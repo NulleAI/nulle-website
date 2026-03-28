@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nulle — Nothing Between You and Intelligence</title>
+  <meta name="description" content="Nulle helps organizations build private AI systems that run locally. Agentic architecture, professional tools, and a partner for your AI journey.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img class="nav-icon" src="assets/nulle-logo.jpeg" alt="Nulle">
+      </a>
+      <div class="nav-links">
+        <a href="#philosophy">Philosophy</a>
+        <a href="#approach">Approach</a>
+        <a href="#services">Services</a>
+        <a href="#contact" class="nav-cta">Start a Conversation</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#approach">Approach</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Start a Conversation</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-logo reveal">
+        <img src="assets/nulle-logo.jpeg" alt="Nulle">
+      </div>
+      <h1 class="hero-headline reveal reveal-d1">
+        Nothing between you<br>and intelligence.
+      </h1>
+      <p class="hero-sub reveal reveal-d2">We help organizations bring AI into their own environment &mdash;<br class="hide-mobile"> so intelligence works for you, not the other way around.</p>
+    </div>
+    <div class="scroll-indicator reveal reveal-d3">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ OPENING STATEMENT -->
+  <section class="statement-section">
+    <div class="container-narrow">
+      <div class="big-text reveal-words" data-reveal="words">
+        <p>The world moved fast toward AI. But somewhere along the way, people were asked to give up something important &mdash; <em class="text-gradient">control over their own data, their own systems, their own decisions.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ SECOND STATEMENT -->
+  <section class="statement-section">
+    <div class="container-narrow">
+      <div class="big-text reveal-words" data-reveal="words">
+        <p>We started Nulle because we believe there&rsquo;s a better path. One where AI lives inside your world &mdash; <em class="text-gradient">not the other way around.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ PHILOSOPHY -->
+  <section class="section-philosophy" id="philosophy">
+    <div class="container">
+      <div class="philosophy-hero reveal">
+        <p class="label">What we believe</p>
+        <h2 class="display-heading">
+          Private AI is not a feature.<br>
+          <span class="text-gradient">It&rsquo;s an architecture.</span>
+        </h2>
+      </div>
+
+      <div class="beliefs">
+        <div class="belief reveal">
+          <div class="belief-number">01</div>
+          <div class="belief-content">
+            <h3>Intelligence should live where your data lives.</h3>
+            <p>When AI runs on your own hardware, in your own environment, you don&rsquo;t have to choose between capability and privacy. You get both.</p>
+          </div>
+        </div>
+        <div class="belief reveal">
+          <div class="belief-number">02</div>
+          <div class="belief-content">
+            <h3>Complexity should be our problem, not yours.</h3>
+            <p>The infrastructure behind private AI is deeply technical. But using it shouldn&rsquo;t be. We handle the architecture so you can focus on what matters.</p>
+          </div>
+        </div>
+        <div class="belief reveal">
+          <div class="belief-number">03</div>
+          <div class="belief-content">
+            <h3>AI should amplify your team, not replace your judgment.</h3>
+            <p>We design systems that make your people more effective &mdash; surfacing insights, connecting information, and removing friction from how work gets done.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ THE PROBLEM WE SEE -->
+  <section class="section-contrast">
+    <div class="container">
+      <div class="contrast-intro reveal">
+        <p class="label">The landscape today</p>
+        <h2 class="section-heading">Most AI asks you to make a trade-off.</h2>
+        <p class="section-desc">Send your data to the cloud to get intelligence back. Trust someone else&rsquo;s infrastructure with your most sensitive information. Hope that &ldquo;privacy settings&rdquo; actually work.</p>
+      </div>
+      <div class="contrast-grid">
+        <div class="contrast-card contrast-old reveal">
+          <div class="contrast-label">The trade-off</div>
+          <ul>
+            <li>Your data leaves your environment</li>
+            <li>You depend on someone else&rsquo;s infrastructure</li>
+            <li>Privacy is a setting you toggle</li>
+            <li>You need internet to think</li>
+            <li>Your information trains someone else&rsquo;s model</li>
+          </ul>
+        </div>
+        <div class="contrast-card contrast-new reveal">
+          <div class="contrast-label">What we help you build</div>
+          <ul>
+            <li>Your data never leaves your machines</li>
+            <li>You own and control the full stack</li>
+            <li>Privacy is the foundation, not a checkbox</li>
+            <li>Intelligence works even offline</li>
+            <li>Your data serves you &mdash; only you</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ APPROACH -->
+  <section class="section-approach" id="approach">
+    <div class="container">
+      <div class="approach-intro reveal">
+        <p class="label">How we work</p>
+        <h2 class="display-heading">We meet you where you are.</h2>
+        <p class="section-desc">Whether you&rsquo;re exploring AI for the first time or rearchitecting existing systems for privacy, we help you move forward with confidence.</p>
+      </div>
+
+      <div class="journey">
+        <div class="journey-line" aria-hidden="true"></div>
+
+        <div class="journey-step reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-content">
+            <span class="journey-phase">Understand</span>
+            <h3>We listen first.</h3>
+            <p>Every organization is different. We start by understanding your data, your workflows, and what intelligence would actually mean for your team &mdash; not what a vendor thinks you need.</p>
+          </div>
+        </div>
+
+        <div class="journey-step reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-content">
+            <span class="journey-phase">Architect</span>
+            <h3>We design systems that belong to you.</h3>
+            <p>Using agentic architecture principles, we design AI systems that run in your environment. Local models, local data, local control &mdash; with the same capabilities you&rsquo;d expect from the cloud.</p>
+          </div>
+        </div>
+
+        <div class="journey-step reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-content">
+            <span class="journey-phase">Build</span>
+            <h3>We bring it to life.</h3>
+            <p>From embedding models to intelligent search, from document understanding to agentic workflows &mdash; we build the tools and infrastructure that make private AI real and practical.</p>
+          </div>
+        </div>
+
+        <div class="journey-step reveal">
+          <div class="journey-dot"></div>
+          <div class="journey-content">
+            <span class="journey-phase">Evolve</span>
+            <h3>We grow with you.</h3>
+            <p>AI isn&rsquo;t a one-time project. As your needs change and the technology advances, we help you adapt &mdash; always keeping you in control of the direction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ SERVICES -->
+  <section class="section-services" id="services">
+    <div class="container">
+      <div class="services-intro reveal">
+        <p class="label">What we offer</p>
+        <h2 class="display-heading">Agentic architecture.<br>Professional tools.<br><span class="text-gradient">Your environment.</span></h2>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M8 12h32M8 24h32M8 36h20" stroke="url(#sG1)" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="38" cy="36" r="6" stroke="url(#sG1)" stroke-width="2"/>
+              <defs><linearGradient id="sG1" x1="8" y1="42" x2="44" y2="12"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+            </svg>
+          </div>
+          <h3>Private AI Architecture</h3>
+          <p>We design end-to-end AI systems that run entirely within your infrastructure. Local models, vector databases, embedding pipelines &mdash; architected for privacy from the ground up.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="6" width="16" height="16" rx="4" stroke="url(#sG2)" stroke-width="2"/>
+              <rect x="26" y="6" width="16" height="16" rx="4" stroke="url(#sG2)" stroke-width="2"/>
+              <rect x="6" y="26" width="16" height="16" rx="4" stroke="url(#sG2)" stroke-width="2"/>
+              <rect x="26" y="26" width="16" height="16" rx="4" stroke="url(#sG2)" stroke-width="2"/>
+              <defs><linearGradient id="sG2" x1="6" y1="42" x2="42" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+            </svg>
+          </div>
+          <h3>Agentic Systems</h3>
+          <p>Intelligent agents that understand your documents, automate workflows, and surface insights &mdash; all running locally, all under your control.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M24 6v36M6 24h36" stroke="url(#sG3)" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+              <circle cx="24" cy="24" r="8" stroke="url(#sG3)" stroke-width="2"/>
+              <circle cx="24" cy="24" r="16" stroke="url(#sG3)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <defs><linearGradient id="sG3" x1="6" y1="42" x2="42" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+            </svg>
+          </div>
+          <h3>Professional Tooling</h3>
+          <p>Desktop applications and developer tools purpose-built for private AI workflows. Semantic search, document Q&A, multimodal understanding &mdash; designed for real work.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M12 36c0-8 6-12 12-16s12-8 12-14" stroke="url(#sG4)" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="36" r="4" stroke="url(#sG4)" stroke-width="2"/>
+              <circle cx="36" cy="6" r="4" stroke="url(#sG4)" stroke-width="2"/>
+              <defs><linearGradient id="sG4" x1="8" y1="42" x2="42" y2="2"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+            </svg>
+          </div>
+          <h3>Strategic Guidance</h3>
+          <p>Not sure where to start? We help you understand the AI landscape, evaluate what&rsquo;s possible on-device, and build a roadmap that makes sense for your organization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CLOSING STATEMENT -->
+  <section class="statement-section statement-closing">
+    <div class="container-narrow">
+      <div class="big-text reveal-words" data-reveal="words">
+        <p>We don&rsquo;t believe you should have to hand over your data to access intelligence. We believe the best AI is the kind that <em class="text-gradient">belongs to you.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CTA -->
+  <section class="section-cta" id="contact">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div class="cta-orb"></div>
+        <img class="cta-mark" src="assets/nulle-logo.jpeg" alt="Nulle">
+        <h2 class="cta-heading">Let&rsquo;s build something<br><span class="text-gradient">that belongs to you.</span></h2>
+        <p class="cta-desc">Whether you&rsquo;re just starting to explore private AI or ready to architect a full system &mdash; we&rsquo;d love to hear what you&rsquo;re working on.</p>
+        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+        <div class="cta-social">
+          <span>Or follow our journey</span>
+          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow Nulle on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-mark" src="assets/nulle-logo.jpeg" alt="Nulle">
+          <p class="footer-tagline">Nothing between you and intelligence.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <a href="#philosophy">Philosophy</a>
+            <a href="#approach">Approach</a>
+            <a href="#services">Services</a>
+          </div>
+          <div class="footer-col">
+            <a href="#contact">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nulle</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" aria-label="Nulle on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
