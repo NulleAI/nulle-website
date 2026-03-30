@@ -104,7 +104,7 @@
   });
 
   // ── Stagger siblings ─────────────────────────────
-  document.querySelectorAll('.beliefs, .services-grid, .contrast-grid, .journey').forEach(group => {
+  document.querySelectorAll('.beliefs, .services-grid, .contrast-grid, .journey, .builders-grid').forEach(group => {
     const items = group.querySelectorAll('.reveal');
     items.forEach((item, i) => {
       item.style.transitionDelay = (i * 0.12) + 's';
