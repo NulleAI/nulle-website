@@ -103,6 +103,32 @@
     wordObserver.observe(container);
   });
 
+  // ── Active nav link on scroll ───────────────────
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const sections = [];
+
+  navLinks.forEach(link => {
+    const id = link.getAttribute('href');
+    if (id === '#') return;
+    const section = document.querySelector(id);
+    if (section) sections.push({ el: section, id: id });
+  });
+
+  const navObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const match = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+          if (match) match.classList.add('active');
+        }
+      });
+    },
+    { threshold: 0, rootMargin: '-50% 0px -50% 0px' }
+  );
+
+  sections.forEach(s => navObserver.observe(s.el));
+
   // ── Stagger siblings ─────────────────────────────
   document.querySelectorAll('.beliefs, .services-grid, .contrast-grid, .journey, .builders-grid').forEach(group => {
     const items = group.querySelectorAll('.reveal');
