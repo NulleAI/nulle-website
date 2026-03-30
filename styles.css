@@ -694,11 +694,11 @@ img, svg { display: block; }
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  max-width: 840px;
+  max-width: 900px;
   margin: 0 auto;
 }
 @media (min-width: 640px) {
-  .services-grid { grid-template-columns: 1fr 1fr; }
+  .services-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 .service-card {
