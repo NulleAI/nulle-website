@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Labs — Nulle</title>
+  <meta name="description" content="Products built by Nulle. Privacy-first tools for AI-powered research, transcription, and knowledge work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img class="nav-icon" src="assets/nulle-logo.jpeg" alt="Nulle">
+      </a>
+      <div class="nav-links">
+        <a href="index.html#philosophy">Philosophy</a>
+        <a href="index.html#approach">Approach</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#builders">For Builders</a>
+        <a href="labs.html" class="active">Labs</a>
+        <a href="index.html#contact" class="nav-cta">Start a Conversation</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html#philosophy">Philosophy</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#builders">For Builders</a>
+      <a href="labs.html">Labs</a>
+      <a href="index.html#contact">Start a Conversation</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ LABS HERO -->
+  <section class="labs-hero">
+    <div class="labs-hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="labs-hero-content">
+        <p class="label reveal">Nulle Labs</p>
+        <h1 class="display-heading reveal reveal-d1">
+          We build what we believe in.
+        </h1>
+        <p class="section-desc reveal reveal-d2">The same principles we bring to client work &mdash; privacy, local-first architecture, user control &mdash; guide the products we build for everyone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ DREA DESKTOP -->
+  <section class="labs-product" id="drea">
+    <div class="container">
+      <div class="product-card reveal">
+        <div class="product-header">
+          <div class="product-status product-status--available">Available</div>
+          <h2 class="product-name">DREA Desktop</h2>
+          <p class="product-tagline text-gradient">Your research. Your data. Your terms.</p>
+        </div>
+        <p class="product-desc">A privacy-first AI desktop application for intelligent document search, vector embeddings, and deep research &mdash; running entirely on-device with Apple Silicon optimization. Built with Tauri, Rust, and Python.</p>
+        <div class="product-features">
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <path d="M18 3L6 10v8c0 8.5 5.5 14 12 17 6.5-3 12-8.5 12-17v-8L18 3z" stroke="url(#pG1)" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M13 18l4 4 7-7" stroke="url(#pG1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs><linearGradient id="pG1" x1="6" y1="28" x2="30" y2="3"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Air-Gapped Intelligence</h3>
+            <p>All AI inference runs locally. Your documents never leave your machine.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <circle cx="16" cy="16" r="10" stroke="url(#pG2)" stroke-width="1.5"/>
+                <path d="M24 24l8 8" stroke="url(#pG2)" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 14h8M12 18h5" stroke="url(#pG2)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                <defs><linearGradient id="pG2" x1="6" y1="30" x2="32" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Semantic Document Search</h3>
+            <p>Vector embeddings and RAG-powered retrieval across PDFs, images, and more.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <rect x="6" y="8" width="24" height="16" rx="4" stroke="url(#pG3)" stroke-width="1.5"/>
+                <path d="M6 28h24" stroke="url(#pG3)" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="18" cy="16" r="3" stroke="url(#pG3)" stroke-width="1.5" opacity="0.5"/>
+                <defs><linearGradient id="pG3" x1="6" y1="28" x2="30" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Apple Silicon Native</h3>
+            <p>Optimized for M-series chips. Fast local inference without cloud dependencies.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <path d="M12 18c0-5 3-9 6-9s6 4 6 9-3 9-6 9-6-4-6-9z" stroke="url(#pG4)" stroke-width="1.5"/>
+                <path d="M18 9v18" stroke="url(#pG4)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                <circle cx="18" cy="18" r="12" stroke="url(#pG4)" stroke-width="1.5"/>
+                <path d="M6 18h24" stroke="url(#pG4)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                <defs><linearGradient id="pG4" x1="6" y1="30" x2="30" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Safe External AI</h3>
+            <p>Work with Claude, ChatGPT, and others through a trust proxy that sanitizes sensitive data before it leaves.</p>
+          </div>
+        </div>
+        <div class="product-cta">
+          <a href="https://discoverdrea.ai" target="_blank" rel="noopener noreferrer" class="btn-cta">Explore DREA &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ WAVELOG -->
+  <section class="labs-product labs-product--alt" id="wavelog">
+    <div class="container">
+      <div class="product-card reveal">
+        <div class="product-header">
+          <div class="product-status product-status--coming-soon">Coming Soon</div>
+          <h2 class="product-name">WaveLog</h2>
+          <p class="product-tagline text-gradient">Capture everything. Lose nothing.</p>
+        </div>
+        <p class="product-desc">A proprietary platform for real-time audio recording, transcription, and intelligent note creation. WaveLog turns conversations, meetings, and ideas into searchable, structured knowledge &mdash; privately and on your terms.</p>
+        <div class="product-features">
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <path d="M18 4v20" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 12v8M24 12v8M9 15v2M27 15v2M15 10v12M21 10v12" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                <path d="M10 24a8 8 0 0016 0" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                <path d="M18 28v4" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round"/>
+                <defs><linearGradient id="wG1" x1="9" y1="32" x2="27" y2="4"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Real-Time Transcription</h3>
+            <p>High-accuracy speech-to-text that works as you speak, with speaker identification.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <rect x="8" y="4" width="20" height="28" rx="3" stroke="url(#wG2)" stroke-width="1.5"/>
+                <path d="M13 12h10M13 16h10M13 20h6" stroke="url(#wG2)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                <path d="M13 26l3 3 5-6" stroke="url(#wG2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs><linearGradient id="wG2" x1="8" y1="32" x2="28" y2="4"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Intelligent Notes</h3>
+            <p>Automatically distills recordings into structured summaries, action items, and key decisions.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <rect x="4" y="6" width="28" height="20" rx="3" stroke="url(#wG3)" stroke-width="1.5"/>
+                <path d="M4 12h28" stroke="url(#wG3)" stroke-width="1.5" opacity="0.3"/>
+                <circle cx="14" cy="19" r="4" stroke="url(#wG3)" stroke-width="1.5"/>
+                <path d="M17 22l4 4" stroke="url(#wG3)" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 30h12" stroke="url(#wG3)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                <defs><linearGradient id="wG3" x1="4" y1="30" x2="32" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Searchable Archive</h3>
+            <p>Every recording becomes a searchable knowledge base. Find any moment by what was said.</p>
+          </div>
+          <div class="product-feature reveal">
+            <div class="product-feature-icon">
+              <svg viewBox="0 0 36 36" fill="none">
+                <rect x="8" y="10" width="20" height="18" rx="3" stroke="url(#wG4)" stroke-width="1.5"/>
+                <path d="M14 10V8a4 4 0 018 0v2" stroke="url(#wG4)" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="18" cy="20" r="2" stroke="url(#wG4)" stroke-width="1.5"/>
+                <path d="M18 22v3" stroke="url(#wG4)" stroke-width="1.5" stroke-linecap="round"/>
+                <defs><linearGradient id="wG4" x1="8" y1="28" x2="28" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
+              </svg>
+            </div>
+            <h3>Private by Design</h3>
+            <p>Your recordings and transcripts stay under your control. No cloud processing required.</p>
+          </div>
+        </div>
+        <div class="product-cta">
+          <p class="product-notify">We&rsquo;ll share more soon. <a href="mailto:connect@nulle.ai" class="product-notify-link">Get notified &rarr;</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CLOSING STATEMENT -->
+  <section class="statement-section statement-closing">
+    <div class="container-narrow">
+      <div class="big-text reveal-words" data-reveal="words">
+        <p>Every product we build starts with the same question: what would this look like if the user <em class="text-gradient">never had to give anything up?</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CTA -->
+  <section class="section-cta" id="contact">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div class="cta-orb"></div>
+        <img class="cta-mark" src="assets/nulle-logo.jpeg" alt="Nulle">
+        <h2 class="cta-heading">Have an idea for<br><span class="text-gradient">what we should build next?</span></h2>
+        <p class="cta-desc">We&rsquo;re always exploring new ways to make private AI more accessible. If you have thoughts, suggestions, or want early access &mdash; reach out.</p>
+        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-mark" src="assets/nulle-logo.jpeg" alt="Nulle">
+          <p class="footer-tagline">Nothing between you and intelligence.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <a href="index.html#philosophy">Philosophy</a>
+            <a href="index.html#approach">Approach</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#builders">For Builders</a>
+            <a href="labs.html">Labs</a>
+          </div>
+          <div class="footer-col">
+            <a href="index.html#contact">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nulle, LLC</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" aria-label="Nulle on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
