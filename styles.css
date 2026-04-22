@@ -290,9 +290,9 @@ img, svg { display: block; }
   background: rgba(0, 0, 0, 0.96);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s var(--ease);
@@ -306,10 +306,20 @@ img, svg { display: block; }
 }
 
 .mobile-menu-inner {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 32px;
+  padding: 88px 24px 48px;
   text-align: center;
+  box-sizing: border-box;
+}
+
+@media (max-height: 500px) {
+  .mobile-menu-inner { gap: 20px; padding: 72px 24px 32px; }
+  .mobile-menu-inner a { font-size: 1.4rem; }
 }
 .mobile-menu-inner a {
   font-family: var(--font-display);
