@@ -226,7 +226,7 @@ img, svg { display: block; }
   align-items: center;
   gap: 32px;
 }
-@media (min-width: 933px) {
+@media (min-width: 1000px) {
   .nav-links { display: flex; }
 }
 
@@ -264,7 +264,7 @@ img, svg { display: block; }
   cursor: pointer;
   z-index: 10;
 }
-@media (min-width: 933px) {
+@media (min-width: 1000px) {
   .nav-toggle { display: none; }
 }
 .nav-toggle span {
@@ -301,7 +301,7 @@ img, svg { display: block; }
   opacity: 1;
   pointer-events: auto;
 }
-@media (min-width: 933px) {
+@media (min-width: 1000px) {
   .mobile-menu { display: none !important; }
 }
 

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founders — Nulle</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="description" content="Meet the founders of Nulle — Jerry Cox and Rahiem Klugh. Two software engineers with 30 years of combined experience building enterprise software.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Founders: Cinematic Duo ──────────────────────── */
+    .cin-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 160px 0 80px;
+      text-align: center;
+    }
+    .cin-hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+
+    .cin-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto 64px;
+    }
+    .cin-hero-content .section-desc { margin: 0 auto; }
+
+    .cin-location {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--text-3);
+    }
+
+    /* Portrait duo composition */
+    .cin-duo {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      height: 420px;
+      z-index: 1;
+    }
+    .cin-duo-photo {
+      position: absolute;
+      width: 44%;
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    }
+    .cin-duo-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .cin-duo-photo:nth-child(1) {
+      left: 6%;
+      top: 0;
+      transform: rotate(-3deg);
+      z-index: 2;
+    }
+    .cin-duo-photo:nth-child(2) {
+      right: 6%;
+      top: 40px;
+      transform: rotate(3deg);
+      z-index: 1;
+    }
+
+    @media (max-width: 639px) {
+      .cin-duo {
+        max-width: 380px;
+        height: 380px;
+      }
+      .cin-duo-photo { width: 52%; }
+      .cin-duo-photo:nth-child(1) { left: 0; }
+      .cin-duo-photo:nth-child(2) { right: 0; top: 48px; }
+    }
+
+    /* Quote pullover */
+    .cin-quote-section {
+      padding: 140px 0 120px;
+    }
+    .cin-quote {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cin-quote p {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .cin-quote-byline {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Founder deep sections */
+    .cin-founder {
+      padding: 100px 0;
+      background: var(--surface);
+    }
+    .cin-founder--alt { background: transparent; }
+
+    .cin-founder-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 820px) {
+      .cin-founder-inner {
+        grid-template-columns: 360px 1fr;
+        gap: 80px;
+      }
+      .cin-founder--reverse .cin-founder-inner {
+        grid-template-columns: 1fr 360px;
+      }
+      .cin-founder--reverse .cin-portrait {
+        order: 2;
+      }
+    }
+
+    .cin-portrait {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: var(--surface-2);
+    }
+    .cin-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .cin-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.35));
+      pointer-events: none;
+    }
+
+    .cin-meta-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 14px;
+    }
+
+    .cin-meta-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .cin-meta-title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 28px;
+    }
+
+    .cin-meta-bio {
+      font-size: 1rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .cin-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cin-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 980px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: -0.005em;
+    }
+
+    .cin-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: color 0.25s;
+    }
+    .cin-linkedin:hover { color: var(--cyan); }
+    .cin-linkedin svg { width: 18px; height: 18px; }
+
+    @media (max-width: 767px) {
+      .cin-hero { padding: 130px 0 60px; }
+      .cin-quote-section { padding: 100px 0 80px; }
+      .cin-founder { padding: 80px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img class="nav-icon" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+      </a>
+      <div class="nav-links">
+        <a href="index.html#philosophy">Philosophy</a>
+        <a href="index.html#approach">Approach</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#builders">For Builders</a>
+        <a href="labs.html">Labs</a>
+        <a href="founders.html" class="active">Founders</a>
+        <a href="index.html#contact" class="nav-cta">Start a Conversation</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html#philosophy">Philosophy</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#builders">For Builders</a>
+      <a href="labs.html">Labs</a>
+      <a href="founders.html">Founders</a>
+      <a href="index.html#contact">Start a Conversation</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cin-hero">
+    <div class="cin-hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="cin-hero-content">
+        <p class="label reveal">Founders</p>
+        <h1 class="display-heading reveal reveal-d1">
+          Built by <span class="text-gradient">two</span>.<br>For everyone who builds.
+        </h1>
+        <p class="section-desc reveal reveal-d2">Two software engineers with 30 years of combined experience building enterprise software. No committee, no venture play &mdash; just two people who saw a problem, shared a conviction, and decided to do something about it.</p>
+        <p class="cin-location reveal reveal-d3">Based in Atlanta, Georgia</p>
+      </div>
+
+      <div class="cin-duo reveal reveal-d3">
+        <div class="cin-duo-photo">
+          <img src="assets/cofounders/jerry-cox.jpeg" alt="Jerry Cox">
+        </div>
+        <div class="cin-duo-photo">
+          <img src="assets/cofounders/rahiem-klugh.jpeg" alt="Rahiem Klugh">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="cin-quote-section">
+    <div class="container-narrow">
+      <div class="cin-quote reveal">
+        <p>&ldquo;Intelligence should belong to the people using it &mdash; not the platforms selling it. Everything we&rsquo;re building at Nulle comes from that one idea.&rdquo;</p>
+        <p class="cin-quote-byline">Jerry &amp; Rahiem</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JERRY -->
+  <section class="cin-founder">
+    <div class="container">
+      <div class="cin-founder-inner reveal">
+        <div class="cin-portrait">
+          <img src="assets/cofounders/jerry-cox.jpeg" alt="Jerry Cox">
+        </div>
+        <div class="cin-meta">
+          <p class="cin-meta-label">Co-Founder</p>
+          <h2 class="cin-meta-name">Jerry Cox</h2>
+          <p class="cin-meta-title">Leads product &amp; engineering.</p>
+          <p class="cin-meta-bio">Software engineer with a background in mathematics, shipping enterprise software since 2011. His work has centered on cloud architectures &mdash; software delivery, security, and availability at enterprise scale. At Nulle, Jerry translates that discipline into working software: architecture that respects the user, interfaces that feel inevitable, and infrastructure that doesn&rsquo;t demand a cloud tax.</p>
+          <div class="cin-meta-tags">
+            <span class="cin-tag">Cloud architecture</span>
+            <span class="cin-tag">Delivery &amp; security</span>
+            <span class="cin-tag">Availability at scale</span>
+            <span class="cin-tag">Local-first AI</span>
+          </div>
+          <a class="cin-linkedin" href="https://www.linkedin.com/in/jerry-g-cox-jr" target="_blank" rel="noopener noreferrer" aria-label="Jerry Cox on LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>Connect on LinkedIn &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAHIEM -->
+  <section class="cin-founder cin-founder--alt cin-founder--reverse">
+    <div class="container">
+      <div class="cin-founder-inner reveal">
+        <div class="cin-portrait">
+          <img src="assets/cofounders/rahiem-klugh.jpeg" alt="Rahiem Klugh">
+        </div>
+        <div class="cin-meta">
+          <p class="cin-meta-label">Co-Founder</p>
+          <h2 class="cin-meta-name">Rahiem Klugh</h2>
+          <p class="cin-meta-title">Leads strategy &amp; partnerships.</p>
+          <p class="cin-meta-bio">Software engineer with a background in electrical engineering, shipping enterprise software since 2011. Has designed, built, and released enterprise iOS and mobile apps to the App Store &mdash; reaching thousands of users. At Nulle, Rahiem shapes direction and the way we show up in the world, making sure our positioning matches the standards we hold ourselves to behind the scenes.</p>
+          <div class="cin-meta-tags">
+            <span class="cin-tag">iOS &amp; mobile</span>
+            <span class="cin-tag">App Store delivery</span>
+            <span class="cin-tag">Strategy</span>
+            <span class="cin-tag">Partnerships</span>
+          </div>
+          <a class="cin-linkedin" href="https://www.linkedin.com/in/rahiem-klugh/" target="_blank" rel="noopener noreferrer" aria-label="Rahiem Klugh on LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>Connect on LinkedIn &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-cta" id="contact">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div class="cta-orb"></div>
+        <img class="cta-mark" src="assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
+        <h2 class="cta-heading">Ready to <span class="text-gradient">talk?</span></h2>
+        <p class="cta-desc">Partnership, product, or a problem worth solving &mdash; we&rsquo;re listening.</p>
+        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-mark" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <a href="index.html#philosophy">Philosophy</a>
+            <a href="index.html#approach">Approach</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#builders">For Builders</a>
+            <a href="labs.html">Labs</a>
+            <a href="founders.html">Founders</a>
+          </div>
+          <div class="footer-col">
+            <a href="index.html#contact">Contact</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nulle, LLC</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" aria-label="Nulle on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

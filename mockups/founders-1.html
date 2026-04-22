@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founders — Nulle (Mockup 1: Portrait Split)</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="description" content="Meet the founders of Nulle — Jerry Cox and Rahiem Klugh.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── Founders: Portrait Split ─────────────────────── */
+    .founders-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 180px 0 100px;
+      text-align: center;
+    }
+    .founders-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .founders-hero-content .section-desc {
+      margin: 0 auto;
+    }
+
+    .founders-grid {
+      padding: 0 0 160px;
+    }
+    .founders-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 80px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    @media (min-width: 720px) {
+      .founders-wrap {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+    }
+
+    .founder {
+      text-align: center;
+    }
+
+    .founder-portrait {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--bg);
+      background: var(--gradient);
+      position: relative;
+      overflow: hidden;
+    }
+    .founder-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 60%);
+    }
+
+    .founder-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .founder-role {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 24px;
+    }
+
+    .founder-bio {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      max-width: 360px;
+      margin: 0 auto 20px;
+    }
+
+    .founder-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      transition: color 0.2s;
+    }
+    .founder-linkedin:hover { color: var(--cyan); }
+    .founder-linkedin svg { width: 16px; height: 16px; }
+
+    @media (max-width: 767px) {
+      .founders-hero { padding: 140px 0 72px; }
+      .founders-grid { padding-bottom: 100px; }
+      .founder-portrait { width: 160px; height: 160px; font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img class="nav-icon" src="../assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+      </a>
+      <div class="nav-links">
+        <a href="../index.html#philosophy">Philosophy</a>
+        <a href="../index.html#approach">Approach</a>
+        <a href="../index.html#services">Services</a>
+        <a href="../index.html#builders">For Builders</a>
+        <a href="../labs.html">Labs</a>
+        <a href="../index.html#contact" class="nav-cta">Start a Conversation</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="../index.html#philosophy">Philosophy</a>
+      <a href="../index.html#approach">Approach</a>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#builders">For Builders</a>
+      <a href="../labs.html">Labs</a>
+      <a href="../index.html#contact">Start a Conversation</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ FOUNDERS HERO -->
+  <section class="founders-hero">
+    <div class="labs-hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="founders-hero-content">
+        <p class="label reveal">Founders</p>
+        <h1 class="display-heading reveal reveal-d1">
+          Two builders.<br>One conviction.
+        </h1>
+        <p class="section-desc reveal reveal-d2">Two software engineers with 30 years of combined experience building enterprise software &mdash; now building the company we wished existed.</p>
+        <p class="section-desc reveal reveal-d3" style="margin-top: 16px; font-size: 0.85rem; letter-spacing: 0.04em; color: var(--text-3);">Based in Atlanta, Georgia &middot; by way of New York</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOUNDERS -->
+  <section class="founders-grid">
+    <div class="container">
+      <div class="founders-wrap">
+
+        <div class="founder reveal">
+          <div class="founder-portrait" aria-hidden="true">JC</div>
+          <h2 class="founder-name">Jerry Cox</h2>
+          <p class="founder-role">Co-Founder</p>
+          <p class="founder-bio">Software engineer with a background in mathematics. Building enterprise software since 2011, with deep experience designing cloud architectures for software delivery, security, and availability at enterprise scale. At Nulle, Jerry leads product and engineering &mdash; focused on making private AI infrastructure feel effortless to the people who use it.</p>
+          <a class="founder-linkedin" href="https://www.linkedin.com/in/jerry-g-cox-jr" target="_blank" rel="noopener noreferrer" aria-label="Jerry Cox on LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+        <div class="founder reveal">
+          <div class="founder-portrait" aria-hidden="true">RK</div>
+          <h2 class="founder-name">Rahiem Klugh</h2>
+          <p class="founder-role">Co-Founder</p>
+          <p class="founder-bio">Software engineer with a background in electrical engineering. Building enterprise software since 2011, with years spent designing, building, and shipping enterprise iOS and mobile applications to the App Store &mdash; reaching thousands of users. At Nulle, Rahiem guides direction, partnerships, and the conviction that privacy and great product aren&rsquo;t opposing forces.</p>
+          <a class="founder-linkedin" href="https://www.linkedin.com/in/rahiem-klugh/" target="_blank" rel="noopener noreferrer" aria-label="Rahiem Klugh on LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CTA -->
+  <section class="section-cta" id="contact">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div class="cta-orb"></div>
+        <img class="cta-mark" src="../assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
+        <h2 class="cta-heading">Want to build <span class="text-gradient">something real?</span></h2>
+        <p class="cta-desc">If our approach resonates &mdash; reach out. We&rsquo;re always open to the right conversations.</p>
+        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-mark" src="../assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <a href="../index.html#philosophy">Philosophy</a>
+            <a href="../index.html#approach">Approach</a>
+            <a href="../index.html#services">Services</a>
+            <a href="../index.html#builders">For Builders</a>
+            <a href="../labs.html">Labs</a>
+          </div>
+          <div class="footer-col">
+            <a href="../index.html#contact">Contact</a>
+            <a href="../privacy.html">Privacy</a>
+            <a href="../terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nulle, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

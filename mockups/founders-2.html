@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founders — Nulle (Mockup 2: Letter)</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="description" content="A letter from the founders of Nulle — Jerry Cox and Rahiem Klugh.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── Founders: Letter ─────────────────────────────── */
+    .letter-section {
+      position: relative;
+      overflow: hidden;
+      padding: 180px 0 140px;
+    }
+    .letter-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .letter {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .letter-label {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .letter-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 56px;
+      text-align: center;
+    }
+
+    .letter-body p {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+      font-weight: 400;
+      line-height: 1.7;
+      letter-spacing: -0.01em;
+      color: var(--text-2);
+      margin-bottom: 28px;
+    }
+    .letter-body p:last-of-type {
+      margin-bottom: 0;
+    }
+    .letter-body em {
+      font-style: normal;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .letter-signoff {
+      margin-top: 72px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    @media (min-width: 640px) {
+      .letter-signoff {
+        flex-direction: row;
+        gap: 56px;
+      }
+    }
+
+    .signature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .signature-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--gradient);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .signature-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 60%);
+    }
+
+    .signature-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .signature-role {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    .signature-linkedin {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-3);
+      transition: color 0.2s;
+      margin-left: auto;
+      padding-left: 16px;
+    }
+    .signature-linkedin:hover { color: var(--cyan); }
+    .signature-linkedin svg { width: 18px; height: 18px; }
+
+    .letter-divider {
+      max-width: 640px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @media (max-width: 767px) {
+      .letter-section { padding: 140px 0 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img class="nav-icon" src="../assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+      </a>
+      <div class="nav-links">
+        <a href="../index.html#philosophy">Philosophy</a>
+        <a href="../index.html#approach">Approach</a>
+        <a href="../index.html#services">Services</a>
+        <a href="../index.html#builders">For Builders</a>
+        <a href="../labs.html">Labs</a>
+        <a href="../index.html#contact" class="nav-cta">Start a Conversation</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="../index.html#philosophy">Philosophy</a>
+      <a href="../index.html#approach">Approach</a>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#builders">For Builders</a>
+      <a href="../labs.html">Labs</a>
+      <a href="../index.html#contact">Start a Conversation</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ LETTER -->
+  <section class="letter-section">
+    <div class="letter-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="container-narrow">
+      <div class="letter reveal">
+        <p class="letter-label">From the founders</p>
+        <h1 class="letter-heading">Why we built <span class="text-gradient">Nulle</span>.</h1>
+
+        <div class="letter-body">
+          <p>Between us, we&rsquo;ve spent <em>30 years building enterprise software</em> &mdash; one of us coming from mathematics, the other from electrical engineering, both writing production code since 2011. One of us has spent that time designing cloud architectures, obsessing over delivery, security, and availability at enterprise scale. The other has designed, built, and shipped enterprise iOS and mobile apps to the App Store, reaching thousands of users. We&rsquo;ve seen what real systems demand, and we&rsquo;ve seen what they&rsquo;re becoming.</p>
+          <p>We didn&rsquo;t start Nulle to compete with the big platforms. We started it because we watched the most powerful technology of our lifetime get handed to a handful of companies &mdash; and everyone else was told to rent it back.</p>
+          <p>That&rsquo;s not a future we wanted to build toward. We believe intelligence should be <em>owned</em>, not leased. Private by default. Local where it matters. Transparent about what it does and doesn&rsquo;t do.</p>
+          <p>Nulle is our answer. A small company, building real tools and real partnerships with people who want a different relationship with their technology.</p>
+          <p>If any of that resonates &mdash; you&rsquo;re in the right place.</p>
+          <p style="font-size: 0.9rem; color: var(--text-3); margin-top: 40px; letter-spacing: 0.04em;">Written from Atlanta, Georgia &middot; by way of New York.</p>
+        </div>
+
+        <div class="letter-signoff">
+          <div class="signature">
+            <div class="signature-avatar" aria-hidden="true">JC</div>
+            <div>
+              <div class="signature-name">Jerry Cox</div>
+              <div class="signature-role">Co-Founder</div>
+            </div>
+            <a class="signature-linkedin" href="https://www.linkedin.com/in/jerry-g-cox-jr" target="_blank" rel="noopener noreferrer" aria-label="Jerry Cox on LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+          <div class="signature">
+            <div class="signature-avatar" aria-hidden="true">RK</div>
+            <div>
+              <div class="signature-name">Rahiem Klugh</div>
+              <div class="signature-role">Co-Founder</div>
+            </div>
+            <a class="signature-linkedin" href="https://www.linkedin.com/in/rahiem-klugh/" target="_blank" rel="noopener noreferrer" aria-label="Rahiem Klugh on LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="letter-divider"></div>
+
+  <!-- ═══════════════════════════════════════════ CTA -->
+  <section class="section-cta" id="contact">
+    <div class="container">
+      <div class="cta-block reveal">
+        <div class="cta-orb"></div>
+        <img class="cta-mark" src="../assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
+        <h2 class="cta-heading">Ready to <span class="text-gradient">talk?</span></h2>
+        <p class="cta-desc">Whether you&rsquo;re exploring private AI for your team or just want to compare notes &mdash; we&rsquo;d love to hear from you.</p>
+        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-mark" src="../assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <a href="../index.html#philosophy">Philosophy</a>
+            <a href="../index.html#approach">Approach</a>
+            <a href="../index.html#services">Services</a>
+            <a href="../index.html#builders">For Builders</a>
+            <a href="../labs.html">Labs</a>
+          </div>
+          <div class="footer-col">
+            <a href="../index.html#contact">Contact</a>
+            <a href="../privacy.html">Privacy</a>
+            <a href="../terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nulle, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
