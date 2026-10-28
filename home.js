@@ -19,7 +19,7 @@
   var LAY = [
     { k: 'The ground it all stands on', t: 'Private infrastructure', d: 'Hardware you buy or lease, or a private cloud in your name. Your data, models, settings, and logins belong to you.',
       b: ['Runs in your office or your private cloud', 'Keeps working with the internet off', 'You hold the master keys'] },
-    { k: 'Rules your AI can’t break', t: 'Guardrails', d: 'Your rules for what AI can see, say, and do. Secrets are blocked from leaving, and requests to Claude or ChatGPT are cleaned first.',
+    { k: 'Rules your AI can’t break', t: 'Guardrails', d: 'Your rules for what AI can see, say, and do. Secrets are blocked from leaving, and requests to public AI platforms are cleaned first.',
       b: ['Blocks passwords, client data, and designs from leaving', 'Cleans requests to public AI', 'Screens files for hidden instructions'] },
     { k: 'A person decides what matters', t: 'Human gates', d: 'Before AI sends, pays, deletes, or publishes anything important, the right person approves it. You choose where the gates go.',
       b: ['Approval before anything leaves the company', 'Limits on what each agent can touch', 'A named owner for every decision'] },
@@ -93,7 +93,7 @@
     ['caught', 'A new browser extension tried to read the CRM. Access denied and IT notified.', 'IT'],
     ['held', 'An agent asked to delete 2,000 old records. Waiting for approval.', 'Operations'],
     ['blocked', 'A client list was attached to a personal email bound for an AI app. Stopped before it left.', 'Marketing'],
-    ['cleaned', 'A coding question went to Claude with the database password stripped out.', 'Engineering']
+    ['cleaned', 'A coding question went to a public AI model with the database password stripped out.', 'Engineering']
   ];
   var KN = { blocked: 'Blocked', held: 'Held', caught: 'Caught', cleaned: 'Cleaned', logged: 'Logged' };
   var list = $('con-list'), ei = 0, req = 1284, held = 6, blk = 3, clock = 10 * 60 + 42;
