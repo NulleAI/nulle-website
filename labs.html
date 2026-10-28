@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Nulle Labs — Private AI Products: DREA, WaveLog, CreatorCam</title>
   <meta name="description" content="Privacy-first products from Nulle Labs: DREA for private AI research, WaveLog for AI voice notes and transcription, and CreatorCam for dual-camera video capture.">
   <meta name="keywords" content="Nulle Labs, DREA, WaveLog, CreatorCam, private AI tools, AI voice notes, dual camera iPhone">
   <meta name="author" content="Nulle, LLC">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#F3F4EF">
   <link rel="canonical" href="https://nulle.ai/labs.html">
 
   <!-- Icons -->
@@ -34,11 +34,11 @@
   <meta name="twitter:image" content="https://nulle.ai/assets/og-image.png">
   <meta name="twitter:image:alt" content="Nulle">
 
-  <!-- Fonts & styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Fonts (self-hosted) & styles -->
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="pages.css">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -61,320 +61,190 @@
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════ NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img class="nav-icon" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
-      </a>
-      <div class="nav-links">
-        <a href="index.html#risk">The Risk</a>
-        <a href="index.html#stack">The Stack</a>
-        <a href="index.html#how">How We Work</a>
-        <a href="index.html#industries">Industries</a>
-        <a href="labs.html" class="active">Labs</a>
-        <a href="founders.html">Founders</a>
-        <a href="index.html#contact" class="nav-cta">Start a Conversation</a>
-      </div>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span><span></span>
-      </button>
-    </div>
-  </nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="nlg" x1="403.81" y1="450" x2="896.27" y2="450" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#b1ff9b"/><stop offset="1" stop-color="#89f0ff"/></linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <linearGradient id="vg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <radialGradient id="cg"><stop offset="0" stop-color="#B0FF9D" stop-opacity=".35"/><stop offset="1" stop-color="#8AF0FD" stop-opacity="0"/></radialGradient>
+  </defs>
+  <symbol id="logo" viewBox="390 240 520 420"><path fill="url(#nlg)" d="M491.13,382.64h-62.39c-13.77,0-24.94,11.16-24.94,24.94v234.32h89.41c13.77,0,24.94-11.16,24.94-24.94v-210.62c0-13.09,10.61-23.7,23.7-23.7h0c9.05,0,17.31,5.16,21.29,13.29l109.65,224.19c6.52,13.32,20.05,21.77,34.88,21.77h0c14.35,0,27.53-7.91,34.27-20.58l47.91-89.93c3.49-6.54,10.3-10.63,17.71-10.63h63.77c13.77,0,24.94-11.16,24.94-24.94v-237.71h-90.54c-13.77,0-24.94,11.16-24.94,24.94v211.73c0,13.1-10.62,23.72-23.72,23.72h0c-9.04,0-17.3-5.14-21.29-13.26l-110.85-225.62c-6.47-13.17-19.86-21.51-34.53-21.51h0c-14.47,0-27.72,8.12-34.29,21.02l-47.12,92.55c-3.42,6.73-10.33,10.96-17.88,10.96Z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 17.8 9.2 4.5 4.5 0 0 1 17.5 18z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></symbol>
+</svg>
 
-  <!-- Mobile overlay -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-inner">
-      <a href="index.html#risk">The Risk</a>
-      <a href="index.html#stack">The Stack</a>
-      <a href="index.html#how">How We Work</a>
-      <a href="index.html#industries">Industries</a>
-      <a href="labs.html">Labs</a>
+<div class="nl">
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="Nulle home"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+    <nav class="nav-bar" aria-label="Main">
+      <a class="nav-a" href="index.html#risk">The risk</a>
+      <a class="nav-a" href="index.html#stack">The stack</a>
+      <a class="nav-a" href="index.html#how">How we work</a>
+      <a class="nav-a" href="labs.html" aria-current="page">Labs</a>
+      <a class="nav-a" href="founders.html">Founders</a>
+    </nav>
+    <a class="btn btn-dark nav-cta" href="index.html#contact">Book a review <span class="arr" aria-hidden="true">&#8599;</span></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+    <div class="menu" id="menu" hidden>
+      <a href="index.html#risk">The risk</a>
+      <a href="index.html#stack">The stack</a>
+      <a href="index.html#how">How we work</a>
+      <a href="labs.html" aria-current="page">Labs</a>
       <a href="founders.html">Founders</a>
-      <a href="index.html#contact">Start a Conversation</a>
+      <a class="btn btn-dark" href="index.html#contact">Book an AI exposure review</a>
     </div>
   </div>
+</header>
 
-  <!-- ═══════════════════════════════════════════ LABS HERO -->
-  <section class="labs-hero">
-    <div class="labs-hero-bg">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
+<main id="top">
+
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="wrap">
+      <p class="lbl">Nulle Labs</p>
+      <h1 class="h1" id="hero-t" style="margin-top:26px">We build what <em>we believe in.</em></h1>
+      <div class="hero-row">
+        <p class="lede">The principles behind every system we build for clients guide the products we build for everyone: privacy first, local by default, and you in control.</p>
+        <div class="acts">
+          <a class="btn btn-dark" href="#drea">See the products</a>
+          <a class="btn btn-line" href="index.html#contact">Book an AI exposure review</a>
+        </div>
+      </div>
     </div>
-    <div class="container">
-      <div class="labs-hero-content">
-        <p class="label reveal">Nulle Labs</p>
-        <h1 class="display-heading reveal reveal-d1">
-          We build what we believe in.
-        </h1>
-        <p class="section-desc reveal reveal-d2">The same principles we bring to client work &mdash; privacy, local-first architecture, user control &mdash; guide the products we build for everyone.</p>
+    <div class="wrap" style="margin-top:clamp(40px,5vw,64px)">
+      <div class="panel">
+        <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="p-row"><span>Three products · one rule</span><span>Built by Nulle, LLC</span></div>
+        <div class="lab-idx">
+          <a class="lab-t" href="#drea"><span class="st-chip"><i></i>Available · Mac</span><h3>DREA</h3><p>Private research across your own documents, on your Mac.</p><span class="go">Jump to DREA &darr;</span></a>
+          <a class="lab-t" href="#wavelog"><span class="st-chip"><i></i>Available · Mac, iPhone, iPad</span><h3>WaveLog</h3><p>Meetings and voice notes, transcribed and summarized on your device.</p><span class="go">Jump to WaveLog &darr;</span></a>
+          <a class="lab-t" href="#creatorcam"><span class="st-chip"><i></i>Available · iPhone</span><h3>CreatorCam</h3><p>Portrait and landscape video from a single tap.</p><span class="go">Jump to CreatorCam &darr;</span></a>
+        </div>
+        <div class="p-row p-foot"><span class="p-line">The rule: you never have to give anything up to use them.</span><span>Available now</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ DREA DESKTOP -->
-  <section class="labs-product" id="drea">
-    <div class="container">
-      <div class="product-card reveal">
-        <div class="product-header">
-          <div class="product-status product-status--available">Available</div>
-          <h2 class="product-name">DREA Desktop</h2>
-          <p class="product-tagline text-gradient">Your research. Your data. Your terms.</p>
+  <section class="sec" id="drea" aria-labelledby="drea-t">
+    <div class="wrap pd">
+      <div class="pd-copy">
+        <span class="st-chip"><i></i>Available · Mac</span>
+        <h2 class="h2" id="drea-t">DREA</h2>
+        <p class="pd-tag">Your research. Your data. Your terms.</p>
+        <p class="lede">A private AI desktop app for searching and researching your own documents. Everything runs on your Mac, tuned for Apple Silicon. Built with Tauri, Rust, and Python.</p>
+        <div class="feat"><div><h3>Works with the internet off</h3><p>All AI runs on your Mac. Your documents never leave it.</p></div><div><h3>Search by meaning</h3><p>Find answers across PDFs, images, and more, even without the exact words.</p></div><div><h3>Built for Apple Silicon</h3><p>Fast on M-series chips, with no cloud required.</p></div><div><h3>Safe access to outside AI</h3><p>Use Claude, ChatGPT, and others through a trust proxy that removes sensitive details before anything leaves.</p></div></div>
+        <div class="acts"><a class="btn btn-dark" href="https://discoverdrea.ai" target="_blank" rel="noopener noreferrer">Explore DREA <span class="arr" aria-hidden="true">&#8599;</span></a></div>
+      </div>
+      <div class="pd-vis">
+        <div class="panel">
+          <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="p-row"><span>DREA · on this Mac</span><span>Illustrative</span></div>
+          <div class="mock-q"><svg class="ic"><use href="#i-search"/></svg>Which client contracts renew in the first quarter?</div>
+          <ul class="res">
+            <li><svg class="ic"><use href="#i-file"/></svg><div>Harlow services agreement<small>Renews January 31 · 60-day notice</small></div><span class="pg">p. 14</span></li>
+            <li><svg class="ic"><use href="#i-file"/></svg><div>Brightline vendor contract<small>Renews March 1 · renews automatically</small></div><span class="pg">p. 3</span></li>
+            <li><svg class="ic"><use href="#i-file"/></svg><div>Summit lease amendment<small>Renews February 15 · rate review</small></div><span class="pg">p. 2</span></li>
+          </ul>
+          <div class="proxy"><svg class="ic"><use href="#i-shield"/></svg><span><b>Asked Claude about market rates.</b> Client names were removed first.</span></div>
+          <div class="p-row p-foot"><span>Searched on this Mac · nothing uploaded</span><span>Works offline</span></div>
         </div>
-        <p class="product-desc">A privacy-first AI desktop application for intelligent document search, vector embeddings, and deep research &mdash; running entirely on-device with Apple Silicon optimization. Built with Tauri, Rust, and Python.</p>
-        <div class="product-features">
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <path d="M18 3L6 10v8c0 8.5 5.5 14 12 17 6.5-3 12-8.5 12-17v-8L18 3z" stroke="url(#pG1)" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M13 18l4 4 7-7" stroke="url(#pG1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <defs><linearGradient id="pG1" x1="6" y1="28" x2="30" y2="3"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Air-Gapped Intelligence</h3>
-            <p>All AI inference runs locally. Your documents never leave your machine.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <circle cx="16" cy="16" r="10" stroke="url(#pG2)" stroke-width="1.5"/>
-                <path d="M24 24l8 8" stroke="url(#pG2)" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 14h8M12 18h5" stroke="url(#pG2)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-                <defs><linearGradient id="pG2" x1="6" y1="30" x2="32" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Semantic Document Search</h3>
-            <p>Vector embeddings and RAG-powered retrieval across PDFs, images, and more.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="6" y="8" width="24" height="16" rx="4" stroke="url(#pG3)" stroke-width="1.5"/>
-                <path d="M6 28h24" stroke="url(#pG3)" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="18" cy="16" r="3" stroke="url(#pG3)" stroke-width="1.5" opacity="0.5"/>
-                <defs><linearGradient id="pG3" x1="6" y1="28" x2="30" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Apple Silicon Native</h3>
-            <p>Optimized for M-series chips. Fast local inference without cloud dependencies.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <path d="M12 18c0-5 3-9 6-9s6 4 6 9-3 9-6 9-6-4-6-9z" stroke="url(#pG4)" stroke-width="1.5"/>
-                <path d="M18 9v18" stroke="url(#pG4)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <circle cx="18" cy="18" r="12" stroke="url(#pG4)" stroke-width="1.5"/>
-                <path d="M6 18h24" stroke="url(#pG4)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <defs><linearGradient id="pG4" x1="6" y1="30" x2="30" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Safe External AI</h3>
-            <p>Work with Claude, ChatGPT, and others through a trust proxy that sanitizes sensitive data before it leaves.</p>
-          </div>
-        </div>
-        <div class="product-cta">
-          <a href="https://discoverdrea.ai" target="_blank" rel="noopener noreferrer" class="btn-cta">Explore DREA &rarr;</a>
-        </div>
+        <div class="label sm" role="group" aria-label="AI Facts for DREA"><p class="label-t">AI Facts</p><p class="label-s">DREA</p><ul><li><span class="k">Where it runs</span><span class="v">Your Mac</span></li><li><span class="k">Works offline</span><span class="v">Yes</span></li><li><span class="k">Documents uploaded</span><span class="v">Never</span></li><li><span class="k">Outside AI</span><span class="v">Optional, cleaned first</span></li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ WAVELOG -->
-  <section class="labs-product labs-product--alt" id="wavelog">
-    <div class="container">
-      <div class="product-card reveal">
-        <div class="product-header">
-          <div class="product-status product-status--available">Available</div>
-          <h2 class="product-name">WaveLog</h2>
-          <p class="product-tagline text-gradient">Capture everything. Lose nothing.</p>
+  <section class="slab dk" id="wavelog" aria-labelledby="wl-t">
+    <div class="wrap sec pd">
+      <div class="pd-copy">
+        <span class="st-chip"><i></i>Available · Mac, iPhone, iPad</span>
+        <h2 class="h2" id="wl-t">WaveLog</h2>
+        <p class="pd-tag">Capture everything. Lose nothing.</p>
+        <p class="lede">Records, transcribes, and turns conversations, meetings, and ideas into searchable, organized notes, privately and on your terms.</p>
+        <div class="feat"><div><h3>Real-time transcription</h3><p>Accurate speech-to-text as you speak, with speaker identification.</p></div><div><h3>Notes that write themselves</h3><p>Summaries, action items, and key decisions from every recording.</p></div><div><h3>Search what was said</h3><p>Every recording becomes searchable. Find any moment by what was said.</p></div><div><h3>Private by design</h3><p>Your recordings and transcripts stay under your control. No cloud processing required.</p></div></div>
+        <div class="acts"><a class="btn btn-grad" href="https://apps.apple.com/us/app/wavelogs-ai-voice-notes/id6759880222" target="_blank" rel="noopener noreferrer">Download on the App Store <span class="arr" aria-hidden="true">&#8599;</span></a></div>
+      </div>
+      <div class="pd-vis">
+        <div class="panel">
+          <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="p-row"><span class="rec"><i aria-hidden="true"></i>Recording · 12:48</span><span>Illustrative</span></div>
+          <div class="wave" aria-hidden="true"><i style="--h:59%;--d:-1.33s"></i><i style="--h:68%;--d:-0.91s"></i><i style="--h:27%;--d:-1.15s"></i><i style="--h:30%;--d:-0.51s"></i><i style="--h:25%;--d:-1.27s"></i><i style="--h:45%;--d:-0.05s"></i><i style="--h:73%;--d:-0.59s"></i><i style="--h:48%;--d:-0.13s"></i><i style="--h:72%;--d:-0.08s"></i><i style="--h:90%;--d:-0.17s"></i><i style="--h:46%;--d:-0.88s"></i><i style="--h:92%;--d:-1.33s"></i><i style="--h:91%;--d:-0.82s"></i><i style="--h:24%;--d:-1.37s"></i><i style="--h:23%;--d:-0.78s"></i><i style="--h:35%;--d:-0.41s"></i><i style="--h:36%;--d:-0.76s"></i><i style="--h:91%;--d:-0.43s"></i><i style="--h:41%;--d:-0.14s"></i><i style="--h:91%;--d:-0.89s"></i><i style="--h:65%;--d:-0.14s"></i><i style="--h:26%;--d:-0.79s"></i><i style="--h:97%;--d:-0.29s"></i><i style="--h:86%;--d:-0.60s"></i><i style="--h:58%;--d:-0.65s"></i><i style="--h:76%;--d:-0.51s"></i><i style="--h:49%;--d:-1.11s"></i><i style="--h:49%;--d:-0.11s"></i><i style="--h:56%;--d:-0.74s"></i><i style="--h:61%;--d:-1.02s"></i><i style="--h:54%;--d:-0.85s"></i><i style="--h:27%;--d:-0.17s"></i><i style="--h:71%;--d:-0.23s"></i><i style="--h:61%;--d:-0.21s"></i><i style="--h:80%;--d:-0.59s"></i><i style="--h:27%;--d:-1.07s"></i><i style="--h:91%;--d:-1.10s"></i><i style="--h:58%;--d:-0.48s"></i><i style="--h:62%;--d:-0.83s"></i><i style="--h:92%;--d:-1.12s"></i><i style="--h:26%;--d:-1.18s"></i><i style="--h:52%;--d:-0.66s"></i><i style="--h:26%;--d:-0.08s"></i><i style="--h:57%;--d:-0.91s"></i><i style="--h:75%;--d:-0.40s"></i><i style="--h:67%;--d:-1.24s"></i><i style="--h:62%;--d:-0.03s"></i><i style="--h:77%;--d:-0.50s"></i></div>
+          <ul class="tr">
+            <li><span class="who">Dana</span><span>Let&rsquo;s move the launch to the first week of March.</span></li>
+            <li><span class="who">Marcus</span><span>Then legal needs the final terms by February 20.</span></li>
+            <li><span class="who">Dana</span><span>I&rsquo;ll send them over Friday.</span></li>
+          </ul>
+          <div class="sum"><span><b>Decision</b>Launch moves to early March</span><span><b>Action</b>Final terms to legal by Feb 20</span><span><b>Owner</b>Dana</span></div>
+          <div class="p-row p-foot"><span>Transcribed on this iPhone</span><span>No cloud needed</span></div>
         </div>
-        <p class="product-desc">A proprietary platform for real-time audio recording, transcription, and intelligent note creation. WaveLog turns conversations, meetings, and ideas into searchable, structured knowledge &mdash; privately and on your terms. Available on Mac, iPhone, and iPad.</p>
-        <div class="product-features">
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <path d="M18 4v20" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 12v8M24 12v8M9 15v2M27 15v2M15 10v12M21 10v12" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-                <path d="M10 24a8 8 0 0016 0" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                <path d="M18 28v4" stroke="url(#wG1)" stroke-width="1.5" stroke-linecap="round"/>
-                <defs><linearGradient id="wG1" x1="9" y1="32" x2="27" y2="4"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Real-Time Transcription</h3>
-            <p>High-accuracy speech-to-text that works as you speak, with speaker identification.</p>
+        <div class="label sm" role="group" aria-label="AI Facts for WaveLog"><p class="label-t">AI Facts</p><p class="label-s">WaveLog</p><ul><li><span class="k">Where it runs</span><span class="v">On your device</span></li><li><span class="k">Cloud processing</span><span class="v">Not required</span></li><li><span class="k">Your recordings</span><span class="v">Stay with you</span></li><li><span class="k">Available on</span><span class="v">Mac, iPhone, iPad</span></li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="creatorcam" aria-labelledby="cc-t">
+    <div class="wrap pd">
+      <div class="pd-copy">
+        <span class="st-chip"><i></i>Available · iPhone</span>
+        <h2 class="h2" id="cc-t">CreatorCam</h2>
+        <p class="pd-tag">Shoot once, post everywhere.</p>
+        <p class="lede">A dual-camera recording app for iPhone that captures full-resolution portrait (9:16) and landscape (16:9) video at the same time. One tap, two synced files, saved straight to your Photos library.</p>
+        <div class="feat"><div><h3>Two cameras at once</h3><p>Portrait and landscape from your wide and ultra-wide lenses, both full resolution, not crops.</p></div><div><h3>Single-camera mode</h3><p>Switch to one lens, with full front-camera support for talking-head videos and interviews.</p></div><div><h3>Professional quality</h3><p>4K and 1080p at 24, 30, or 60 fps. Optical zoom, MOV and MP4, GPU-accelerated processing.</p></div><div><h3>Built for creators</h3><p>Floating preview, countdown timer, and torch control, with files saved straight to Photos.</p></div></div>
+        <div class="acts"><a class="btn btn-dark" href="https://apps.apple.com/us/app/creatorcam-dual-video-record/id6761403032" target="_blank" rel="noopener noreferrer">Download on the App Store <span class="arr" aria-hidden="true">&#8599;</span></a></div>
+      </div>
+      <div class="pd-vis">
+        <div class="panel">
+          <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="p-row"><span>One take</span><span>Illustrative</span></div>
+          <div class="cams" aria-hidden="true">
+            <div class="cam p"><span>9:16</span><i class="dot"></i></div>
+            <div class="cam l"><span>16:9</span><i class="dot"></i></div>
           </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="8" y="4" width="20" height="28" rx="3" stroke="url(#wG2)" stroke-width="1.5"/>
-                <path d="M13 12h10M13 16h10M13 20h6" stroke="url(#wG2)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-                <path d="M13 26l3 3 5-6" stroke="url(#wG2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <defs><linearGradient id="wG2" x1="8" y1="32" x2="28" y2="4"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Intelligent Notes</h3>
-            <p>Automatically distills recordings into structured summaries, action items, and key decisions.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="4" y="6" width="28" height="20" rx="3" stroke="url(#wG3)" stroke-width="1.5"/>
-                <path d="M4 12h28" stroke="url(#wG3)" stroke-width="1.5" opacity="0.3"/>
-                <circle cx="14" cy="19" r="4" stroke="url(#wG3)" stroke-width="1.5"/>
-                <path d="M17 22l4 4" stroke="url(#wG3)" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 30h12" stroke="url(#wG3)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <defs><linearGradient id="wG3" x1="4" y1="30" x2="32" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Searchable Archive</h3>
-            <p>Every recording becomes a searchable knowledge base. Find any moment by what was said.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="8" y="10" width="20" height="18" rx="3" stroke="url(#wG4)" stroke-width="1.5"/>
-                <path d="M14 10V8a4 4 0 018 0v2" stroke="url(#wG4)" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="18" cy="20" r="2" stroke="url(#wG4)" stroke-width="1.5"/>
-                <path d="M18 22v3" stroke="url(#wG4)" stroke-width="1.5" stroke-linecap="round"/>
-                <defs><linearGradient id="wG4" x1="8" y1="28" x2="28" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Private by Design</h3>
-            <p>Your recordings and transcripts stay under your control. No cloud processing required.</p>
-          </div>
-        </div>
-        <div class="product-cta">
-          <a href="https://apps.apple.com/us/app/wavelogs-ai-voice-notes/id6759880222" target="_blank" rel="noopener noreferrer" class="btn-cta">Download on the App Store &rarr;</a>
+          <p class="cam-cap">One tap · two full-resolution files</p>
+          <div class="p-row p-foot"><span>4K or 1080p · 24, 30, 60 fps</span><span>Saved to Photos</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ CREATORCAM -->
-  <section class="labs-product" id="creatorcam">
-    <div class="container">
-      <div class="product-card reveal">
-        <div class="product-header">
-          <div class="product-status product-status--available">Available</div>
-          <h2 class="product-name">CreatorCam</h2>
-          <p class="product-tagline text-gradient">Shoot once, post everywhere.</p>
-        </div>
-        <p class="product-desc">A dual-camera recording app for iPhone that captures full-resolution portrait (9:16) and landscape (16:9) video at the same time &mdash; one tap, two perfectly synced files saved directly to your Photos library. No choosing, no cropping, no compromise.</p>
-        <div class="product-features">
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="4" y="10" width="14" height="18" rx="2" stroke="url(#cG1)" stroke-width="1.5"/>
-                <rect x="18" y="8" width="14" height="12" rx="2" stroke="url(#cG1)" stroke-width="1.5"/>
-                <circle cx="11" cy="19" r="2" stroke="url(#cG1)" stroke-width="1.5" opacity="0.5"/>
-                <circle cx="25" cy="14" r="2" stroke="url(#cG1)" stroke-width="1.5" opacity="0.5"/>
-                <defs><linearGradient id="cG1" x1="4" y1="28" x2="32" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Dual-Camera Recording</h3>
-            <p>Simultaneous portrait and landscape video from your wide and ultra-wide lenses &mdash; both full resolution, not crops.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <circle cx="18" cy="18" r="12" stroke="url(#cG2)" stroke-width="1.5"/>
-                <circle cx="18" cy="18" r="5" stroke="url(#cG2)" stroke-width="1.5"/>
-                <circle cx="18" cy="18" r="1.5" fill="url(#cG2)"/>
-                <path d="M18 6v2M18 28v2M6 18h2M28 18h2" stroke="url(#cG2)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <defs><linearGradient id="cG2" x1="6" y1="30" x2="30" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Single-Camera Mode</h3>
-            <p>Switch to single-lens recording with full front camera support. Perfect for talking-head content and interviews.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect x="5" y="9" width="26" height="18" rx="3" stroke="url(#cG3)" stroke-width="1.5"/>
-                <text x="18" y="21" text-anchor="middle" font-size="9" font-weight="600" fill="url(#cG3)" font-family="Inter, sans-serif">4K</text>
-                <path d="M10 31h16" stroke="url(#cG3)" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <defs><linearGradient id="cG3" x1="5" y1="31" x2="31" y2="9"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Professional Quality</h3>
-            <p>4K and 1080p at 24, 30, or 60 fps. Optical zoom, MOV and MP4 formats, GPU-accelerated processing.</p>
-          </div>
-          <div class="product-feature reveal">
-            <div class="product-feature-icon">
-              <svg viewBox="0 0 36 36" fill="none">
-                <path d="M14 13l10 5-10 5V13z" stroke="url(#cG4)" stroke-width="1.5" stroke-linejoin="round"/>
-                <rect x="4" y="6" width="28" height="24" rx="4" stroke="url(#cG4)" stroke-width="1.5"/>
-                <circle cx="28" cy="10" r="3" stroke="url(#cG4)" stroke-width="1.5" opacity="0.5"/>
-                <defs><linearGradient id="cG4" x1="4" y1="30" x2="32" y2="6"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-              </svg>
-            </div>
-            <h3>Built for Creators</h3>
-            <p>Real-time floating preview, countdown timer, torch control &mdash; and files save straight to your Photos library.</p>
-          </div>
-        </div>
-        <div class="product-cta">
-          <a href="https://apps.apple.com/us/app/creatorcam-dual-video-record/id6761403032" target="_blank" rel="noopener noreferrer" class="btn-cta">Download on the App Store &rarr;</a>
-        </div>
-      </div>
+  <section class="sec" style="padding-top:0" aria-label="Our principle">
+    <div class="wrap">
+      <p class="pull">Every product we build starts with the same question: what would this look like if you never had to give anything up?</p>
+      <div class="off-close"><p>Have an idea for what we should build next? Share it, or ask for early access.</p><div class="acts"><a class="btn btn-grad" href="mailto:connect@nulle.ai?subject=Nulle%20Labs%20idea">Share an idea <span class="arr" aria-hidden="true">&#8599;</span></a><a class="btn btn-ghost" href="index.html#contact">Book an AI exposure review</a></div></div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ CLOSING STATEMENT -->
-  <section class="statement-section statement-closing">
-    <div class="container-narrow">
-      <div class="big-text reveal-words" data-reveal="words">
-        <p>Every product we build starts with the same question: what would this look like if the user <em class="text-gradient">never had to give anything up?</em></p>
-      </div>
-    </div>
-  </section>
+</main>
 
-  <!-- ═══════════════════════════════════════════ CTA -->
-  <section class="section-cta" id="contact">
-    <div class="container">
-      <div class="cta-block reveal">
-        <div class="cta-orb"></div>
-        <img class="cta-mark" src="assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
-        <h2 class="cta-heading">Have an idea for<br><span class="text-gradient">what we should build next?</span></h2>
-        <p class="cta-desc">We&rsquo;re always exploring new ways to make private AI more accessible. If you have thoughts, suggestions, or want early access &mdash; reach out.</p>
-        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-g">
+      <div>
+        <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+        <p class="foot-tag">Ethical AI that fights for you. Nothing between you and intelligence.</p>
       </div>
+      <div><h3>Company</h3><ul><li><a href="index.html#stack">The stack</a></li><li><a href="index.html#how">How we work</a></li><li><a href="founders.html">Founders</a></li><li><a href="labs.html">Labs</a></li></ul></div>
+      <div><h3>Industries</h3><ul><li><a href="index.html#industries">Healthcare</a></li><li><a href="index.html#industries">Law firms</a></li><li><a href="index.html#industries">Finance</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a href="mailto:connect@nulle.ai">connect@nulle.ai</a></li><li><a href="https://www.instagram.com/nulleai">Instagram &#8599;</a></li></ul></div>
     </div>
-  </section>
+    <div class="foot-bot mono-s"><span>&copy; 2026 Nulle, LLC · Atlanta, GA</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+  </div>
+</footer>
 
-  <!-- ═══════════════════════════════════════════ FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <img class="footer-mark" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
-        </div>
-        <div class="footer-nav">
-          <div class="footer-col">
-            <a href="index.html#risk">The Risk</a>
-            <a href="index.html#stack">The Stack</a>
-            <a href="index.html#how">How We Work</a>
-            <a href="index.html#industries">Industries</a>
-            <a href="labs.html">Labs</a>
-            <a href="founders.html">Founders</a>
-          </div>
-          <div class="footer-col">
-            <a href="index.html#contact">Contact</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Nulle, LLC</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" aria-label="Nulle on Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
+</div>
 
-  <script src="script.js"></script>
+<script src="pages.js"></script>
 </body>
 </html>
