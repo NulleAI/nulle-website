@@ -17,7 +17,12 @@
  *   CONTACT_FROM     verified sender, e.g. "Nulle Website <website@nulle.ai>"
  *   ALLOWED_ORIGINS  comma-separated origins allowed to post, e.g. https://nulle.ai
  */
+// Prefer IPv4 when resolving api.resend.com. Otherwise Node can try an IPv6
+// address first and wait on a route that never connects.
+require('node:dns').setDefaultResultOrder('ipv4first');
+
 const RESEND_URL = 'https://api.resend.com/emails';
+const RESEND_TIMEOUT_MS = 5000;         // well inside the function's time limit in project.yml
 const LIMITS = { name: 120, email: 254, company: 160, role: 120, message: 5000 };
 const INDUSTRIES = { health: 'Healthcare', law: 'Law firm', fin: 'Finance', other: 'Something else' };
 const HELP = [
@@ -91,6 +96,12 @@ function rateLimited(ip, now) {
   list.push(now);
   recent.set(ip, list);
   return false;
+}
+
+// Error codes from Resend or Node (e.g. validation_error, UND_ERR_CONNECT_TIMEOUT)
+// are safe to log; anything else is dropped so no message text reaches the logs.
+function errCode(v) {
+  return typeof v === 'string' && /^[A-Za-z_]{1,40}$/.test(v) ? v : '-';
 }
 
 // Strip control characters (keep tabs and newlines for the message), trim.
@@ -212,18 +223,19 @@ async function main(args) {
         text: body,
         tags: [{ name: 'source', value: form.tag }]
       }),
-      signal: AbortSignal.timeout(8000)
+      signal: AbortSignal.timeout(RESEND_TIMEOUT_MS)
     });
     if (!res.ok) {
-      console.error('contact_submit: resend responded', res.status);
+      const err = await res.json().catch(() => ({}));
+      console.error('contact_submit: resend responded', res.status, errCode(err && err.name));
       return reply(502, { ok: false, error: 'send_failed' });
     }
   } catch (e) {
-    console.error('contact_submit: resend request failed', e && e.name);
+    console.error('contact_submit: resend request failed', errCode(e && e.name), errCode(e && e.cause && e.cause.code));
     return reply(502, { ok: false, error: 'send_failed' });
   }
   return reply(200, { ok: true });
 }
 
 exports.main = main;
-exports._internal = { validate, compose, validateChecklist, composeChecklist, readRequest, recent };
+exports._internal = { validate, compose, validateChecklist, composeChecklist, readRequest, recent, RESEND_TIMEOUT_MS };
