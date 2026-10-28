@@ -1,6 +1,6 @@
 # Website forms function
 
-Both homepage forms post JSON to `/api/contact/submit`: the contact form (`kind: "review"`, the default) and the AI leak checklist request (`kind: "checklist"`, work email only). That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (Node.js 18). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
+Both homepage forms post JSON to `/api/contact/submit`: the contact form (`kind: "review"`, the default) and the AI leak checklist request (`kind: "checklist"`, work email only). That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (the platform's default Node.js runtime; the code needs Node.js 18 or later). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
 
 No npm dependencies: it calls Resend's REST API with the runtime's built-in `fetch`.
 
@@ -25,6 +25,8 @@ No npm dependencies: it calls Resend's REST API with the runtime's built-in `fet
 3. **Check it:** submit both forms on nulle.ai and confirm the emails reach `connect@nulle.ai`.
 
 `CONTACT_TO`, `CONTACT_FROM` and `ALLOWED_ORIGINS` are set in `.do/app.yaml`. `CONTACT_FROM` has to use the domain you verified in Resend.
+
+All four variables have to exist and be non-empty at build time (scope **Run and build time**). `project.yml` pulls them in during the build, and the build fails with `The following substitutions could not be resolved` if any is missing, empty, or scoped to run time only.
 
 ## Tests
 

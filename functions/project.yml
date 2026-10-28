@@ -2,8 +2,11 @@
 # Deployed by App Platform as the "api" component (see .do/app.yaml), served at /api.
 # The contact form posts to /api/contact/submit.
 #
-# ${VAR} values are filled in at build time from the component's environment
-# variables in App Platform, or from functions/.env when deploying with doctl.
+# The environment values below are filled in at build time from the component's
+# environment variables in App Platform, or from functions/.env when deploying
+# with doctl. The deployer substitutes dollar-brace and dollar-paren patterns
+# anywhere in this file, comments included, and fails the build on any name it
+# can't resolve or that is empty. Keep those patterns out of comments.
 packages:
   - name: contact
     environment:
@@ -13,7 +16,7 @@ packages:
       ALLOWED_ORIGINS: "${ALLOWED_ORIGINS}"
     functions:
       - name: submit
-        runtime: nodejs:18
+        runtime: nodejs:default
         web: true
         limits:
           timeout: 10000
