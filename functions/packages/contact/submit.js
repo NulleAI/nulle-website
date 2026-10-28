@@ -1,10 +1,15 @@
 'use strict';
 /*
- * Contact form handler for nulle.ai (DigitalOcean Functions, web: true).
+ * Form handler for nulle.ai (DigitalOcean Functions, web: true).
+ *
+ * Handles the two homepage forms, chosen by `kind`:
+ *   "review"     the contact form (default when kind is missing)
+ *   "checklist"  a request for the AI leak checklist (work email only)
  *
  * Validates a submission, applies basic abuse checks, and sends one plain-text
- * email to the Nulle team through Resend. No dependencies: it uses the
- * runtime's built-in fetch. Submitter details are never logged.
+ * email to the Nulle team through Resend. It never emails the visitor. No
+ * dependencies: it uses the runtime's built-in fetch. Submitter details are
+ * never logged.
  *
  * Environment (set in project.yml from App Platform / .env):
  *   RESEND_API_KEY   Resend API key with sending access only (secret)
@@ -138,6 +143,31 @@ function compose(f) {
   return { subject, body };
 }
 
+function validateChecklist(data) {
+  const f = { email: oneLine(text(data.email)).toLowerCase() };
+  const bad = [];
+  if (!f.email || f.email.length > LIMITS.email || !EMAIL_RE.test(f.email)) bad.push('email');
+  return { fields: f, bad };
+}
+
+function composeChecklist(f) {
+  const subject = `Website: AI leak checklist request from ${f.email}`.slice(0, 200);
+  const body = [
+    'New request for the AI leak checklist from the nulle.ai homepage.',
+    '',
+    `Send it to: ${f.email}`,
+    '',
+    '---',
+    'Reply to this email to send the checklist directly.'
+  ].join('\n');
+  return { subject, body };
+}
+
+const FORMS = {
+  review: { validate, compose, tag: 'website_contact' },
+  checklist: { validate: validateChecklist, compose: composeChecklist, tag: 'website_checklist' }
+};
+
 async function main(args) {
   args = args || {};
   const { headers, method, data } = readRequest(args);
@@ -158,7 +188,10 @@ async function main(args) {
 
   if (rateLimited(clientIp(headers), Date.now())) return reply(429, { ok: false, error: 'rate_limited' });
 
-  const { fields, bad } = validate(data);
+  const kind = text(data.kind) || 'review';
+  const form = Object.prototype.hasOwnProperty.call(FORMS, kind) ? FORMS[kind] : null;
+  if (!form) return reply(400, { ok: false, error: 'invalid', fields: ['kind'] });
+  const { fields, bad } = form.validate(data);
   if (bad.length) return reply(400, { ok: false, error: 'invalid', fields: bad });
 
   if (!cfg.key || !cfg.to || !cfg.from) {
@@ -166,7 +199,7 @@ async function main(args) {
     return reply(500, { ok: false, error: 'unavailable' });
   }
 
-  const { subject, body } = compose(fields);
+  const { subject, body } = form.compose(fields);
   try {
     const res = await fetch(RESEND_URL, {
       method: 'POST',
@@ -177,7 +210,7 @@ async function main(args) {
         reply_to: fields.email,
         subject,
         text: body,
-        tags: [{ name: 'source', value: 'website_contact' }]
+        tags: [{ name: 'source', value: form.tag }]
       }),
       signal: AbortSignal.timeout(8000)
     });
@@ -193,4 +226,4 @@ async function main(args) {
 }
 
 exports.main = main;
-exports._internal = { validate, compose, readRequest, recent };
+exports._internal = { validate, compose, validateChecklist, composeChecklist, readRequest, recent };

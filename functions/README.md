@@ -1,6 +1,6 @@
-# Contact form function
+# Website forms function
 
-The homepage contact form posts JSON to `/api/contact/submit`. That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (Node.js 18). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
+Both homepage forms post JSON to `/api/contact/submit`: the contact form (`kind: "review"`, the default) and the AI leak checklist request (`kind: "checklist"`, work email only). That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (Node.js 18). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
 
 No npm dependencies: it calls Resend's REST API with the runtime's built-in `fetch`.
 
@@ -22,7 +22,7 @@ No npm dependencies: it calls Resend's REST API with the runtime's built-in `fet
    doctl apps update <app-id> --spec .do/app.yaml
    ```
    In the dashboard, open App > Settings > `api` > Environment Variables and add `RESEND_API_KEY`. Tick **Encrypt** and set scope to **Run and build time**. Redeploy.
-3. **Check it:** submit the form on nulle.ai and confirm the email reaches `connect@nulle.ai`.
+3. **Check it:** submit both forms on nulle.ai and confirm the emails reach `connect@nulle.ai`.
 
 `CONTACT_TO`, `CONTACT_FROM` and `ALLOWED_ORIGINS` are set in `.do/app.yaml`. `CONTACT_FROM` has to use the domain you verified in Resend.
 

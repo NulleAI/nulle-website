@@ -593,7 +593,8 @@
         <form class="inline-form" id="ck-form" novalidate>
           <label for="ck-email" class="mono-s" style="flex-basis:100%">Work email</label>
           <input id="ck-email" name="email" type="email" autocomplete="email" placeholder="you@yourcompany.com">
-          <button class="btn btn-dark" type="submit">Send me the checklist</button>
+          <div class="hp" aria-hidden="true"><label for="ck-website">Leave this field empty</label><input id="ck-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn-dark" id="ck-send" type="submit">Send me the checklist</button>
           <p class="f-msg" id="ck-msg" role="status" style="flex-basis:100%"></p>
         </form>
       </div>

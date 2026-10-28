@@ -130,3 +130,40 @@ test('reports unavailable when the API key is missing', async () => {
   assert.strictEqual(res.statusCode, 500);
   assert.strictEqual(calls.length, 0);
 });
+
+// Checklist requests (kind: "checklist")
+function checklist(over = {}) {
+  return Object.assign({ kind: 'checklist', email: 'Lee@Example.com', website: '', started: Date.now() - 20000 }, over);
+}
+
+test('the contact form is the default kind and keeps its tag', async () => {
+  await main(req(form()));
+  assert.deepStrictEqual(calls[0].body.tags, [{ name: 'source', value: 'website_contact' }]);
+});
+
+test('checklist requests need only a work email and notify the team', async () => {
+  const res = await main(req(checklist()));
+  assert.strictEqual(res.statusCode, 200);
+  assert.strictEqual(calls.length, 1);
+  const b = calls[0].body;
+  assert.deepStrictEqual(b.to, ['connect@nulle.ai']);
+  assert.strictEqual(b.reply_to, 'lee@example.com');
+  assert.strictEqual(b.subject, 'Website: AI leak checklist request from lee@example.com');
+  assert.match(b.text, /Send it to: lee@example\.com/);
+  assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_checklist' }]);
+  assert.ok(!('html' in b));
+});
+
+test('checklist rejects a bad email, and unknown kinds are rejected', async () => {
+  assert.deepStrictEqual((await main(req(checklist({ email: 'nope' })))).body.fields, ['email']);
+  assert.deepStrictEqual((await main(req(checklist({ email: 'a@b.co\nBcc: x@y.z' })))).body.fields, ['email']);
+  assert.deepStrictEqual((await main(req(checklist({ kind: 'newsletter' })))).body.fields, ['kind']);
+  assert.deepStrictEqual((await main(req(checklist({ kind: '__proto__' })))).body.fields, ['kind']);
+  assert.strictEqual(calls.length, 0);
+});
+
+test('checklist bot signals get a quiet success and send nothing', async () => {
+  assert.deepStrictEqual((await main(req(checklist({ website: 'x' })))).body, { ok: true });
+  assert.deepStrictEqual((await main(req(checklist({ started: Date.now() })))).body, { ok: true });
+  assert.strictEqual(calls.length, 0);
+});
