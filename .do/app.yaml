@@ -6,7 +6,33 @@ static_sites:
     output_dir: /
     index_document: index.html
     error_document: index.html
+    routes:
+      - path: /
     github:
       repo: NulleAI/nulle-website
       branch: main
       deploy_on_push: true
+functions:
+  - name: api
+    source_dir: /functions
+    routes:
+      - path: /api
+    github:
+      repo: NulleAI/nulle-website
+      branch: main
+      deploy_on_push: true
+    envs:
+      - key: CONTACT_TO
+        scope: RUN_AND_BUILD_TIME
+        value: connect@nulle.ai
+      - key: CONTACT_FROM
+        scope: RUN_AND_BUILD_TIME
+        value: Nulle Website <website@nulle.ai>
+      - key: ALLOWED_ORIGINS
+        scope: RUN_AND_BUILD_TIME
+        value: https://nulle.ai,https://www.nulle.ai
+      # RESEND_API_KEY is a secret. Add it in the DigitalOcean dashboard
+      # (App > Settings > api > Environment Variables, type: Encrypt, scope:
+      # Run and build time). Never put the plain key in this file. After adding
+      # it, `doctl apps spec get <app-id>` returns an encrypted EV[...] value
+      # that is safe to commit here if you want the spec to stay in sync.

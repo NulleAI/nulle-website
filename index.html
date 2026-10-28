@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Nulle — Nothing Between You and Intelligence</title>
-  <meta name="description" content="Nulle builds private AI systems that run locally. Agentic architecture, enterprise-grade software delivery, and a partner for your AI journey. Based in Atlanta, GA.">
-  <meta name="keywords" content="private AI, local AI, on-device AI, AI consultancy, enterprise AI, agentic AI, Nulle">
+  <meta name="description" content="Ethical AI that fights for you. Nulle builds and runs private AI infrastructure, guardrails, human gates, and auditable monitoring, custom fit to your company.">
+  <meta name="keywords" content="ethical AI, private AI, AI guardrails, AI governance, AI monitoring, private AI infrastructure, AI for healthcare, AI for law firms, AI for finance, Nulle">
   <meta name="author" content="Nulle, LLC">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#F3F4EF">
   <link rel="canonical" href="https://nulle.ai/">
 
   <!-- Icons -->
@@ -20,7 +20,7 @@
   <meta property="og:site_name" content="Nulle">
   <meta property="og:url" content="https://nulle.ai/">
   <meta property="og:title" content="Nulle — Nothing Between You and Intelligence">
-  <meta property="og:description" content="Nulle builds private AI systems that run locally. Agentic architecture, enterprise-grade software delivery, and a partner for your AI journey.">
+  <meta property="og:description" content="Ethical AI that fights for you. Nulle builds and runs private AI infrastructure, guardrails, human gates, and auditable monitoring, custom fit to your company.">
   <meta property="og:image" content="https://nulle.ai/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -30,15 +30,14 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Nulle — Nothing Between You and Intelligence">
-  <meta name="twitter:description" content="Nulle builds private AI systems that run locally. Agentic architecture, enterprise-grade delivery, and a partner for your AI journey.">
+  <meta name="twitter:description" content="Ethical AI that fights for you. Nulle builds and runs private AI infrastructure, guardrails, human gates, and auditable monitoring, custom fit to your company.">
   <meta name="twitter:image" content="https://nulle.ai/assets/og-image.png">
   <meta name="twitter:image:alt" content="Nulle">
 
-  <!-- Fonts & styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Fonts (self-hosted) & styles -->
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="home.css">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -53,7 +52,7 @@
         "url": "https://nulle.ai/",
         "logo": "https://nulle.ai/assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png",
         "image": "https://nulle.ai/assets/og-image.png",
-        "description": "Nulle builds private AI systems that run locally. Agentic architecture, enterprise-grade software delivery, and a partner for your AI journey.",
+        "description": "Ethical AI that fights for you. Nulle builds and runs private AI infrastructure, guardrails, human gates, and auditable monitoring, custom fit to your company.",
         "email": "connect@nulle.ai",
         "address": {
           "@type": "PostalAddress",
@@ -74,7 +73,7 @@
         "@id": "https://nulle.ai/#website",
         "url": "https://nulle.ai/",
         "name": "Nulle",
-        "description": "Private AI systems for organizations, built by Nulle.",
+        "description": "Ethical, private AI for companies, built and run by Nulle.",
         "publisher": { "@id": "https://nulle.ai/#organization" },
         "inLanguage": "en-US"
       }
@@ -84,407 +83,583 @@
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════ NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <img class="nav-icon" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
-      </a>
-      <div class="nav-links">
-        <a href="#philosophy">Philosophy</a>
-        <a href="#approach">Approach</a>
-        <a href="#services">Services</a>
-        <a href="#builders">For Builders</a>
-        <a href="labs.html">Labs</a>
-        <a href="founders.html">Founders</a>
-        <a href="#contact" class="nav-cta">Start a Conversation</a>
-      </div>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span><span></span>
-      </button>
-    </div>
-  </nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="nlg" x1="403.81" y1="450" x2="896.27" y2="450" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#b1ff9b"/><stop offset="1" stop-color="#89f0ff"/></linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <linearGradient id="vg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <radialGradient id="cg"><stop offset="0" stop-color="#B0FF9D" stop-opacity=".35"/><stop offset="1" stop-color="#8AF0FD" stop-opacity="0"/></radialGradient>
+  </defs>
+  <symbol id="logo" viewBox="390 240 520 420"><path fill="url(#nlg)" d="M491.13,382.64h-62.39c-13.77,0-24.94,11.16-24.94,24.94v234.32h89.41c13.77,0,24.94-11.16,24.94-24.94v-210.62c0-13.09,10.61-23.7,23.7-23.7h0c9.05,0,17.31,5.16,21.29,13.29l109.65,224.19c6.52,13.32,20.05,21.77,34.88,21.77h0c14.35,0,27.53-7.91,34.27-20.58l47.91-89.93c3.49-6.54,10.3-10.63,17.71-10.63h63.77c13.77,0,24.94-11.16,24.94-24.94v-237.71h-90.54c-13.77,0-24.94,11.16-24.94,24.94v211.73c0,13.1-10.62,23.72-23.72,23.72h0c-9.04,0-17.3-5.14-21.29-13.26l-110.85-225.62c-6.47-13.17-19.86-21.51-34.53-21.51h0c-14.47,0-27.72,8.12-34.29,21.02l-47.12,92.55c-3.42,6.73-10.33,10.96-17.88,10.96Z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 17.8 9.2 4.5 4.5 0 0 1 17.5 18z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+</svg>
 
-  <!-- Mobile overlay -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-inner">
-      <a href="#philosophy">Philosophy</a>
-      <a href="#approach">Approach</a>
-      <a href="#services">Services</a>
-      <a href="#builders">For Builders</a>
+<div class="nl">
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Nulle home"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+    <nav class="nav-bar" aria-label="Main">
+      <a class="nav-a" href="#risk">The risk</a>
+      <a class="nav-a" href="#stack">The stack</a>
+      <a class="nav-a" href="#how">How we work</a>
+      <a class="nav-a" href="labs.html">Labs</a>
+      <a class="nav-a" href="founders.html">Founders</a>
+    </nav>
+    <a class="btn btn-dark nav-cta" href="#contact">Book a review <span class="arr" aria-hidden="true">&#8599;</span></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+    <div class="menu" id="menu" hidden>
+      <a href="#risk">The risk</a>
+      <a href="#stack">The stack</a>
+      <a href="#how">How we work</a>
       <a href="labs.html">Labs</a>
       <a href="founders.html">Founders</a>
-      <a href="#contact">Start a Conversation</a>
+      <a class="btn btn-dark" href="#contact">Book an AI exposure review</a>
     </div>
   </div>
+</header>
 
-  <!-- ═══════════════════════════════════════════ HERO -->
-  <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-logo reveal">
-        <img src="assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
-      </div>
-      <h1 class="hero-headline reveal reveal-d1">
-        Nothing between you<br>and intelligence.
-      </h1>
-      <p class="hero-sub reveal reveal-d2">Whether you&rsquo;re building your first AI-powered app or architecting private infrastructure &mdash;<br class="hide-mobile"> we help you get there.</p>
-    </div>
-    <div class="scroll-indicator reveal reveal-d3">
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+<main id="top">
 
-  <!-- ═══════════════════════════════════════════ OPENING STATEMENT -->
-  <section class="statement-section">
-    <div class="container-narrow">
-      <div class="big-text reveal-words" data-reveal="words">
-        <p>The world moved fast toward AI. But somewhere along the way, people were asked to give up something important &mdash; <em class="text-gradient">control over their own data, their own systems, their own decisions.</em></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ SECOND STATEMENT -->
-  <section class="statement-section">
-    <div class="container-narrow">
-      <div class="big-text reveal-words" data-reveal="words">
-        <p>We started Nulle because we believe there&rsquo;s a better path. One where AI lives inside your world &mdash; <em class="text-gradient">not the other way around.</em></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ PHILOSOPHY -->
-  <section class="section-philosophy" id="philosophy">
-    <div class="container">
-      <div class="philosophy-hero reveal">
-        <p class="label">What we believe</p>
-        <h2 class="display-heading">
-          The world is moving fast.<br>
-          <span class="text-gradient">Your practice should move with it.</span>
-        </h2>
-      </div>
-
-      <div class="beliefs">
-        <div class="belief reveal">
-          <div class="belief-number">01</div>
-          <div class="belief-content">
-            <h3>AI isn&rsquo;t the future &mdash; it&rsquo;s already reshaping your market.</h3>
-            <p>Clients expect faster responses, sharper insights, and more from the practices they trust. We help you deliver that without ever putting their information at risk.</p>
-          </div>
-        </div>
-        <div class="belief reveal">
-          <div class="belief-number">02</div>
-          <div class="belief-content">
-            <h3>Every barrier you&rsquo;re facing, we&rsquo;ve built a path through.</h3>
-            <p>Don&rsquo;t have a tech team? Don&rsquo;t know where to start? Worried about compliance? That&rsquo;s exactly why we exist. We handle the complexity so you can stay focused.</p>
-          </div>
-        </div>
-        <div class="belief reveal">
-          <div class="belief-number">03</div>
-          <div class="belief-content">
-            <h3>More capable. More competitive. Still in control.</h3>
-            <p>We make your practice faster, sharper, and more capable &mdash; while keeping you in the driver&rsquo;s seat. Your data, your decisions, your advantage.</p>
-          </div>
-        </div>
-        <div class="belief reveal">
-          <div class="belief-number">04</div>
-          <div class="belief-content">
-            <h3>Great ideas shouldn&rsquo;t stop at the prototype.</h3>
-            <p>You don&rsquo;t need a computer science degree to build something that matters. If you&rsquo;ve got the vision and the drive, we&rsquo;ve got the engineering. Together, we turn what you&rsquo;ve started into something your users can depend on.</p>
-          </div>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="wrap">
+      <p class="lbl">Ethical AI · Custom built for your company</p>
+      <h1 class="h1" id="hero-t" style="margin-top:26px">AI that fights <em>for you.</em></h1>
+      <div class="hero-row">
+        <p class="lede">Imagine AI that guards your secrets, catches threats as they happen, and helps your team out-build the competition. Nulle designs, builds, and runs it for your company, from private infrastructure to the tools your people use every day.</p>
+        <div class="acts">
+          <a class="btn btn-dark" href="#contact">Book an AI exposure review <span class="arr" aria-hidden="true">&#8599;</span></a>
+          <a class="btn btn-line" href="#stack">See the stack</a>
         </div>
       </div>
     </div>
+    <div class="wrap" style="margin-top:clamp(40px,5vw,64px)">
+      <div class="panel fut-panel" id="fut" data-mode="safe">
+        <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="p-row">
+          <div class="seg" role="group" aria-label="Compare two futures">
+            <button type="button" data-mode="today" aria-pressed="false">Today</button>
+            <button type="button" data-mode="safe" aria-pressed="true">With Nulle</button>
+          </div>
+          <span>Your company · illustrative</span>
+        </div>
+        <div class="fut" role="img" aria-label="Illustration. Today: your company's data leaks out to public AI platforms, competitors and bad actors, and you slow down. With Nulle: four protective layers surround your company, threats stop at the edge, only cleaned requests reach public AI, and your team moves faster into your market.">
+          <div class="fc threat a-comp"><svg class="ic"><use href="#i-copy"/></svg><div><b>Competitors</b><span class="m-t">Learning from your data</span><span class="m-s">Left a step behind</span></div></div>
+          <div class="ff a-f1" aria-hidden="true"></div>
+          <div class="a-core">
+            <svg class="fut-svg" viewBox="0 0 300 300" aria-hidden="true">
+              <circle cx="150" cy="150" r="80" fill="url(#cg)"/>
+              <g class="rings">
+                <circle class="ring r1" cx="150" cy="150" r="86"/>
+                <circle class="ring r2" cx="150" cy="150" r="104"/>
+                <circle class="ring r3" cx="150" cy="150" r="122"/>
+                <circle class="ring r4" cx="150" cy="150" r="140"/>
+                <circle class="hit" cx="23" cy="91" r="4"/>
+                <circle class="hit h2" cx="23" cy="209" r="4"/>
+              </g>
+              <g class="leaks">
+                <path class="lk" id="lk0" d="M212 150H296"/>
+                <path class="lk" id="lk1" d="M181 204 223 276"/>
+                <path class="lk" id="lk2" d="M119 204 77 276"/>
+                <path class="lk" id="lk3" d="M88 150H4"/>
+                <path class="lk" id="lk4" d="M119 96 77 24"/>
+                <path class="lk" id="lk5" d="M181 96 223 24"/>
+                <circle class="lkd" r="3"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#lk0"/></animateMotion></circle>
+                <circle class="lkd" r="3"><animateMotion dur="2.1s" begin=".4s" repeatCount="indefinite"><mpath href="#lk1"/></animateMotion></circle>
+                <circle class="lkd" r="3"><animateMotion dur="1.9s" begin=".9s" repeatCount="indefinite"><mpath href="#lk2"/></animateMotion></circle>
+                <circle class="lkd" r="3"><animateMotion dur="2s" begin=".2s" repeatCount="indefinite"><mpath href="#lk3"/></animateMotion></circle>
+                <circle class="lkd" r="3"><animateMotion dur="1.7s" begin="1.1s" repeatCount="indefinite"><mpath href="#lk4"/></animateMotion></circle>
+                <circle class="lkd" r="3"><animateMotion dur="2.2s" begin=".6s" repeatCount="indefinite"><mpath href="#lk5"/></animateMotion></circle>
+              </g>
+              <g class="team">
+                <circle class="tm" cx="212" cy="150" r="5"/><circle class="tm" cx="181" cy="204" r="5"/><circle class="tm" cx="119" cy="204" r="5"/>
+                <circle class="tm" cx="88" cy="150" r="5"/><circle class="tm" cx="119" cy="96" r="5"/><circle class="tm" cx="181" cy="96" r="5"/>
+              </g>
+              <rect class="cr" x="108" y="108" width="84" height="84" rx="22"/>
+              <use href="#logo" x="129" y="133" width="42" height="34"/>
+            </svg>
+            <div class="core-t">Your company</div>
+            <div class="core-s"><span class="m-t">Exposed on every side</span><span class="m-s">Protected by layers you own</span></div>
+          </div>
+          <div class="ff a-f2" aria-hidden="true"></div>
+          <div class="fc ai a-ai"><svg class="ic"><use href="#i-cloud"/></svg><div><b>Public AI platforms</b><span class="m-t">Holding your secrets</span><span class="m-s">Cleaned requests only</span></div></div>
+          <div class="fc threat a-bad"><svg class="ic"><use href="#i-alert"/></svg><div><b>Bad actors</b><span class="m-t">Probing for leaks</span><span class="m-s">Stopped at the edge</span></div></div>
+          <div class="ff a-f3" aria-hidden="true"></div>
+          <div class="ff a-f4" aria-hidden="true"></div>
+          <div class="fc mkt a-mkt"><svg class="ic"><use href="#i-up"/></svg><div><b>Your market</b><span class="m-t">You&rsquo;re slowing down</span><span class="m-s">You&rsquo;re moving faster</span></div></div>
+          <div class="fv v1" aria-hidden="true"></div>
+          <div class="fv v2" aria-hidden="true"></div>
+        </div>
+        <div class="p-row p-foot">
+          <span class="p-line"><span class="m-t" style="font:inherit;letter-spacing:inherit;text-transform:none;color:var(--sink)">Secrets leaving: unknown. Who&rsquo;s watching: no one.</span><span class="m-s" style="font:inherit;letter-spacing:inherit;text-transform:none;color:var(--sink)">Secrets leaving: none. Every action: on the record. Your team: on offense.</span></span>
+          <span><span class="m-t">Today</span><span class="m-s">With Nulle</span></span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ THE PROBLEM WE SEE -->
-  <section class="section-contrast">
-    <div class="container">
-      <div class="contrast-intro reveal">
-        <p class="label">The landscape today</p>
-        <h2 class="section-heading">Most AI asks you to make a trade-off.</h2>
-        <p class="section-desc">Send your data to the cloud to get intelligence back. Trust someone else&rsquo;s infrastructure with your most sensitive information. Hope that &ldquo;privacy settings&rdquo; actually work.</p>
+  <!-- RISK -->
+  <section class="sec" id="risk" aria-labelledby="rk-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">The risk</p>
+        <h2 class="h2" id="rk-t">The danger doesn&rsquo;t <em>look dangerous.</em></h2>
+        <p class="lede">It looks like a helpful chatbot, a faster prototype, an agent that saves a few hours. Here&rsquo;s what it looks like from the inside.</p>
       </div>
-      <div class="contrast-grid">
-        <div class="contrast-card contrast-old reveal">
-          <div class="contrast-label">The trade-off</div>
+      <div class="fz">
+        <article class="fz-c">
+          <svg class="fz-il" viewBox="0 0 160 96" aria-hidden="true">
+            <rect class="s" x="18" y="16" width="44" height="60" rx="5"/><path class="s" d="M28 32h24M28 42h24M28 52h16"/>
+            <path class="s" d="M100 22h38a6 6 0 0 1 6 6v26a6 6 0 0 1-6 6h-22l-10 9v-9h-6a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6z"/>
+            <g class="drift"><circle class="rf" cx="70" cy="46" r="2.5"/><circle class="rf" cx="80" cy="46" r="2.5"/><circle class="rf" cx="90" cy="46" r="2.5"/></g>
+            <path class="r" d="M112 36h20M112 45h14"/>
+          </svg>
+          <span class="fz-k">The quiet leak</span>
+          <h3>Secrets walk out one prompt at a time.</h3>
+          <p>An employee pastes your pricing model into a chatbot to tidy it up. Now it sits on someone else&rsquo;s servers, under someone else&rsquo;s rules.</p>
+        </article>
+        <article class="fz-c">
+          <svg class="fz-il" viewBox="0 0 160 96" aria-hidden="true">
+            <rect class="s" x="18" y="14" width="58" height="58" rx="4"/><path class="s faint" d="M18 33h58M18 52h58M37 14v58M56 14v58"/>
+            <circle class="s" cx="47" cy="43" r="12"/><path class="s" d="M47 31v24M35 43h24"/>
+            <rect class="r dash" x="88" y="26" width="58" height="58" rx="4"/>
+            <circle class="r" cx="117" cy="55" r="12"/><path class="r" d="M117 43v24M105 55h24"/>
+            <path class="r faint" d="M78 30l8 4"/>
+          </svg>
+          <span class="fz-k">The copycat</span>
+          <h3>Your edge becomes someone else&rsquo;s.</h3>
+          <p>Designs, playbooks, and client lists end up in data you don&rsquo;t control, where they can help a competitor, or someone worse.</p>
+        </article>
+        <article class="fz-c">
+          <svg class="fz-il" viewBox="0 0 160 96" aria-hidden="true">
+            <path class="s" d="M44 24 22 46l22 22M80 24l22 22-22 22M68 20 56 72"/>
+            <g class="fall"><circle class="r" cx="124" cy="58" r="9"/><path class="r" d="M132 52l16-13M143 43l5 5M138 47l4 4"/></g>
+            <path class="r faint" d="M106 38l7 5M104 50l8 2"/>
+          </svg>
+          <span class="fz-k">The exposed build</span>
+          <h3>New products, built on borrowed trust.</h3>
+          <p>Your team builds on public AI, with passwords in the code and customer data in every request.</p>
+        </article>
+        <article class="fz-c">
+          <svg class="fz-il" viewBox="0 0 160 96" aria-hidden="true">
+            <rect class="s" x="14" y="34" width="36" height="28" rx="8"/><path class="s" d="M24 48h16"/>
+            <path class="r dash" d="M50 42 104 22M50 48h58M50 54l54 22"/>
+            <rect class="s" x="106" y="10" width="28" height="20" rx="3"/><path class="s" d="m106 12 14 9 14-9"/>
+            <circle class="s" cx="121" cy="48" r="11"/><path class="s" d="M121 41v14M124.5 44.5H119a2.5 2.5 0 0 0 0 5h4a2.5 2.5 0 0 1 0 5h-5.5"/>
+            <path class="s" d="M108 68h16l6 6v16h-22z"/>
+          </svg>
+          <span class="fz-k">The runaway machine</span>
+          <h3>Agents acting with no one watching.</h3>
+          <p>AI agents get access to email, files, and payments, then act with no one checking and no record of what they did.</p>
+        </article>
+      </div>
+      <div class="question">
+        <span class="mono-s">Behind all of it</span>
+        <p class="big">The question everyone is asking: who is really in control of AI? It should be you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKES -->
+  <section class="sec" style="padding-top:0" aria-labelledby="sk-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">What&rsquo;s at stake</p>
+        <h2 class="h2" id="sk-t">Slowing down isn&rsquo;t safety. <em>It&rsquo;s how you lose.</em></h2>
+      </div>
+      <div class="stk">
+        <div class="stk-c"><span class="stk-k"><i aria-hidden="true"></i>Lock it down</span><h3>Ban AI, and it goes underground.</h3><p>Your people use it anyway, on personal accounts you can&rsquo;t see. Competitors move ahead while you wait.</p></div>
+        <div class="stk-c"><span class="stk-k"><i aria-hidden="true"></i>Let it run</span><h3>Ignore it, and the leaks add up.</h3><p>Your secrets leave one helpful prompt at a time. You find out from a client, a regulator, or a headline.</p></div>
+      </div>
+      <div class="third">
+        <p class="big">There&rsquo;s a third way: put AI on your side.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGINE -->
+  <section class="slab dk" id="imagine" aria-labelledby="im-t">
+    <div class="wrap sec">
+      <div class="head c">
+        <p class="lbl">Imagine</p>
+        <h2 class="h2" id="im-t">Imagine AI that&rsquo;s <em>on your side.</em></h2>
+        <p class="lede">Not a tool you have to fear. A system built for your company that protects what&rsquo;s yours, fights back when something goes wrong, and makes your team faster, not slower.</p>
+      </div>
+      <div class="vis">
+        <div class="vis-c">
+          <h3><svg class="ic"><use href="#i-shield"/></svg>It protects you</h3>
+          <p class="t">Your secrets stay yours.</p>
           <ul>
-            <li>Your data leaves your environment</li>
-            <li>You depend on someone else&rsquo;s infrastructure</li>
-            <li>Privacy is a setting you toggle</li>
-            <li>You need internet to think</li>
-            <li>Your information trains someone else&rsquo;s model</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Keeps company secrets out of public AI</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Stops risky agent actions before they happen</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Catches leaks and attacks as they happen</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Proves all of it with a record you can audit</li>
           </ul>
         </div>
-        <div class="contrast-card contrast-new reveal">
-          <div class="contrast-label">What we help you build</div>
+        <div class="vis-c win">
+          <h3><svg class="ic"><use href="#i-up"/></svg>It helps you win</h3>
+          <p class="t">Your team stays on offense.</p>
           <ul>
-            <li>Your data never leaves your machines</li>
-            <li>You own and control the full stack</li>
-            <li>Privacy is the foundation, not a checkbox</li>
-            <li>Intelligence works even offline</li>
-            <li>Your data serves you &mdash; only you</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Your people ship faster with AI you&rsquo;ve approved</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>Your data becomes an advantage only you have</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>You say yes to AI projects competitors can&rsquo;t touch</li>
+            <li><svg class="ic"><use href="#i-check"/></svg>You win clients who ask hard security questions</li>
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ APPROACH -->
-  <section class="section-approach" id="approach">
-    <div class="container">
-      <div class="approach-intro reveal">
-        <p class="label">How we work</p>
-        <h2 class="display-heading">We meet you where you are.</h2>
-        <p class="section-desc">Whether you&rsquo;re exploring AI for the first time or rearchitecting existing systems for privacy, we help you move forward with confidence.</p>
-      </div>
-
-      <div class="journey">
-        <div class="journey-line" aria-hidden="true"></div>
-
-        <div class="journey-step reveal">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <span class="journey-phase">Understand</span>
-            <h3>We listen first.</h3>
-            <p>Every organization is different. We start by understanding your data, your workflows, and what intelligence would actually mean for your team &mdash; not what a vendor thinks you need.</p>
+      <div class="vel-w">
+        <div class="p-row"><span>How fast you innovate</span><span>Illustrative</span></div>
+        <svg class="vel" viewBox="0 0 640 280" role="img" aria-label="Illustrative chart of innovation over time. Locking AI down stays flat. Letting it run rises fast, then drops after a leak. AI on your side keeps rising.">
+          <path class="g" d="M40 60H620M40 130H620M40 200H620"/>
+          <path class="ax" d="M40 20V250H620"/>
+          <path class="l-lock" d="M40 236C220 233 420 231 620 229"/>
+          <path class="l-run" d="M40 236C110 214 200 150 286 100"/>
+          <path class="l-run" d="M286 100 306 222"/>
+          <path class="l-run dash" d="M306 222C420 224 520 226 620 226"/>
+          <circle class="mk-r" cx="286" cy="100" r="12"/><circle class="mk" cx="286" cy="100" r="5.5"/>
+          <path class="l-side" d="M40 236C220 206 400 120 620 34"/>
+          <circle class="end" cx="620" cy="34" r="5"/>
+        </svg>
+        <div class="p-row" style="text-transform:none;letter-spacing:0;font-family:var(--f-sans)">
+          <div class="leg">
+            <span><i style="background:linear-gradient(90deg,var(--mint),var(--cyan))"></i>AI on your side</span>
+            <span><i style="background:var(--red)"></i>Let it run</span>
+            <span><i style="background:var(--sdim)"></i>Lock it down</span>
+            <span><i class="dot" style="background:var(--red)"></i>The leak</span>
           </div>
-        </div>
-
-        <div class="journey-step reveal">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <span class="journey-phase">Architect</span>
-            <h3>We design systems that belong to you.</h3>
-            <p>Using agentic architecture principles, we design AI systems that run in your environment. Local models, local data, local control &mdash; with the same capabilities you&rsquo;d expect from the cloud.</p>
-          </div>
-        </div>
-
-        <div class="journey-step reveal">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <span class="journey-phase">Build</span>
-            <h3>We bring it to life.</h3>
-            <p>From embedding models to intelligent search, from document understanding to agentic workflows &mdash; we build the tools and infrastructure that make private AI real and practical.</p>
-          </div>
-        </div>
-
-        <div class="journey-step reveal">
-          <div class="journey-dot"></div>
-          <div class="journey-content">
-            <span class="journey-phase">Evolve</span>
-            <h3>We grow with you.</h3>
-            <p>AI isn&rsquo;t a one-time project. As your needs change and the technology advances, we help you adapt &mdash; always keeping you in control of the direction.</p>
-          </div>
+          <span class="mono-s">Time &rarr;</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ SERVICES -->
-  <section class="section-services" id="services">
-    <div class="container">
-      <div class="services-intro reveal">
-        <p class="label">What we offer</p>
-        <h2 class="display-heading">Your clients trust you.<br><span class="text-gradient">We help you protect that.</span></h2>
+  <!-- STACK -->
+  <section class="sec" id="stack" aria-labelledby="st-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">The stack</p>
+        <h2 class="h2" id="st-h">One stack. <em>Custom fit to your company.</em></h2>
+        <p class="lede">We don&rsquo;t sell a box. We design, build, and run every layer around how your company actually works, and every layer can be audited without slowing your people down.</p>
       </div>
-
-      <div class="services-grid">
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none">
-              <path d="M24 4L6 14v12c0 11 8 18 18 22 10-4 18-11 18-22V14L24 4z" stroke="url(#sG1)" stroke-width="2" stroke-linejoin="round" fill="none"/>
-              <path d="M17 24l5 5 9-9" stroke="url(#sG1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <defs><linearGradient id="sG1" x1="6" y1="38" x2="42" y2="4"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-            </svg>
-          </div>
-          <h3>Protect What Your Clients Trust You With</h3>
-          <p>Your clients share their most sensitive information with you. We help you use AI without that trust ever leaving your hands.</p>
-        </div>
-
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none">
-              <rect x="8" y="8" width="32" height="32" rx="6" stroke="url(#sG2)" stroke-width="2"/>
-              <path d="M16 24h16M24 16v16" stroke="url(#sG2)" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-              <circle cx="24" cy="24" r="6" stroke="url(#sG2)" stroke-width="2"/>
-              <defs><linearGradient id="sG2" x1="8" y1="40" x2="40" y2="8"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-            </svg>
-          </div>
-          <h3>AI That Respects Your Obligations</h3>
-          <p>We build systems that operate within the same ethical and regulatory boundaries you do &mdash; locally, privately, with nothing leaving your environment.</p>
-        </div>
-
-        <div class="service-card reveal">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none">
-              <path d="M12 36l8-8 6 6 10-14" stroke="url(#sG3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="36" r="3" stroke="url(#sG3)" stroke-width="2"/>
-              <circle cx="36" cy="20" r="3" stroke="url(#sG3)" stroke-width="2"/>
-              <defs><linearGradient id="sG3" x1="8" y1="40" x2="40" y2="16"><stop stop-color="#7BF5A0"/><stop offset="1" stop-color="#5CE0D8"/></linearGradient></defs>
-            </svg>
-          </div>
-          <h3>Grow At Your Pace</h3>
-          <p>No pressure to adopt everything at once. We help you start where it makes sense, prove the value, and expand when you&rsquo;re ready &mdash; always on your terms.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ FOR BUILDERS -->
-  <section class="section-builders" id="builders">
-    <div class="container">
-      <div class="builders-intro reveal">
-        <p class="label">For builders</p>
-        <h2 class="display-heading">You built it with AI.<br><span class="text-gradient">We help you ship it.</span></h2>
-        <p class="section-desc">AI tools are incredible for going from idea to prototype. But production-ready software needs architecture, security, and polish that prompts alone don&rsquo;t close. That&rsquo;s where we come in.</p>
-      </div>
-
-      <div class="platforms reveal">
-        <div class="ticker-wrap">
-          <div class="ticker-fade ticker-fade-left"></div>
-          <div class="ticker-fade ticker-fade-right"></div>
-          <div class="ticker ticker-row-1">
-            <div class="ticker-track">
-              <span class="ticker-chip">Cursor</span>
-              <span class="ticker-chip">Claude Code</span>
-              <span class="ticker-chip">Bolt</span>
-              <span class="ticker-chip">Lovable</span>
-              <span class="ticker-chip">Replit</span>
-              <span class="ticker-chip">Windsurf</span>
-              <span class="ticker-chip">v0</span>
-              <span class="ticker-chip">Cursor</span>
-              <span class="ticker-chip">Claude Code</span>
-              <span class="ticker-chip">Bolt</span>
-              <span class="ticker-chip">Lovable</span>
-              <span class="ticker-chip">Replit</span>
-              <span class="ticker-chip">Windsurf</span>
-              <span class="ticker-chip">v0</span>
+      <div class="panel">
+        <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="p-row"><span>Five layers · pick one to open it</span><span>Built around your company</span></div>
+        <div class="stk-w" style="margin-top:26px">
+          <svg class="iso" viewBox="0 0 480 520" role="img" aria-label="Isometric diagram of five stacked layers: private infrastructure at the base, then guardrails, human gates, monitoring and audit, and tools for your team on top."><g class="lay" data-i="0"><title>Private infrastructure</title><polygon class="sl" points="60,402 240,492 240,506 60,416"/><polygon class="sr" points="240,492 420,402 420,416 240,506"/><polygon class="tp" points="240,312 420,402 240,492 60,402"/><g class="pat" transform="matrix(1.8 0.9 -1.8 0.9 240 312)"><rect x="14" y="16" width="72" height="16" rx="3" vector-effect="non-scaling-stroke"/><rect x="14" y="42" width="72" height="16" rx="3" vector-effect="non-scaling-stroke"/><rect x="14" y="68" width="72" height="16" rx="3" vector-effect="non-scaling-stroke"/><path d="M24 24h8M24 50h8M24 76h8" vector-effect="non-scaling-stroke"/></g><text class="ln" x="46" y="408" text-anchor="end">01</text></g><g class="lay" data-i="1"><title>Guardrails</title><polygon class="sl" points="60,344 240,434 240,448 60,358"/><polygon class="sr" points="240,434 420,344 420,358 240,448"/><polygon class="tp" points="240,254 420,344 240,434 60,344"/><g class="pat" transform="matrix(1.8 0.9 -1.8 0.9 240 254)"><rect x="10" y="10" width="80" height="80" rx="6" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"/><path d="M50 24 32 31v15c0 11 8 19 18 23 10-4 18-12 18-23V31z" vector-effect="non-scaling-stroke"/></g><text class="ln" x="46" y="350" text-anchor="end">02</text></g><g class="lay" data-i="2"><title>Human gates</title><polygon class="sl" points="60,286 240,376 240,390 60,300"/><polygon class="sr" points="240,376 420,286 420,300 240,390"/><polygon class="tp" points="240,196 420,286 240,376 60,286"/><g class="pat" transform="matrix(1.8 0.9 -1.8 0.9 240 196)"><path d="M22 28v54M78 28v54M22 44h56M22 62h56" vector-effect="non-scaling-stroke"/><circle cx="50" cy="16" r="6" vector-effect="non-scaling-stroke"/></g><text class="ln" x="46" y="292" text-anchor="end">03</text></g><g class="lay" data-i="3"><title>Monitoring and audit</title><polygon class="sl" points="60,228 240,318 240,332 60,242"/><polygon class="sr" points="240,318 420,228 420,242 240,332"/><polygon class="tp" points="240,138 420,228 240,318 60,228"/><g class="pat" transform="matrix(1.8 0.9 -1.8 0.9 240 138)"><path d="M8 56h20l8-24 12 42 10-30 6 12h28" vector-effect="non-scaling-stroke"/><circle cx="82" cy="24" r="6" vector-effect="non-scaling-stroke"/></g><text class="ln" x="46" y="234" text-anchor="end">04</text></g><g class="lay" data-i="4"><title>Tools for your team</title><polygon class="sl" points="60,170 240,260 240,274 60,184"/><polygon class="sr" points="240,260 420,170 420,184 240,274"/><polygon class="tp" points="240,80 420,170 240,260 60,170"/><g class="pat" transform="matrix(1.8 0.9 -1.8 0.9 240 80)"><circle cx="26" cy="28" r="8" vector-effect="non-scaling-stroke"/><circle cx="74" cy="28" r="8" vector-effect="non-scaling-stroke"/><circle cx="26" cy="74" r="8" vector-effect="non-scaling-stroke"/><circle cx="74" cy="74" r="8" vector-effect="non-scaling-stroke"/><circle cx="50" cy="51" r="10" vector-effect="non-scaling-stroke"/><path d="M32 34l10 9M68 34l-10 9M32 68l10-9M68 68l-10-9" vector-effect="non-scaling-stroke"/></g><text class="ln" x="46" y="176" text-anchor="end">05</text></g></svg>
+          <div>
+            <div class="ly-list" role="group" aria-label="Stack layers">
+              <button type="button" class="ly" data-i="4" aria-pressed="false"><span class="n">05</span><span class="t">Tools for your team</span><span class="k">Offense</span></button>
+              <button type="button" class="ly" data-i="3" aria-pressed="false"><span class="n">04</span><span class="t">Monitoring and audit</span><span class="k">Watch</span></button>
+              <button type="button" class="ly" data-i="2" aria-pressed="false"><span class="n">03</span><span class="t">Human gates</span><span class="k">Decide</span></button>
+              <button type="button" class="ly" data-i="1" aria-pressed="false"><span class="n">02</span><span class="t">Guardrails</span><span class="k">Protect</span></button>
+              <button type="button" class="ly" data-i="0" aria-pressed="true"><span class="n">01</span><span class="t">Private infrastructure</span><span class="k">Own</span></button>
             </div>
-          </div>
-          <div class="ticker ticker-row-2">
-            <div class="ticker-track">
-              <span class="ticker-chip">Windsurf</span>
-              <span class="ticker-chip">v0</span>
-              <span class="ticker-chip">Lovable</span>
-              <span class="ticker-chip">Cursor</span>
-              <span class="ticker-chip">Replit</span>
-              <span class="ticker-chip">Bolt</span>
-              <span class="ticker-chip">Claude Code</span>
-              <span class="ticker-chip">Windsurf</span>
-              <span class="ticker-chip">v0</span>
-              <span class="ticker-chip">Lovable</span>
-              <span class="ticker-chip">Cursor</span>
-              <span class="ticker-chip">Replit</span>
-              <span class="ticker-chip">Bolt</span>
-              <span class="ticker-chip">Claude Code</span>
+            <div class="ly-d" aria-live="polite">
+              <span class="mono-s" id="ld-n">Layer 01 · The ground it all stands on</span>
+              <h3 id="ld-t">Private infrastructure</h3>
+              <p id="ld-d">Hardware you buy or lease, or a private cloud in your name. Your data, models, settings, and logins belong to you.</p>
+              <ul class="ticks" id="ld-b"><li><svg class="ic"><use href="#i-check"/></svg>Runs in your office or your private cloud</li><li><svg class="ic"><use href="#i-check"/></svg>Keeps working with the internet off</li><li><svg class="ic"><use href="#i-check"/></svg>You hold the master keys</li></ul>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="builders-grid">
-        <div class="builder-card reveal">
-          <div class="builder-number">01</div>
-          <div class="builder-content">
-            <h3>Production Architecture</h3>
-            <p>Your prototype works. Now we help you structure it to scale &mdash; clean architecture, proper data flow, and a codebase that won&rsquo;t fight you as you grow.</p>
-          </div>
-        </div>
-        <div class="builder-card reveal">
-          <div class="builder-number">02</div>
-          <div class="builder-content">
-            <h3>Code Hardening</h3>
-            <p>We close the gaps AI leaves open &mdash; security vulnerabilities, edge cases, error handling, and the invisible details that separate a demo from a product.</p>
-          </div>
-        </div>
-        <div class="builder-card reveal">
-          <div class="builder-number">03</div>
-          <div class="builder-content">
-            <h3>Deployment &amp; Infrastructure</h3>
-            <p>CI/CD pipelines, hosting, monitoring, domain setup &mdash; we handle the infrastructure so your software is live, stable, and ready for real users.</p>
-          </div>
-        </div>
-        <div class="builder-card reveal">
-          <div class="builder-number">04</div>
-          <div class="builder-content">
-            <h3>Go-to-Market</h3>
-            <p>The last 20% takes 80% of the effort. Performance tuning, UX polish, cross-device testing &mdash; we help you get from &ldquo;it works&rdquo; to &ldquo;it&rsquo;s ready.&rdquo;</p>
-          </div>
-        </div>
+  <!-- ADVOCATE -->
+  <section class="sec" id="advocate" style="padding-top:0" aria-labelledby="ad-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">Guardrails in action</p>
+        <h2 class="h2" id="ad-t">Use the most powerful AI. <em>Send your advocate.</em></h2>
+        <p class="lede">Your private AI doesn&rsquo;t replace ChatGPT or the other big AI platforms. When a job needs more power, it goes for you. It removes names, numbers, and passwords, holds back anything that shouldn&rsquo;t leave, and brings the answer home with your details put back in.</p>
       </div>
+      <div class="panel">
+        <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="p-row">
+          <div class="seg" role="group" aria-label="Choose your industry" data-ind-seg>
+            <button type="button" data-k="health" aria-pressed="true">Healthcare</button>
+            <button type="button" data-k="law" aria-pressed="false">Law firm</button>
+            <button type="button" data-k="fin" aria-pressed="false">Finance</button>
+          </div>
+          <span>One request · illustrative</span>
+        </div>
+        <div class="adv-grid">
+          <div class="adv-card"><h3>What you typed</h3><p class="adv-txt" id="adv-in">Summarize treatment options for <mark class="pii">Maria Lopez</mark>, born <mark class="pii">03/14/1961</mark>, record <mark class="pii">448812</mark>, newly diagnosed with stage 2 breast cancer, and draft an appeal to her insurer.</p></div>
+          <div class="flow" aria-hidden="true"></div>
+          <div class="adv-mid">
+            <div class="core-w">
+              <div class="core"><svg aria-hidden="true"><use href="#logo"/></svg></div>
+              <div class="core-t">Your advocate</div>
+              <div class="core-s">Runs on your system</div>
+            </div>
+            <ul class="adv-acts" id="adv-acts">
+              <li><svg class="ic"><use href="#i-check"/></svg>Removed a name</li>
+              <li><svg class="ic"><use href="#i-check"/></svg>Removed a birth date and record number</li>
+              <li><svg class="ic"><use href="#i-check"/></svg>Sent through your business account</li>
+              <li><svg class="ic"><use href="#i-check"/></svg>Logged what left</li>
+            </ul>
+          </div>
+          <div class="flow" aria-hidden="true"></div>
+          <div class="adv-card sent"><h3>What the public AI sees</h3><p class="adv-txt" id="adv-out">Summarize treatment options for <span class="ph">PATIENT_1</span>, a woman in her 60s, newly diagnosed with stage 2 breast cancer, and draft an appeal to her insurer.</p></div>
+        </div>
+        <div class="p-row p-foot"><span class="p-line" id="adv-back">The answer comes back with Maria Lopez&rsquo;s details put back in, ready for her doctor to review.</span><span>Secrets sent: <b>0</b></span></div>
+      </div>
+      <p class="adv-like" id="adv-like">Like a patient advocate, it speaks up for your patients when you&rsquo;re not in the room.</p>
+      <p class="adv-foot">Works with ChatGPT and other leading AI platforms through business accounts in your name. ChatGPT is a trademark of OpenAI. Nulle is not affiliated with OpenAI.</p>
+    </div>
+  </section>
 
-      <div class="builders-cta reveal">
-        <p>Have an idea you&rsquo;ve been building? <a href="#contact" class="builders-link">Let&rsquo;s get it to market together.</a></p>
+  <!-- FIGHTS BACK -->
+  <section class="slab dk" id="watch" aria-labelledby="wt-t">
+    <div class="wrap sec">
+      <div class="head">
+        <p class="lbl">Monitoring and audit</p>
+        <h2 class="h2" id="wt-t">It doesn&rsquo;t just defend. <em>It fights back.</em></h2>
+        <p class="lede">Your AI watches every request and every agent, stops what shouldn&rsquo;t happen, and tells you what it did as it happens. Every event lands in a record your auditors can read.</p>
+      </div>
+      <div class="con">
+        <div class="con-top"><span class="mono-s live"><i aria-hidden="true"></i>Your AI on watch · illustrative</span><span class="mono-s">Today</span></div>
+        <div class="con-stats">
+          <div><b id="cs-req">1,284</b><span class="mono-s">Requests handled</span></div>
+          <div><b id="cs-held">6</b><span class="mono-s">Held for a person</span></div>
+          <div><b id="cs-blk">3</b><span class="mono-s">Blocked or caught</span></div>
+          <div class="zero"><b>0</b><span class="mono-s">Secrets leaked</span></div>
+        </div>
+        <ul class="con-list" id="con-list" aria-label="Recent events">
+          <li><span class="ev-t">10:42</span><span class="ev-k k-blocked">Blocked</span><span class="ev-x">A customer list was pasted into a public chatbot. Redirected to your private AI.</span><span class="ev-tm">Sales</span></li>
+          <li><span class="ev-t">10:39</span><span class="ev-k k-held">Held</span><span class="ev-x">An agent tried to email a contract outside the company. Waiting for approval.</span><span class="ev-tm">Legal</span></li>
+          <li><span class="ev-t">10:31</span><span class="ev-k k-caught">Caught</span><span class="ev-x">A password was found in code headed to an AI coding tool. Removed and flagged to change.</span><span class="ev-tm">Engineering</span></li>
+          <li><span class="ev-t">10:24</span><span class="ev-k k-cleaned">Cleaned</span><span class="ev-x">A research question went to a public AI platform with three client names removed.</span><span class="ev-tm">Strategy</span></li>
+          <li><span class="ev-t">10:17</span><span class="ev-k k-caught">Caught</span><span class="ev-x">Hidden instructions were found in a vendor PDF. Quarantined before an agent read them.</span><span class="ev-tm">Operations</span></li>
+        </ul>
+        <div class="con-foot"><span class="con-msg" id="con-msg" role="status"></span><button class="btn btn-ghost" type="button" id="con-exp">Export the audit record</button></div>
+      </div>
+      <div class="gates">
+        <div><span class="mono-s">Human gates</span><h3>A person approves what matters.</h3><p>Sending, paying, deleting, and publishing wait for the right person. You choose where the gates go.</p></div>
+        <div><span class="mono-s">In real time</span><h3>Alerts while it&rsquo;s happening.</h3><p>Leaks, risky agent actions, and hidden instructions are stopped first and explained right after.</p></div>
+        <div><span class="mono-s">Audit-ready</span><h3>A record anyone can read.</h3><p>Plain-English history of every request and action, ready for auditors, regulators, and clients.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ CLOSING STATEMENT -->
-  <section class="statement-section statement-closing">
-    <div class="container-narrow">
-      <div class="big-text reveal-words" data-reveal="words">
-        <p>We don&rsquo;t believe you should have to hand over your data to access intelligence. We believe the best AI is the kind that <em class="text-gradient">belongs to you.</em></p>
+  <!-- OFFENSE -->
+  <section class="sec" id="offense" aria-labelledby="of-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">Go on offense</p>
+        <h2 class="h2" id="of-t">Then go <em>on offense.</em></h2>
+        <p class="lede">With the guardrails in place, your people stop asking whether they&rsquo;re allowed to use AI and start using it to win. We equip them with four things.</p>
+      </div>
+      <div class="off">
+        <div class="off-c"><span class="off-i"><svg class="ic"><use href="#i-msg"/></svg></span><h3>Ethical AI tools</h3><p>Private chat, search, drafting, and meeting notes, running on your own stack.</p></div>
+        <div class="off-c"><span class="off-i"><svg class="ic"><use href="#i-cap"/></svg></span><h3>Skills</h3><p>Hands-on training and playbooks so every team knows how to use AI well, and safely.</p></div>
+        <div class="off-c"><span class="off-i"><svg class="ic"><use href="#i-cube"/></svg></span><h3>Agents</h3><p>Custom agents that finish multi-step work, with human gates and a full record built in.</p></div>
+        <div class="off-c"><span class="off-i"><svg class="ic"><use href="#i-code"/></svg></span><h3>Custom software</h3><p>Apps and integrations built on your stack and shaped to how your company works.</p></div>
+      </div>
+      <div class="off-close"><p>Your competitors are still debating whether AI is safe. You&rsquo;re already shipping.</p><a class="btn btn-grad" href="#contact">Book an AI exposure review <span class="arr" aria-hidden="true">&#8599;</span></a></div>
+    </div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="sec" id="about" style="padding-top:0" aria-labelledby="gd-t">
+    <div class="wrap">
+      <div class="g-top">
+        <div class="head">
+          <p class="lbl">Your guide</p>
+          <h2 class="h2" id="gd-t">You don&rsquo;t need an AI department. <em>You need a guide.</em></h2>
+          <p class="lede">You didn&rsquo;t start your company to referee AI risk, and you shouldn&rsquo;t have to choose between moving fast and staying safe. We&rsquo;ve spent our careers building enterprise software, where security and uptime aren&rsquo;t optional. Now we bring that to companies without an AI team to spare.</p>
+        </div>
+        <div class="g-facts">
+          <div><b>2011</b><span>Shipping enterprise software since</span></div>
+          <div><b>30 yrs</b><span>Combined engineering experience</span></div>
+          <div><b>2</b><span>Private AI products built and shipped</span></div>
+        </div>
+      </div>
+      <div class="fdr">
+        <article class="fdr-c">
+          <img src="assets/cofounders/jerry-cox-480.jpg" alt="Portrait of Jerry Cox" width="480" height="600" loading="lazy" decoding="async">
+          <div class="fdr-b"><span class="mono-s">Co-founder · Product &amp; engineering</span><h3>Jerry Cox</h3><p>Software engineer with a background in mathematics, shipping enterprise software since 2011. His work centers on cloud architecture: software delivery, security, and availability at enterprise scale.</p><a href="https://www.linkedin.com/in/jerry-g-cox-jr">LinkedIn &#8599;</a></div>
+        </article>
+        <article class="fdr-c">
+          <img src="assets/cofounders/rahiem-klugh-480.jpg" alt="Portrait of Rahiem Klugh" width="480" height="600" loading="lazy" decoding="async">
+          <div class="fdr-b"><span class="mono-s">Co-founder · Strategy &amp; partnerships</span><h3>Rahiem Klugh</h3><p>Software engineer with a background in electrical engineering, shipping enterprise software since 2011, including enterprise iOS apps released to the App Store.</p><a href="https://www.linkedin.com/in/rahiem-klugh/">LinkedIn &#8599;</a></div>
+        </article>
+      </div>
+      <p class="proof"><span class="mono-s">We practice it first</span><span><b>DREA</b> · private document research on your Mac</span><span><b>WaveLog</b> · meeting notes transcribed on your device</span></p>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section class="sec" id="how" style="padding-top:0" aria-labelledby="pl-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">How we work</p>
+        <h2 class="h2" id="pl-t">Three steps to <em>AI on your side.</em></h2>
+        <p class="lede">One team from the first conversation to every day after launch. You always know what&rsquo;s happening and what comes next.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="How we work">
+        <button class="tab" type="button" role="tab" id="tab-0" aria-controls="stage" aria-selected="true" data-i="0"><span class="n">Step 01</span><span class="t">Find your exposure</span><span class="s">See where AI is leaking today.</span></button>
+        <button class="tab" type="button" role="tab" id="tab-1" aria-controls="stage" aria-selected="false" tabindex="-1" data-i="1"><span class="n">Step 02</span><span class="t">Build your stack</span><span class="s">Every layer, custom fit.</span></button>
+        <button class="tab" type="button" role="tab" id="tab-2" aria-controls="stage" aria-selected="false" tabindex="-1" data-i="2"><span class="n">Step 03</span><span class="t">Go on offense</span><span class="s">Your people, faster than ever.</span></button>
+      </div>
+      <div class="stage" id="stage" role="tabpanel" aria-labelledby="tab-0">
+        <div><span class="mono-s" id="st-n">Step 01 / 03</span><h3 id="st-t">Find your exposure</h3><p class="d" id="st-d">We map where AI is used across your company, what&rsquo;s leaking, and what your teams are building on public AI.</p></div>
+        <div><h4>What happens</h4><ul class="ticks" id="st-h"><li><svg class="ic"><use href="#i-check"/></svg>Conversations with leaders and teams</li><li><svg class="ic"><use href="#i-check"/></svg>A review of AI tools, accounts, agents, and code</li><li><svg class="ic"><use href="#i-check"/></svg>A check for exposed passwords, keys, and client data</li></ul></div>
+        <div><h4>What you get</h4><ul class="ticks" id="st-g"><li><svg class="ic"><use href="#i-check"/></svg>A plain-English exposure report</li><li><svg class="ic"><use href="#i-check"/></svg>A ranked plan, biggest risks first</li><li><svg class="ic"><use href="#i-check"/></svg>A draft AI policy your people can follow</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ CTA -->
-  <section class="section-cta" id="contact">
-    <div class="container">
-      <div class="cta-block reveal">
-        <div class="cta-orb"></div>
-        <img class="cta-mark" src="assets/Nulle-assets/Nulle Logo Only/Nulle-Logo-Only.png" alt="Nulle">
-        <h2 class="cta-heading">Let&rsquo;s build something<br><span class="text-gradient">that belongs to you.</span></h2>
-        <p class="cta-desc">Whether you&rsquo;re just starting to explore private AI or ready to architect a full system &mdash; we&rsquo;d love to hear what you&rsquo;re working on.</p>
-        <a href="mailto:connect@nulle.ai" class="btn-cta">Start a Conversation</a>
-        <div class="cta-social">
-          <span>Or follow our journey</span>
-          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow Nulle on Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          </a>
-        </div>
+  <!-- INDUSTRIES -->
+  <section class="sec" id="industries" style="padding-top:0" aria-labelledby="in-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">Industries</p>
+        <h2 class="h2" id="in-t">Built for work <em>with rules.</em></h2>
+      </div>
+      <div class="ind">
+        <div class="ind-c"><h3>Healthcare</h3>
+          <div class="ind-r bad"><span class="k">The fear</span><span>Patient records in a chatbot, or an AI scribe nobody vetted.</span></div>
+          <div class="ind-r"><span class="k">The stack</span><span>Keeps patient data in your practice and gates anything that leaves.</span></div>
+          <div class="ind-r"><span class="k">The rule</span><span>HIPAA. Ask every AI vendor for a signed BAA, including us.</span></div></div>
+        <div class="ind-c"><h3>Law firms</h3>
+          <div class="ind-r bad"><span class="k">The fear</span><span>Client confidences in a public tool, or an agent emailing the wrong party.</span></div>
+          <div class="ind-r"><span class="k">The stack</span><span>Holds back confidences and records every request for ethics questions.</span></div>
+          <div class="ind-r"><span class="k">The rule</span><span>Your duty of confidentiality, and ABA Formal Opinion 512 on AI.</span></div></div>
+        <div class="ind-c"><h3>Finance</h3>
+          <div class="ind-r bad"><span class="k">The fear</span><span>Account numbers in a prompt, or a password in an AI coding tool.</span></div>
+          <div class="ind-r"><span class="k">The stack</span><span>Blocks account data and credentials, with a record for examiners.</span></div>
+          <div class="ind-r"><span class="k">The rule</span><span>The GLBA Safeguards Rule or SEC Regulation S-P, depending on your firm.</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <img class="footer-mark" src="assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png" alt="Nulle">
+  <!-- IN WRITING -->
+  <section class="sec" id="promise" style="padding-top:0" aria-labelledby="pm-t">
+    <div class="wrap">
+      <div class="head">
+        <p class="lbl">Our promise</p>
+        <h2 class="h2" id="pm-t">Yours, <em>in writing.</em></h2>
+      </div>
+      <div class="pr">
+        <div class="pr-list">
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>Your AI belongs to you.</h3><p>Your data, models, settings, and logins are yours, and the contract says so.</p></div></div>
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>You hold the master keys.</h3><p>We use our own logins. You can see what we do and switch us off any time.</p></div></div>
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>Never used to train anyone else&rsquo;s AI.</h3><p>Your information stays out of every public model.</p></div></div>
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>Outside AI gets only what it needs.</h3><p>Names, numbers, and passwords are removed or held back first, and every outside request is recorded.</p></div></div>
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>Audit it any time.</h3><p>Every request and action, in a plain-English record you control.</p></div></div>
+          <div><svg class="ic"><use href="#i-check"/></svg><div><h3>Leave any time, keep everything.</h3><p>We hand over the drives or wipe them and give you a certificate.</p></div></div>
         </div>
-        <div class="footer-nav">
-          <div class="footer-col">
-            <a href="#philosophy">Philosophy</a>
-            <a href="#approach">Approach</a>
-            <a href="#services">Services</a>
-            <a href="#builders">For Builders</a>
-            <a href="labs.html">Labs</a>
-            <a href="founders.html">Founders</a>
-          </div>
-          <div class="footer-col">
-            <a href="#contact">Contact</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-          </div>
+        <div class="label" role="group" aria-label="AI Facts label">
+          <p class="label-t">AI Facts</p>
+          <p class="label-s">Filled in for every system we build</p>
+          <ul>
+            <li><span class="k">Where it runs</span><span class="v">Your office</span></li>
+            <li><span class="k">Who owns it</span><span class="v">You</span></li>
+            <li><span class="k">Used to train other AI</span><span class="v">Never</span></li>
+            <li><span class="k">Uses public AI</span><span class="v">Cleaned requests only</span></li>
+            <li><span class="k">Human approval</span><span class="v">Before anything important</span></li>
+            <li><span class="k">Master keys</span><span class="v">Held by you</span></li>
+            <li><span class="k">Activity record</span><span class="v">Kept by you</span></li>
+          </ul>
+          <p class="label-f">Your label ships with your system and lists anything set up differently.</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Nulle, LLC</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/nulleai?igsh=MXdpeXFxNjBrZGhtZA==" target="_blank" rel="noopener noreferrer" aria-label="Nulle on Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          </a>
-        </div>
-      </div>
+      <div class="bar"><p><b>Buy the hardware or lease it.</b> Your AI is never rented.</p><a class="btn btn-grad" href="#contact">Book an AI exposure review <span class="arr" aria-hidden="true">&#8599;</span></a></div>
     </div>
-  </footer>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- CHECKLIST -->
+  <section class="sec" id="checklist" style="padding-top:0" aria-labelledby="ck-t">
+    <div class="wrap ck">
+      <div class="head" style="margin-bottom:0">
+        <p class="lbl">Free checklist</p>
+        <h2 class="h2" id="ck-t">10 places your secrets <em>are leaking into AI.</em></h2>
+        <p class="lede">Check your company in 15 minutes. The full version includes a plain-English fix for each one.</p>
+        <form class="inline-form" id="ck-form" novalidate>
+          <label for="ck-email" class="mono-s" style="flex-basis:100%">Work email</label>
+          <input id="ck-email" name="email" type="email" autocomplete="email" placeholder="you@yourcompany.com">
+          <div class="hp" aria-hidden="true"><label for="ck-website">Leave this field empty</label><input id="ck-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn-dark" id="ck-send" type="submit">Send me the checklist</button>
+          <p class="f-msg" id="ck-msg" role="status" style="flex-basis:100%"></p>
+        </form>
+      </div>
+      <ol class="ck-list">
+        <li>Work done in chatbots on personal or free accounts</li>
+        <li>Client documents pasted in to clean up or summarize</li>
+        <li>Passwords, API keys, and database logins in code shared with AI coding tools</li>
+        <li>AI note-takers joining client calls</li>
+        <li>Browser extensions that read every page you open</li>
+        <li>AI features switched on inside software you already pay for</li>
+        <li>Shared chat links that anyone with the link can open</li>
+        <li>Agents with access to email, files, or payments and no approval step</li>
+        <li>Products built on public AI with customer data in every request</li>
+        <li>No written AI policy, so nobody knows what&rsquo;s allowed</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="slab dk" id="contact" aria-labelledby="ct-t">
+    <div class="wrap sec ct">
+      <div>
+        <div class="head" style="margin-bottom:0">
+          <p class="lbl">Book an AI exposure review</p>
+          <h2 class="h2" id="ct-t">The future of your company is <em>still yours to write.</em></h2>
+          <p class="lede">Tell us how your teams use AI today and what you want to build next. We&rsquo;ll show you where you&rsquo;re exposed and how to go on offense.</p>
+        </div>
+        <div class="ct-mail"><span class="mono-s">Prefer email?</span><a href="mailto:connect@nulle.ai"><b>connect@nulle.ai</b></a></div>
+      </div>
+      <form class="form" id="ct-form" novalidate>
+        <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name"></div>
+        <div class="fld"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+        <div class="fld"><label for="f-co">Company</label><input id="f-co" name="company" autocomplete="organization"></div>
+        <div class="fld"><label for="f-role">Your role</label><input id="f-role" name="role" autocomplete="organization-title" placeholder="CEO, COO, IT lead…"></div>
+        <div class="fld"><label for="f-ind">Industry</label>
+          <select id="f-ind" name="industry"><option value="">Select one</option><option value="health" selected>Healthcare</option><option value="law">Law firm</option><option value="fin">Finance</option><option value="other">Something else</option></select></div>
+        <div class="fld"><label for="f-help">Where should we start?</label>
+          <select id="f-help" name="help"><option value="">Select one</option><option>AI exposure review</option><option>Private AI infrastructure</option><option>Guardrails and human gates</option><option>Monitoring and audit</option><option>AI tools, agents, and training for our team</option><option>Custom AI software</option><option>Not sure yet</option></select></div>
+        <div class="fld full"><label for="f-msg">How does your company use AI today?</label><textarea id="f-msg" name="message" placeholder="For example: our team uses ChatGPT for drafts, and we're building a customer tool on a public AI platform."></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="f-website">Leave this field empty</label><input id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <div class="form-foot"><span class="mono-s">Goes straight to the Nulle team</span><button class="btn btn-grad" id="ct-send" type="submit">Book my review <span class="arr" aria-hidden="true">&#8599;</span></button></div>
+        <p class="f-msg" id="ct-msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-g">
+      <div>
+        <a class="brand" href="#top"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+        <p class="foot-tag">Ethical AI that fights for you. Nothing between you and intelligence.</p>
+      </div>
+      <div><h3>Company</h3><ul><li><a href="#stack">The stack</a></li><li><a href="#how">How we work</a></li><li><a href="#about">About</a></li><li><a href="founders.html">Founders</a></li><li><a href="labs.html">Labs</a></li></ul></div>
+      <div><h3>Industries</h3><ul><li><a href="#industries">Healthcare</a></li><li><a href="#industries">Law firms</a></li><li><a href="#industries">Finance</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a href="mailto:connect@nulle.ai">connect@nulle.ai</a></li><li><a href="https://www.instagram.com/nulleai">Instagram &#8599;</a></li></ul></div>
+    </div>
+    <div class="foot-bot mono-s"><span>&copy; 2026 Nulle, LLC · Atlanta, GA</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+  </div>
+</footer>
+
+</div>
+
+<script src="home.js"></script>
 </body>
 </html>

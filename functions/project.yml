@@ -1,0 +1,20 @@
+# DigitalOcean Functions project for nulle.ai.
+# Deployed by App Platform as the "api" component (see .do/app.yaml), served at /api.
+# The contact form posts to /api/contact/submit.
+#
+# ${VAR} values are filled in at build time from the component's environment
+# variables in App Platform, or from functions/.env when deploying with doctl.
+packages:
+  - name: contact
+    environment:
+      RESEND_API_KEY: "${RESEND_API_KEY}"
+      CONTACT_TO: "${CONTACT_TO}"
+      CONTACT_FROM: "${CONTACT_FROM}"
+      ALLOWED_ORIGINS: "${ALLOWED_ORIGINS}"
+    functions:
+      - name: submit
+        runtime: nodejs:18
+        web: true
+        limits:
+          timeout: 10000
+          memory: 128
