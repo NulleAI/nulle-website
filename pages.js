@@ -1,4 +1,4 @@
-/* Nulle subpage interactions (Labs, Founders): mobile menu and email panels. No third-party scripts. */
+/* Nulle subpage interactions (Labs, Founders): mobile menu, email panels, and the CreatorCam preview. No third-party scripts. */
 (function () {
   document.querySelectorAll('.burger').forEach(function (burger) {
     var menu = document.getElementById(burger.getAttribute('aria-controls'));
@@ -28,6 +28,24 @@
       if (open) pop.querySelector('[data-copy]').focus();
     });
   });
+  // CreatorCam preview: one generated loop shown in both frames. Plays only while
+  // visible, stays on its poster frame for reduced-motion visitors.
+  var vids = Array.prototype.slice.call(document.querySelectorAll('.cam-v'));
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (vids.length && !reduce && 'IntersectionObserver' in window) {
+    var lead = vids[vids.length - 1];
+    lead.addEventListener('timeupdate', function () {
+      vids.forEach(function (v) { if (v !== lead && Math.abs(v.currentTime - lead.currentTime) > 0.15) v.currentTime = lead.currentTime; });
+    });
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        vids.forEach(function (v) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
+        });
+      });
+    }, { threshold: 0.25 }).observe(vids[0].closest('.cams'));
+  }
+
   document.querySelectorAll('[data-copy]').forEach(function (b) {
     b.addEventListener('click', function () {
       var pop = b.closest('.mail-pop'), msg = pop.querySelector('.mail-msg'), addr = pop.querySelector('.mail-addr');
