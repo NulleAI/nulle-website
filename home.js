@@ -168,12 +168,13 @@
   menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); burger.focus(); } });
 
-  // Forms (preview only: nothing is sent)
+  // Forms. The contact form posts to the DigitalOcean Function at /api/contact/submit;
+  // the checklist request still opens the visitor's email app.
   function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
   function mailto(subject, lines) {
     window.location.href = 'mailto:connect@nulle.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
   }
-  var IND_NAME = { health: 'Healthcare', law: 'Law firm', fin: 'Finance', other: 'Something else' };
+  var formStarted = Date.now();
   $('ck-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var m = $('ck-msg'), v = $('ck-email').value.trim();
@@ -189,18 +190,36 @@
     if (!$('f-ind').value) miss.push('your industry');
     if (!$('f-help').value) miss.push('where to start');
     if (miss.length) { m.className = 'f-msg err'; m.textContent = 'Add ' + miss.join(', ') + ' to continue.'; return; }
-    var co = $('f-co').value.trim();
-    mailto('AI exposure review request' + (co ? ': ' + co : ''), [
-      'Name: ' + $('f-name').value.trim(),
-      'Email: ' + $('f-email').value.trim(),
-      'Company: ' + co,
-      'Role: ' + $('f-role').value.trim(),
-      'Industry: ' + (IND_NAME[$('f-ind').value] || ''),
-      'Where to start: ' + $('f-help').value,
-      '',
-      'How we use AI today:',
-      $('f-msg').value.trim()
-    ]);
-    m.className = 'f-msg'; m.textContent = 'Your email app should open with your request filled in. If it doesn’t, email connect@nulle.ai.';
+    var form = this, btn = $('ct-send'), email = $('f-email').value.trim();
+    var fallback = 'We couldn’t send that just now. Please email connect@nulle.ai, or try again in a few minutes.';
+    btn.disabled = true; btn.firstChild.textContent = 'Sending… ';
+    m.className = 'f-msg'; m.textContent = '';
+    fetch('/api/contact/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        name: $('f-name').value.trim(), email: email, company: $('f-co').value.trim(), role: $('f-role').value.trim(),
+        industry: $('f-ind').value, help: $('f-help').value, message: $('f-msg').value.trim(),
+        website: $('f-website').value, started: formStarted
+      })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok === true, status: r.status }; });
+    }).then(function (res) {
+      if (res.ok) {
+        form.reset();
+        m.className = 'f-msg'; m.textContent = 'Thanks. Your request is in, and we’ll reply to ' + email + '.';
+      } else if (res.status === 400) {
+        m.className = 'f-msg err'; m.textContent = 'Please check your details and try again.';
+      } else if (res.status === 429) {
+        m.className = 'f-msg err'; m.textContent = 'Too many requests from this connection. Please try again later, or email connect@nulle.ai.';
+      } else {
+        m.className = 'f-msg err'; m.textContent = fallback;
+      }
+    }, function () {
+      m.className = 'f-msg err'; m.textContent = fallback;
+    }).then(function () {
+      btn.disabled = false; btn.firstChild.textContent = 'Book my review ';
+    });
   });
 })();

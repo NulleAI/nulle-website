@@ -4,6 +4,7 @@
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0}
 [hidden]{display:none!important}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 .ct-mail a{color:var(--sink);text-decoration:none}
 .ct-mail a:hover{color:var(--mint)}
 
@@ -64,6 +65,7 @@ h1,h2,h3,h4{font-weight:400;line-height:1.15;text-wrap:balance}
 .btn-ghost{background:transparent;color:var(--sink);border:1px solid var(--sline2)}
 .btn-ghost:hover{color:var(--sink);border-color:var(--smuted)}
 .btn .arr{transition:transform .2s ease}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
 .btn:hover .arr{transform:translate(2px,-2px)}
 
 /* nav */
