@@ -19,5 +19,5 @@ packages:
         runtime: nodejs:default
         web: true
         limits:
-          timeout: 10000
+          timeout: 15000
           memory: 128

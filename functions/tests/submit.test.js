@@ -17,12 +17,20 @@ function env() {
   process.env.ALLOWED_ORIGINS = 'https://nulle.ai,https://www.nulle.ai';
 }
 
-function mockResend(status = 200) {
+function mockResend(status = 200, data = { id: 'email_123' }) {
   calls = [];
   global.fetch = async (url, opts) => {
     calls.push({ url, opts, body: JSON.parse(opts.body) });
-    return { ok: status >= 200 && status < 300, status, json: async () => ({ id: 'email_123' }) };
+    return { ok: status >= 200 && status < 300, status, json: async () => data };
   };
+}
+
+// Capture console.error lines while fn runs.
+async function logged(fn) {
+  const lines = [];
+  const orig = console.error;
+  console.error = (...a) => lines.push(a.join(' '));
+  try { return { res: await fn(), lines }; } finally { console.error = orig; }
 }
 
 function form(over = {}) {
@@ -124,6 +132,35 @@ test('reports a send failure without leaking details', async () => {
   const res = await main(req(form()));
   assert.strictEqual(res.statusCode, 502);
   assert.deepStrictEqual(res.body, { ok: false, error: 'send_failed' });
+});
+
+test('logs the Resend error code but not its message', async () => {
+  mockResend(403, { statusCode: 403, name: 'validation_error', message: 'Cannot send to dana@example.com' });
+  const { res, lines } = await logged(() => main(req(form())));
+  assert.strictEqual(res.statusCode, 502);
+  assert.deepStrictEqual(lines, ['contact_submit: resend responded 403 validation_error']);
+});
+
+test('a connection failure returns 502 and logs only error codes', async () => {
+  global.fetch = async () => {
+    throw new TypeError('fetch failed', { cause: Object.assign(new Error('Connect Timeout Error (api.resend.com)'), { code: 'UND_ERR_CONNECT_TIMEOUT' }) });
+  };
+  const { res, lines } = await logged(() => main(req(form())));
+  assert.strictEqual(res.statusCode, 502);
+  assert.deepStrictEqual(res.body, { ok: false, error: 'send_failed' });
+  assert.deepStrictEqual(lines, ['contact_submit: resend request failed TypeError UND_ERR_CONNECT_TIMEOUT']);
+});
+
+// The function must give up on Resend and answer before the platform's time
+// limit, or visitors get a gateway timeout instead of the fallback message.
+test('the Resend timeout leaves headroom inside the function time limit', () => {
+  const yml = fs.readFileSync(path.join(__dirname, '..', 'project.yml'), 'utf8');
+  const limit = Number(yml.match(/^\s*timeout:\s*(\d+)/m)[1]);
+  assert.ok(_internal.RESEND_TIMEOUT_MS + 5000 <= limit, `${_internal.RESEND_TIMEOUT_MS} ms + 5 s headroom > ${limit} ms`);
+});
+
+test('DNS prefers IPv4', () => {
+  assert.strictEqual(require('node:dns').getDefaultResultOrder(), 'ipv4first');
 });
 
 test('reports unavailable when the API key is missing', async () => {
