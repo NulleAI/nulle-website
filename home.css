@@ -466,3 +466,11 @@ h1,h2,h3,h4{font-weight:400;line-height:1.15;text-wrap:balance}
   .foot-g{grid-template-columns:1fr}
   .acts .btn{flex:1 1 auto}
 }
+
+/* Mission pillars on the homepage */
+.vis.vis3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vis-c.fight h3,.vis-c.fight li .ic{color:var(--cyan)}
+.vis-c.win h3,.vis-c.win li .ic{color:var(--mint)}
+.more{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font:500 11.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.more:hover{color:var(--link)}
+@media (max-width:900px){ .vis.vis3{grid-template-columns:1fr} }
