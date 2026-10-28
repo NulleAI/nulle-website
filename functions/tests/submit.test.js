@@ -3,6 +3,8 @@
 // Resend is mocked; no network calls are made.
 const test = require('node:test');
 const assert = require('node:assert');
+const fs = require('node:fs');
+const path = require('node:path');
 const { main, _internal } = require('../packages/contact/submit.js');
 
 const ORIGIN = 'https://nulle.ai';
@@ -160,6 +162,14 @@ test('checklist rejects a bad email, and unknown kinds are rejected', async () =
   assert.deepStrictEqual((await main(req(checklist({ kind: 'newsletter' })))).body.fields, ['kind']);
   assert.deepStrictEqual((await main(req(checklist({ kind: '__proto__' })))).body.fields, ['kind']);
   assert.strictEqual(calls.length, 0);
+});
+
+// The deployer substitutes ${...} and $(...) anywhere in project.yml, comments
+// included, and fails the build on any name it can't resolve.
+test('project.yml substitutes only the four configured variables', () => {
+  const yml = fs.readFileSync(path.join(__dirname, '..', 'project.yml'), 'utf8');
+  const names = [...yml.matchAll(/\$[{(]([^})]*)[})]/g)].map((m) => m[1].trim()).sort();
+  assert.deepStrictEqual(names, ['ALLOWED_ORIGINS', 'CONTACT_FROM', 'CONTACT_TO', 'RESEND_API_KEY']);
 });
 
 test('checklist bot signals get a quiet success and send nothing', async () => {
