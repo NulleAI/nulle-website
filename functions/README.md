@@ -1,6 +1,6 @@
 # Website forms function
 
-Both homepage forms post JSON to `/api/contact/submit`: the contact form (`kind: "review"`, the default) and the AI leak checklist request (`kind: "checklist"`, work email only). That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (the platform's default Node.js runtime; the code needs Node.js 18 or later). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
+The site's forms post JSON to `/api/contact/submit`: the contact form (`kind: "review"`, the default) and the AI leak checklist request (`kind: "checklist"`, work email only), and the AI app launch checklist request on the Free checklists page (`kind: "app-checklist"`, work email only). That path is served by the `api` functions component in `.do/app.yaml`, which runs `packages/contact/submit.js` on DigitalOcean Functions (the platform's default Node.js runtime; the code needs Node.js 18 or later). The function checks the request and sends one plain-text email to `CONTACT_TO` through Resend, with reply-to set to the visitor's address.
 
 No npm dependencies: it calls Resend's REST API with the runtime's built-in `fetch`.
 

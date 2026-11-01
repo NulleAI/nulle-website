@@ -25,7 +25,7 @@
       b: ['Approval before anything leaves the company', 'Limits on what each agent can touch', 'A named owner for every decision'] },
     { k: 'Nothing happens in the dark', t: 'Monitoring and audit', d: 'Every request and action is recorded in plain English, with alerts in real time. Hand the record to an auditor, a regulator, or a client.',
       b: ['Live alerts on leaks and risky actions', 'A searchable record of everything AI did', 'Reports ready for audits and security reviews'] },
-    { k: 'Where you go on offense', t: 'Tools for your team', d: 'Ethical AI tools, skills training, agents, and custom software your people use every day, all running on the layers below.',
+    { k: 'Where you go on offense', t: 'Tools for your team', d: 'Private AI tools, skills training, agents, and custom software your people use every day, all running on the layers below.',
       b: ['Private chat, search, and drafting', 'Agents that finish multi-step work', 'Custom software and training for every team'] }
   ];
   var lays = Array.prototype.slice.call(document.querySelectorAll('.iso .lay'));
@@ -66,7 +66,13 @@
       o: 'Suggest a tax-loss harvesting plan before year end for a <span class="ph">CLIENT_1</span> portfolio of about $2.4M.',
       a: [['ok', 'Removed a family name'], ['ok', 'Removed an account number'], ['block', 'Blocked a password and flagged it to change'], ['ok', 'Logged what left']],
       r: 'The plan comes back with the Thompson name put back in, plus an alert to change that password.',
-      l: 'Like a fiduciary, it acts in your clients’ interest every time it acts.' }
+      l: 'Like a fiduciary, it acts in your clients’ interest every time it acts.' },
+    eng: {
+      i: 'Why does checkout fail for <mark class="pii">dana.reyes@brightpath.com</mark>? Here’s the payment handler and our config: <mark class="pii">DB_PASSWORD=Prod#2291</mark>, <mark class="pii">PAYMENTS_KEY=live_8f3kQ2…</mark>',
+      o: 'Why does checkout fail for <span class="ph">CUSTOMER_1</span>? Here’s the payment handler and our config, with <span class="ph">DB_PASSWORD</span> and <span class="ph">PAYMENTS_KEY</span> left blank.',
+      a: [['ok', 'Removed a customer email'], ['block', 'Blocked a database password'], ['block', 'Blocked a live payment key'], ['ok', 'Logged what left']],
+      r: 'The fix comes back ready for your engineer to review, plus an alert to change both exposed secrets.',
+      l: 'Like a senior engineer reviewing every change, it catches secrets before your code leaves the building.' }
   };
   document.querySelectorAll('[data-ind-seg] button').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -80,7 +86,7 @@
       }).join('');
       $('adv-back').textContent = d.r;
       $('adv-like').textContent = d.l;
-      var sel = $('f-ind'); if (sel) sel.value = k;
+      var sel = $('f-ind'); if (sel && sel.querySelector('option[value="' + k + '"]')) sel.value = k;
     });
   });
 
@@ -126,21 +132,35 @@
   });
 
   // Plan stepper
-  var STEPS = [
-    { t: 'Find your exposure', d: 'We map where AI is used across your company, what’s leaking, and what your teams are building on public AI.',
+  var TRACKS = {
+    secure: [
+    { t: 'Find your exposure', s: 'See where AI is leaking today.', d: 'We map where AI is used across your company, what’s leaking, and what your teams are building on public AI.',
       h: ['Conversations with leaders and teams', 'A review of AI tools, accounts, agents, and code', 'A check for exposed passwords, keys, and client data'],
       g: ['A plain-English exposure report', 'A ranked plan, biggest risks first', 'A draft AI policy your people can follow'] },
-    { t: 'Build your stack', d: 'We custom fit every layer to how your company works: private infrastructure, guardrails, human gates, and monitoring.',
+    { t: 'Build your stack', s: 'Every layer, custom fit.', d: 'We custom fit every layer to how your company works: private infrastructure, guardrails, human gates, and monitoring.',
       h: ['Choose to buy or lease hardware, or a private cloud in your name', 'Set your guardrails and decide where the human gates go', 'Turn on monitoring and the audit record'],
       g: ['A private AI stack you own', 'Rules that match your risks and regulations', 'An AI Facts label for your system'] },
-    { t: 'Go on offense', d: 'We put AI to work across your teams, train your people, and keep watch as you grow.',
+    { t: 'Go on offense', s: 'Your people, faster than ever.', d: 'We put AI to work across your teams, train your people, and keep watch as you grow.',
       h: ['Roll out tools and agents team by team', 'Hands-on training and playbooks', 'Ongoing monitoring, updates, and support'],
       g: ['Teams shipping faster with approved AI', 'Regular reviews and new uses as you grow', 'A partner who stays after launch'] }
-  ];
+    ],
+    build: [
+      { t: 'Scope it', s: 'Plan the product with us.', d: 'We map what you want to build, who will use it, and what data it touches. If your team already has a prototype, including a vibe-coded one, we start there.',
+        h: ['Working sessions with your team', 'A review of any prototype or code you already have', 'A check of the data, risks, and rules involved'],
+        g: ['A written scope and plan', 'A build estimate and timeline', 'An architecture on your private stack'] },
+      { t: 'Build it', s: 'Engineered on your stack.', d: 'Our engineers build it on your private stack, with guardrails, human gates, and an activity record in place from day one.',
+        h: ['Working software to test every week', 'Code review and security checks on every change', 'Your team trained as we go'],
+        g: ['Software you own, code and all', 'Designs, docs, and an AI Facts label', 'A handoff plan your team can take over'] },
+      { t: 'Launch and run it', s: 'Live, secure, and supported.', d: 'We release it to your customers on the App Store or the web, then keep it secure, online, and up to date.',
+        h: ['Launch and App Store release', 'Monitoring for uptime, leaks, and risky actions', 'Updates as models and your needs change'],
+        g: ['A product live with your customers', 'Alerts and an audit record from day one', 'Support for as long as you want it'] }
+    ]
+  };
+  var track = 'secure';
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
   function li(x) { return '<li>' + CHECK + esc(x) + '</li>'; }
   function pick(i, focus) {
-    var s = STEPS[i];
+    var s = TRACKS[track][i];
     tabs.forEach(function (t, j) { t.setAttribute('aria-selected', j === i ? 'true' : 'false'); t.setAttribute('tabindex', j === i ? '0' : '-1'); });
     $('stage').setAttribute('aria-labelledby', 'tab-' + i);
     $('st-n').textContent = 'Step 0' + (i + 1) + ' / 03';
@@ -155,6 +175,17 @@
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); pick((i + tabs.length - 1) % tabs.length, true); }
     });
   });
+  document.querySelectorAll('[data-track-seg] button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      track = b.getAttribute('data-track');
+      document.querySelectorAll('[data-track-seg] button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      tabs.forEach(function (t, j) {
+        var s = TRACKS[track][j];
+        t.querySelector('.t').textContent = s.t; t.querySelector('.s').textContent = s.s;
+      });
+      pick(0);
+    });
+  });
 
   // Mobile menu
   var burger = $('burger'), menu = $('menu');
@@ -167,88 +198,4 @@
   burger.addEventListener('click', function () { setMenu(menu.hidden); });
   menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); burger.focus(); } });
-
-  // Forms. Both post to the DigitalOcean Function at /api/contact/submit.
-  // Until nulle.ai is verified in Resend, they open the visitor's email app
-  // instead, with the request filled in and addressed to connect@nulle.ai.
-  // Set USE_EMAIL_APP to false to send through the function again.
-  var USE_EMAIL_APP = true;
-  function openDraft(subject, lines, msg) {
-    var body = lines.join('\n');
-    if (body.length > 1500) body = body.slice(0, 1500) + '…';  // long mailto links fail in some email apps
-    window.location.href = 'mailto:connect@nulle.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    msg.className = 'f-msg';
-    msg.textContent = 'Your email app should open with this ready to send. If it doesn’t, email connect@nulle.ai.';
-  }
-  function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-  var formStarted = Date.now();
-  var FALLBACK = 'We couldn’t send that just now. Please email connect@nulle.ai, or try again in a few minutes.';
-  function send(payload, btn, msg, onOk) {
-    var label = btn.firstChild.textContent;
-    btn.disabled = true; btn.firstChild.textContent = 'Sending… ';
-    msg.className = 'f-msg'; msg.textContent = '';
-    payload.started = formStarted;
-    fetch('/api/contact/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify(payload)
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok === true, status: r.status }; });
-    }).then(function (res) {
-      if (res.ok) { onOk(); return; }
-      msg.className = 'f-msg err';
-      if (res.status === 400) msg.textContent = 'Please check your details and try again.';
-      else if (res.status === 429) msg.textContent = 'Too many requests from this connection. Please try again later, or email connect@nulle.ai.';
-      else msg.textContent = FALLBACK;
-    }, function () {
-      msg.className = 'f-msg err'; msg.textContent = FALLBACK;
-    }).then(function () {
-      btn.disabled = false; btn.firstChild.textContent = label;
-    });
-  }
-  $('ck-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var form = this, m = $('ck-msg'), v = $('ck-email').value.trim();
-    if (!okEmail(v)) { m.className = 'f-msg err'; m.textContent = 'Enter a work email like you@yourcompany.com.'; return; }
-    if (USE_EMAIL_APP) {
-      openDraft('Website: AI leak checklist request from ' + v, ['Hi Nulle team,', '', 'Please send the AI leak checklist to: ' + v], m);
-      return;
-    }
-    send({ kind: 'checklist', email: v, website: $('ck-website').value }, $('ck-send'), m, function () {
-      form.reset();
-      m.className = 'f-msg'; m.textContent = 'Thanks. We’ll send the checklist to ' + v + '.';
-    });
-  });
-  $('ct-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var m = $('ct-msg'), miss = [];
-    if (!$('f-name').value.trim()) miss.push('your name');
-    if (!okEmail($('f-email').value.trim())) miss.push('a valid work email');
-    if (!$('f-ind').value) miss.push('your industry');
-    if (!$('f-help').value) miss.push('where to start');
-    if (miss.length) { m.className = 'f-msg err'; m.textContent = 'Add ' + miss.join(', ') + ' to continue.'; return; }
-    var form = this, email = $('f-email').value.trim();
-    if (USE_EMAIL_APP) {
-      var name = $('f-name').value.trim(), co = $('f-co').value.trim(), ind = $('f-ind');
-      openDraft('Website: AI exposure review request from ' + name + (co ? ' (' + co + ')' : ''), [
-        'Hi Nulle team,', '',
-        'Name: ' + name,
-        'Email: ' + email,
-        'Company: ' + (co || '(not provided)'),
-        'Role: ' + ($('f-role').value.trim() || '(not provided)'),
-        'Industry: ' + ind.options[ind.selectedIndex].text,
-        'Where to start: ' + $('f-help').value,
-        '', 'How we use AI today:', $('f-msg').value.trim() || '(not provided)'
-      ], m);
-      return;
-    }
-    send({
-      kind: 'review', name: $('f-name').value.trim(), email: email, company: $('f-co').value.trim(), role: $('f-role').value.trim(),
-      industry: $('f-ind').value, help: $('f-help').value, message: $('f-msg').value.trim(), website: $('f-website').value
-    }, $('ct-send'), m, function () {
-      form.reset();
-      m.className = 'f-msg'; m.textContent = 'Thanks. Your request is in, and we’ll reply to ' + email + '.';
-    });
-  });
 })();

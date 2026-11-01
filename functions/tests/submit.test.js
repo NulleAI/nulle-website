@@ -193,6 +193,17 @@ test('checklist requests need only a work email and notify the team', async () =
   assert.ok(!('html' in b));
 });
 
+test('app launch checklist requests use their own subject and tag', async () => {
+  const res = await main(req(checklist({ kind: 'app-checklist' })));
+  assert.strictEqual(res.statusCode, 200);
+  assert.strictEqual(calls.length, 1);
+  const b = calls[0].body;
+  assert.strictEqual(b.subject, 'Website: AI app launch checklist request from lee@example.com');
+  assert.match(b.text, /Send it to: lee@example\.com/);
+  assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_app_checklist' }]);
+  assert.deepStrictEqual((await main(req(checklist({ kind: 'app-checklist', email: 'nope' })))).body.fields, ['email']);
+});
+
 test('checklist rejects a bad email, and unknown kinds are rejected', async () => {
   assert.deepStrictEqual((await main(req(checklist({ email: 'nope' })))).body.fields, ['email']);
   assert.deepStrictEqual((await main(req(checklist({ email: 'a@b.co\nBcc: x@y.z' })))).body.fields, ['email']);
