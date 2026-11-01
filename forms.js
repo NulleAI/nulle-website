@@ -79,7 +79,7 @@
       if (saved && typeof saved.email === 'string' && okEmail(saved.email) && !$('f-email').value) $('f-email').value = saved.email;
       if (!$('f-msg').value) $('f-msg').value = 'Please send me the checklist: ' + CHECKLISTS[key] + '.';
       $('ct-msg').className = 'f-msg';
-      $('ct-msg').textContent = 'Add your name, check your industry, and send. We’ll email you the checklist.';
+      $('ct-msg').textContent = 'Add your name and industry, then send. We’ll email you the checklist.';
       try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch (err) {}
       try { $('contact').scrollIntoView({ behavior: 'instant', block: 'start' }); } catch (err) {}  // jump, don't smooth-scroll the whole page
     }
