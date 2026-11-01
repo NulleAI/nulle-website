@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Free AI Checklists — Nulle</title>
+  <meta name="description" content="Two free checklists from Nulle: 10 places your secrets are leaking into AI, and 10 checks before you ship an AI-built app.">
+  <meta name="keywords" content="AI security checklist, AI data leaks, vibe coding security, AI app launch checklist, private AI, Nulle">
+  <meta name="author" content="Nulle, LLC">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#F3F4EF">
+  <link rel="canonical" href="https://nulle.ai/checklists.html">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nulle">
+  <meta property="og:url" content="https://nulle.ai/checklists.html">
+  <meta property="og:title" content="Free AI Checklists — Nulle">
+  <meta property="og:description" content="Two free checklists from Nulle: 10 places your secrets are leaking into AI, and 10 checks before you ship an AI-built app.">
+  <meta property="og:image" content="https://nulle.ai/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nulle">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free AI Checklists — Nulle">
+  <meta name="twitter:description" content="Free checklists from Nulle: where your secrets leak into AI, and what to check before you ship an AI-built app.">
+  <meta name="twitter:image" content="https://nulle.ai/assets/og-image.png">
+  <meta name="twitter:image:alt" content="Nulle">
+
+  <!-- Fonts (self-hosted) & styles -->
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="pages.css">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://nulle.ai/checklists.html",
+    "name": "Free AI Checklists",
+    "description": "Free checklists from Nulle: where your secrets leak into AI, and what to check before you ship an AI-built app.",
+    "isPartOf": { "@type": "WebSite", "url": "https://nulle.ai/", "name": "Nulle" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nulle",
+      "url": "https://nulle.ai/",
+      "logo": "https://nulle.ai/assets/Nulle-assets/Nulle Final White/Nulle-Final-White.png"
+    },
+    "inLanguage": "en-US"
+  }
+  </script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="nlg" x1="403.81" y1="450" x2="896.27" y2="450" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#b1ff9b"/><stop offset="1" stop-color="#89f0ff"/></linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <linearGradient id="vg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B0FF9D"/><stop offset="1" stop-color="#8AF0FD"/></linearGradient>
+    <radialGradient id="cg"><stop offset="0" stop-color="#B0FF9D" stop-opacity=".35"/><stop offset="1" stop-color="#8AF0FD" stop-opacity="0"/></radialGradient>
+  </defs>
+  <symbol id="logo" viewBox="390 240 520 420"><path fill="url(#nlg)" d="M491.13,382.64h-62.39c-13.77,0-24.94,11.16-24.94,24.94v234.32h89.41c13.77,0,24.94-11.16,24.94-24.94v-210.62c0-13.09,10.61-23.7,23.7-23.7h0c9.05,0,17.31,5.16,21.29,13.29l109.65,224.19c6.52,13.32,20.05,21.77,34.88,21.77h0c14.35,0,27.53-7.91,34.27-20.58l47.91-89.93c3.49-6.54,10.3-10.63,17.71-10.63h63.77c13.77,0,24.94-11.16,24.94-24.94v-237.71h-90.54c-13.77,0-24.94,11.16-24.94,24.94v211.73c0,13.1-10.62,23.72-23.72,23.72h0c-9.04,0-17.3-5.14-21.29-13.26l-110.85-225.62c-6.47-13.17-19.86-21.51-34.53-21.51h0c-14.47,0-27.72,8.12-34.29,21.02l-47.12,92.55c-3.42,6.73-10.33,10.96-17.88,10.96Z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 17.8 9.2 4.5 4.5 0 0 1 17.5 18z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></symbol>
+</svg>
+
+<div class="nl">
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="Nulle home"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+    <nav class="nav-bar" aria-label="Main">
+      <a class="nav-a" href="index.html#build">What we build</a>
+      <a class="nav-a" href="index.html#stack">The stack</a>
+      <a class="nav-a" href="index.html#how">How we work</a>
+      <a class="nav-a" href="labs.html">Labs</a>
+      <a class="nav-a" href="founders.html">Founders</a>
+    </nav>
+    <a class="btn btn-dark nav-cta" href="index.html#contact">Talk to an engineer <span class="arr" aria-hidden="true">&#8599;</span></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+    <div class="menu" id="menu" hidden>
+      <a href="index.html#build">What we build</a>
+      <a href="index.html#stack">The stack</a>
+      <a href="index.html#how">How we work</a>
+      <a href="labs.html">Labs</a>
+      <a href="founders.html">Founders</a>
+      <a class="btn btn-dark" href="index.html#contact">Talk to an engineer</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="wrap">
+      <p class="lbl">Free checklists</p>
+      <h1 class="h1" id="hero-t" style="margin-top:26px">Check your company <em>in 15 minutes.</em></h1>
+      <div class="hero-row">
+        <p class="lede">Two plain-English checklists from our engineers: one for how your teams use AI, one for the apps they build with it. Ask for the full version of either and we&rsquo;ll send a fix for every item.</p>
+        <div class="acts">
+          <a class="btn btn-dark" href="#leaks">Secrets and AI</a>
+          <a class="btn btn-line" href="#ship">AI-built apps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="leaks" aria-labelledby="ck1-t">
+    <div class="wrap ck">
+      <div class="head" style="margin-bottom:0">
+        <p class="lbl">Checklist 01 · For every team</p>
+        <h2 class="h2" id="ck1-t">10 places your secrets <em>are leaking into AI.</em></h2>
+        <p class="lede">Check your company in 15 minutes. The full version includes a plain-English fix for each one.</p>
+        <form class="inline-form" id="ck-form" novalidate>
+          <label for="ck-email" class="mono-s" style="flex-basis:100%">Work email</label>
+          <input id="ck-email" name="email" type="email" autocomplete="email" placeholder="you@yourcompany.com">
+          <div class="hp" aria-hidden="true"><label for="ck-website">Leave this field empty</label><input id="ck-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn-dark" id="ck-send" type="submit">Send me the checklist</button>
+          <p class="f-msg" id="ck-msg" role="status" style="flex-basis:100%"></p>
+        </form>
+      </div>
+      <ol class="ck-list">
+        <li>Work done in chatbots on personal or free accounts</li>
+        <li>Client documents pasted in to clean up or summarize</li>
+        <li>Passwords, API keys, and database logins in code shared with AI coding tools</li>
+        <li>AI note-takers joining client calls</li>
+        <li>Browser extensions that read every page you open</li>
+        <li>AI features switched on inside software you already pay for</li>
+        <li>Shared chat links that anyone with the link can open</li>
+        <li>Agents with access to email, files, or payments and no approval step</li>
+        <li>Products built on public AI with customer data in every request</li>
+        <li>No written AI policy, so nobody knows what&rsquo;s allowed</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="ship" style="padding-top:0" aria-labelledby="ck2-t">
+    <div class="wrap ck">
+      <div class="head" style="margin-bottom:0">
+        <p class="lbl">Checklist 02 · For builders</p>
+        <h2 class="h2" id="ck2-t">Before you ship an AI-built app: <em>10 checks.</em></h2>
+        <p class="lede">For apps your team vibe coded or built with AI coding assistants. Run through it before customers or coworkers rely on the app. The full version includes a plain-English fix for each one.</p>
+        <form class="inline-form" id="ship-form" novalidate>
+          <label for="ship-email" class="mono-s" style="flex-basis:100%">Work email</label>
+          <input id="ship-email" name="email" type="email" autocomplete="email" placeholder="you@yourcompany.com">
+          <div class="hp" aria-hidden="true"><label for="ship-website">Leave this field empty</label><input id="ship-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn-dark" id="ship-send" type="submit">Send me the checklist</button>
+          <p class="f-msg" id="ship-msg" role="status" style="flex-basis:100%"></p>
+        </form>
+      </div>
+      <ol class="ck-list">
+        <li>Passwords, API keys, and database logins written into the code</li>
+        <li>No login, or one shared login, on an app with company data</li>
+        <li>Packages the AI suggested that nobody checked, or that don&rsquo;t exist</li>
+        <li>Customer data sent to an AI provider with every request</li>
+        <li>No record of who used the app or what it did</li>
+        <li>Error messages that show your data or your settings</li>
+        <li>Inputs that let a user give the AI new instructions</li>
+        <li>An app only one person understands, with no named owner</li>
+        <li>No plan for updates when a model or a package changes</li>
+        <li>No one has reviewed the code before people rely on it</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-label="Get help">
+    <div class="wrap">
+      <div class="off-close"><p>Want our engineers to run these checks for you?</p><div class="acts"><a class="btn btn-grad" href="index.html#contact">Talk to an engineer <span class="arr" aria-hidden="true">&#8599;</span></a></div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-g">
+      <div>
+        <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#logo"/></svg>Nulle</a>
+        <p class="foot-tag">Private AI systems and custom software. Put AI to work on a stack you own.</p>
+      </div>
+      <div><h3>Company</h3><ul><li><a href="index.html#build">What we build</a></li><li><a href="index.html#stack">The stack</a></li><li><a href="index.html#how">How we work</a></li><li><a href="mission.html">Our mission</a></li><li><a href="founders.html">Founders</a></li><li><a href="labs.html">Labs</a></li><li><a href="checklists.html" aria-current="page">Free checklists</a></li></ul></div>
+      <div><h3>Industries</h3><ul><li><a href="index.html#industries">Healthcare</a></li><li><a href="index.html#industries">Law firms</a></li><li><a href="index.html#industries">Finance</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a href="mailto:connect@nulle.ai">connect@nulle.ai</a></li><li><a href="https://www.instagram.com/nulleai">Instagram &#8599;</a></li></ul></div>
+    </div>
+    <div class="foot-bot mono-s"><span>&copy; 2026 Nulle, LLC · Atlanta, GA</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+  </div>
+</footer>
+
+</div>
+
+<script src="pages.js"></script>
+<script src="forms.js"></script>
+</body>
+</html>

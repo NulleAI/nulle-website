@@ -119,7 +119,6 @@
 }
 
 /* ===== MISSION ===== */
-.h1.long{font-size:clamp(44px,6.2vw,92px);max-width:16ch}
 .msn{margin-top:24px;max-width:30ch;font-size:clamp(26px,3.2vw,44px);line-height:1.28;letter-spacing:-.03em;text-wrap:pretty}
 .msn .mpart{padding:0 2px;border-bottom:1.5px solid rgba(176,255,157,.7);background:linear-gradient(transparent 64%,rgba(176,255,157,.16) 64%)}
 .msn sup{margin-left:3px;font:500 .34em var(--f-mono);color:var(--mint)}

@@ -4,7 +4,8 @@
  *
  * Handles the two homepage forms, chosen by `kind`:
  *   "review"     the contact form (default when kind is missing)
- *   "checklist"  a request for the AI leak checklist (work email only)
+ *   "checklist"      a request for the AI leak checklist (work email only)
+ *   "app-checklist"  a request for the AI app launch checklist (work email only)
  *
  * Validates a submission, applies basic abuse checks, and sends one plain-text
  * email to the Nulle team through Resend. It never emails the visitor. No
@@ -32,8 +33,10 @@ const HELP = [
   'Monitoring and audit',
   'AI tools, agents, and training for our team',
   'Custom AI software',
+  'Send me a checklist',
   'Not sure yet'
 ];
+const CHECKLIST_HELP = 'Send me a checklist';
 const MIN_FILL_MS = 1500;               // faster than this is almost certainly a bot; autofill-friendly
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;                     // per IP per window, per warm instance (best effort)
@@ -134,7 +137,8 @@ function validate(data) {
 }
 
 function compose(f) {
-  const subject = oneLine(`Website: AI exposure review request from ${f.name}${f.company ? ` (${f.company})` : ''}`).slice(0, 200);
+  const what = f.help === CHECKLIST_HELP ? 'checklist request' : 'AI exposure review request';
+  const subject = oneLine(`Website: ${what} from ${f.name}${f.company ? ` (${f.company})` : ''}`).slice(0, 200);
   const body = [
     'New request from the nulle.ai contact form.',
     '',
@@ -145,7 +149,7 @@ function compose(f) {
     `Industry: ${INDUSTRIES[f.industry]}`,
     `Where to start: ${f.help}`,
     '',
-    'How they use AI today:',
+    f.help === CHECKLIST_HELP ? 'Message:' : 'How they use AI today:',
     f.message || '(not provided)',
     '',
     '---',
@@ -164,7 +168,20 @@ function validateChecklist(data) {
 function composeChecklist(f) {
   const subject = `Website: AI leak checklist request from ${f.email}`.slice(0, 200);
   const body = [
-    'New request for the AI leak checklist from the nulle.ai homepage.',
+    'New request for the AI leak checklist from nulle.ai.',
+    '',
+    `Send it to: ${f.email}`,
+    '',
+    '---',
+    'Reply to this email to send the checklist directly.'
+  ].join('\n');
+  return { subject, body };
+}
+
+function composeAppChecklist(f) {
+  const subject = `Website: AI app launch checklist request from ${f.email}`.slice(0, 200);
+  const body = [
+    'New request for the AI app launch checklist from nulle.ai.',
     '',
     `Send it to: ${f.email}`,
     '',
@@ -176,7 +193,8 @@ function composeChecklist(f) {
 
 const FORMS = {
   review: { validate, compose, tag: 'website_contact' },
-  checklist: { validate: validateChecklist, compose: composeChecklist, tag: 'website_checklist' }
+  checklist: { validate: validateChecklist, compose: composeChecklist, tag: 'website_checklist' },
+  'app-checklist': { validate: validateChecklist, compose: composeAppChecklist, tag: 'website_app_checklist' }
 };
 
 async function main(args) {

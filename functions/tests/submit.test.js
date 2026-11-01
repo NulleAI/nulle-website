@@ -175,6 +175,16 @@ function checklist(over = {}) {
   return Object.assign({ kind: 'checklist', email: 'Lee@Example.com', website: '', started: Date.now() - 20000 }, over);
 }
 
+test('"Send me a checklist" on the contact form gets a checklist subject', async () => {
+  const res = await main(req(form({ help: 'Send me a checklist', message: 'Please send me the checklist: 10 places your secrets are leaking into AI.' })));
+  assert.strictEqual(res.statusCode, 200);
+  const b = calls[0].body;
+  assert.match(b.subject, /^Website: checklist request from /);
+  assert.match(b.text, /Where to start: Send me a checklist/);
+  assert.match(b.text, /Message:\nPlease send me the checklist: 10 places/);
+  assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_contact' }]);
+});
+
 test('the contact form is the default kind and keeps its tag', async () => {
   await main(req(form()));
   assert.deepStrictEqual(calls[0].body.tags, [{ name: 'source', value: 'website_contact' }]);
@@ -191,6 +201,17 @@ test('checklist requests need only a work email and notify the team', async () =
   assert.match(b.text, /Send it to: lee@example\.com/);
   assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_checklist' }]);
   assert.ok(!('html' in b));
+});
+
+test('app launch checklist requests use their own subject and tag', async () => {
+  const res = await main(req(checklist({ kind: 'app-checklist' })));
+  assert.strictEqual(res.statusCode, 200);
+  assert.strictEqual(calls.length, 1);
+  const b = calls[0].body;
+  assert.strictEqual(b.subject, 'Website: AI app launch checklist request from lee@example.com');
+  assert.match(b.text, /Send it to: lee@example\.com/);
+  assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_app_checklist' }]);
+  assert.deepStrictEqual((await main(req(checklist({ kind: 'app-checklist', email: 'nope' })))).body.fields, ['email']);
 });
 
 test('checklist rejects a bad email, and unknown kinds are rejected', async () => {
