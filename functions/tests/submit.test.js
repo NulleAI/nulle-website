@@ -175,6 +175,16 @@ function checklist(over = {}) {
   return Object.assign({ kind: 'checklist', email: 'Lee@Example.com', website: '', started: Date.now() - 20000 }, over);
 }
 
+test('"Send me a checklist" on the contact form gets a checklist subject', async () => {
+  const res = await main(req(form({ help: 'Send me a checklist', message: 'Please send me the checklist: 10 places your secrets are leaking into AI.' })));
+  assert.strictEqual(res.statusCode, 200);
+  const b = calls[0].body;
+  assert.match(b.subject, /^Website: checklist request from /);
+  assert.match(b.text, /Where to start: Send me a checklist/);
+  assert.match(b.text, /Message:\nPlease send me the checklist: 10 places/);
+  assert.deepStrictEqual(b.tags, [{ name: 'source', value: 'website_contact' }]);
+});
+
 test('the contact form is the default kind and keeps its tag', async () => {
   await main(req(form()));
   assert.deepStrictEqual(calls[0].body.tags, [{ name: 'source', value: 'website_contact' }]);

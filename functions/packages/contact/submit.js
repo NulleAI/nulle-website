@@ -33,8 +33,10 @@ const HELP = [
   'Monitoring and audit',
   'AI tools, agents, and training for our team',
   'Custom AI software',
+  'Send me a checklist',
   'Not sure yet'
 ];
+const CHECKLIST_HELP = 'Send me a checklist';
 const MIN_FILL_MS = 1500;               // faster than this is almost certainly a bot; autofill-friendly
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_MAX = 5;                     // per IP per window, per warm instance (best effort)
@@ -135,7 +137,8 @@ function validate(data) {
 }
 
 function compose(f) {
-  const subject = oneLine(`Website: AI exposure review request from ${f.name}${f.company ? ` (${f.company})` : ''}`).slice(0, 200);
+  const what = f.help === CHECKLIST_HELP ? 'checklist request' : 'AI exposure review request';
+  const subject = oneLine(`Website: ${what} from ${f.name}${f.company ? ` (${f.company})` : ''}`).slice(0, 200);
   const body = [
     'New request from the nulle.ai contact form.',
     '',
@@ -146,7 +149,7 @@ function compose(f) {
     `Industry: ${INDUSTRIES[f.industry]}`,
     `Where to start: ${f.help}`,
     '',
-    'How they use AI today:',
+    f.help === CHECKLIST_HELP ? 'Message:' : 'How they use AI today:',
     f.message || '(not provided)',
     '',
     '---',
