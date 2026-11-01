@@ -169,6 +169,17 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); burger.focus(); } });
 
   // Forms. Both post to the DigitalOcean Function at /api/contact/submit.
+  // Until nulle.ai is verified in Resend, they open the visitor's email app
+  // instead, with the request filled in and addressed to connect@nulle.ai.
+  // Set USE_EMAIL_APP to false to send through the function again.
+  var USE_EMAIL_APP = true;
+  function openDraft(subject, lines, msg) {
+    var body = lines.join('\n');
+    if (body.length > 1500) body = body.slice(0, 1500) + '…';  // long mailto links fail in some email apps
+    window.location.href = 'mailto:connect@nulle.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    msg.className = 'f-msg';
+    msg.textContent = 'Your email app should open with this ready to send. If it doesn’t, email connect@nulle.ai.';
+  }
   function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
   var formStarted = Date.now();
   var FALLBACK = 'We couldn’t send that just now. Please email connect@nulle.ai, or try again in a few minutes.';
@@ -200,6 +211,10 @@
     e.preventDefault();
     var form = this, m = $('ck-msg'), v = $('ck-email').value.trim();
     if (!okEmail(v)) { m.className = 'f-msg err'; m.textContent = 'Enter a work email like you@yourcompany.com.'; return; }
+    if (USE_EMAIL_APP) {
+      openDraft('Website: AI leak checklist request from ' + v, ['Hi Nulle team,', '', 'Please send the AI leak checklist to: ' + v], m);
+      return;
+    }
     send({ kind: 'checklist', email: v, website: $('ck-website').value }, $('ck-send'), m, function () {
       form.reset();
       m.className = 'f-msg'; m.textContent = 'Thanks. We’ll send the checklist to ' + v + '.';
@@ -214,6 +229,20 @@
     if (!$('f-help').value) miss.push('where to start');
     if (miss.length) { m.className = 'f-msg err'; m.textContent = 'Add ' + miss.join(', ') + ' to continue.'; return; }
     var form = this, email = $('f-email').value.trim();
+    if (USE_EMAIL_APP) {
+      var name = $('f-name').value.trim(), co = $('f-co').value.trim(), ind = $('f-ind');
+      openDraft('Website: AI exposure review request from ' + name + (co ? ' (' + co + ')' : ''), [
+        'Hi Nulle team,', '',
+        'Name: ' + name,
+        'Email: ' + email,
+        'Company: ' + (co || '(not provided)'),
+        'Role: ' + ($('f-role').value.trim() || '(not provided)'),
+        'Industry: ' + ind.options[ind.selectedIndex].text,
+        'Where to start: ' + $('f-help').value,
+        '', 'How we use AI today:', $('f-msg').value.trim() || '(not provided)'
+      ], m);
+      return;
+    }
     send({
       kind: 'review', name: $('f-name').value.trim(), email: email, company: $('f-co').value.trim(), role: $('f-role').value.trim(),
       industry: $('f-ind').value, help: $('f-help').value, message: $('f-msg').value.trim(), website: $('f-website').value
