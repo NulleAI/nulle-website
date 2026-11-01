@@ -53,20 +53,20 @@
   var CHECKLISTS = { leaks: '10 places your secrets are leaking into AI', ship: 'Before you ship an AI-built app: 10 checks' };
   var STORE = 'nulle-checklist-request';
   function isChecklist(key) { return typeof key === 'string' && Object.prototype.hasOwnProperty.call(CHECKLISTS, key); }
-  function checklistForm(ids) {
+  var CONTACT_PAGE = 'index.html';  // the homepage, where the contact form lives
+  // The destination and checklist names are fixed here, never read from the page.
+  function checklistForm(ids, key) {
     var form = $(ids + '-form'); if (!form) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var m = $(ids + '-msg'), v = $(ids + '-email').value.trim(), key = form.getAttribute('data-checklist');
+      var m = $(ids + '-msg'), v = $(ids + '-email').value.trim();
       if (!okEmail(v)) { m.className = 'f-msg err'; m.textContent = 'Enter a work email like you@yourcompany.com.'; return; }
       try { sessionStorage.setItem(STORE, JSON.stringify({ list: key, email: v })); } catch (err) { /* storage blocked: the form still opens with the checklist chosen */ }
-      var next = form.getAttribute('data-next') || 'index.html#contact', i = next.indexOf('#');
-      if (i < 0) i = next.length;
-      window.location.href = next.slice(0, i) + '?checklist=' + encodeURIComponent(key) + next.slice(i);
+      window.location.href = CONTACT_PAGE + '?checklist=' + key + '#contact';
     });
   }
-  checklistForm('ck');
-  checklistForm('ship');
+  checklistForm('ck', 'leaks');
+  checklistForm('ship', 'ship');
 
   var ct = $('ct-form');
   if (ct) {
