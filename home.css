@@ -420,6 +420,7 @@ h1,h2,h3,h4{font-weight:400;line-height:1.15;text-wrap:balance}
 .foot-g h3{font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
 .foot-g ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px}
 .foot-g ul a{text-decoration:none}
+.foot-addr{font-style:normal;color:var(--muted);line-height:1.5}
 .foot-tag{font-size:15px;color:var(--muted);margin-top:14px;max-width:32ch}
 .foot-bot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
