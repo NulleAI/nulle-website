@@ -157,9 +157,9 @@
 
   .hero-title {
     font-size: clamp(2.5rem, 11.4vw, 4.25rem);
-    line-height: 1;
-    letter-spacing: -0.045em;
-    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    font-weight: 400;
     /* Pull the heading left by its side bearing so it aligns optically
        with the text around it. */
     margin-left: -0.035em;
@@ -167,8 +167,138 @@
 
   @media (min-width: 48rem) {
     .hero-title {
-      font-size: clamp(3.5rem, min(6.1vw, 11.5svh), 6.75rem);
+      font-size: clamp(3.75rem, min(7.3vw, 13svh), 8.5rem);
     }
+  }
+
+  /* The hero is a short scroll track. Its contents hold still while the
+     visitor scrolls through it, and that scroll plays the scene. */
+  .hero-track {
+    height: 225svh;
+  }
+
+  .hero-pin {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    min-height: 32rem;
+    overflow: hidden;
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-track {
+      height: 195svh;
+    }
+  }
+
+  /* Without motion, or in a window too short to hold it, the hero is an
+     ordinary section. */
+  @media (prefers-reduced-motion: reduce), (max-height: 31.99rem) {
+    .hero-track {
+      height: auto;
+    }
+
+    .hero-pin {
+      position: relative;
+      height: auto;
+      min-height: 100svh;
+    }
+  }
+
+  /* "intelligence." waits in grey until the beam reaches it, then takes
+     its colour from the left, and a band of light crosses it. */
+  .hero-title .hero-accent {
+    background-image:
+      linear-gradient(100deg, transparent 38%, rgb(255 255 255 / 0.9) 50%, transparent 62%),
+      linear-gradient(90deg, var(--color-mint), var(--color-cyan)),
+      linear-gradient(var(--fg-mute), var(--fg-mute));
+    background-size: 260% 100%, 0% 100%, 100% 100%;
+    background-position: 0% 0, 0 0, 0 0;
+    background-repeat: no-repeat;
+    transition: background-size 1.2s var(--ease-expo);
+  }
+
+  [data-connected] .hero-title .hero-accent {
+    background-size: 260% 100%, 100% 100%, 100% 100%;
+  }
+
+  /* The two ends of the hero's line. */
+  .hero-node {
+    position: relative;
+    display: block;
+    width: 0.6875rem;
+    height: 0.6875rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+  }
+
+  .hero-node-you {
+    border: 1px solid var(--fg);
+    background-image: radial-gradient(circle, var(--fg) 0 2px, transparent 2.5px);
+  }
+
+  .hero-node-ai {
+    border: 1px solid var(--line-strong);
+    transition:
+      border-color 0.5s ease,
+      box-shadow 1.4s var(--ease-expo);
+  }
+
+  .hero-node-ai::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .hero-node-label {
+    position: absolute;
+    top: calc(100% + 0.875rem);
+    white-space: nowrap;
+    transition: color 0.8s ease;
+  }
+
+  /* Centred under the line, level with the endpoint labels: the steps
+     still between, until it reads "Nothing between". */
+  .hero-count {
+    position: absolute;
+    top: calc(50% + 0.34375rem + 0.875rem);
+    left: 50%;
+    translate: -50% 0;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.8s ease;
+  }
+
+  /* On a phone there is no room beside the endpoint labels; it sits
+     above the line instead. */
+  @media (max-width: 47.99rem) {
+    .hero-count {
+      top: auto;
+      bottom: calc(50% + 0.34375rem + 0.875rem);
+    }
+  }
+
+  [data-connected] .hero-count {
+    color: var(--fg);
+  }
+
+  [data-connected] .hero-node-ai {
+    border-color: transparent;
+    box-shadow: 0 0 22px 3px rgb(138 240 253 / 0.32);
+  }
+
+  [data-connected] .hero-node-ai::before {
+    opacity: 1;
+  }
+
+  [data-connected] .hero-node-ai .hero-node-label {
+    color: var(--fg);
   }
 
   .hero-lead {
@@ -598,6 +728,15 @@
   }
 }
 
+@keyframes sheen {
+  from {
+    background-position: 100% 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0% 0, 0 0, 0 0;
+  }
+}
+
 @keyframes draw {
   from {
     transform: scaleX(0);
@@ -669,6 +808,10 @@
 
   .scroll-cue::after {
     animation: cue 2.6s var(--ease-quart) 2.2s infinite;
+  }
+
+  [data-connected] .hero-title .hero-accent {
+    animation: sheen 1.6s var(--ease-quart) 0.35s both;
   }
 
   .enter-draw {
