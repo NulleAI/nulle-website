@@ -7,9 +7,9 @@ This document stands in for the generated design board (no image-generation tool
 ## 1. Principles
 
 1. **Nothing between.** If an element does not carry meaning, it is removed. Empty space is a feature.
-2. **Typography is the image.** No illustrations, no 3D, no stock imagery. Scale, weight, and alignment do the work.
+2. **Typography is the image.** No illustrations, no 3D, no stock imagery. Scale, weight, and alignment do the work. The exceptions carry facts: a small set of hand-drawn line icons (24px grid, 1.5px stroke), the Apple and Android marks where platforms are named, and the founders' own portraits.
 3. **Colour is an event.** The interface is monochrome. Mint-to-cyan appears only where intelligence is acting: the logo, the hero's AI point, its outcome and key word, an active step, a hover.
-4. **Still first.** Every screen must be complete with motion switched off. Motion only sequences what is already there. The hero is the one place the visitor plays; with reduced motion it renders resolved.
+4. **Still first.** Every screen must be complete with motion switched off. Motion only sequences what is already there. Demonstrations are authored in their final state; with reduced motion the hero and every demonstration simply show their result.
 
 ## 2. Colour
 
@@ -26,7 +26,7 @@ This document stands in for the generated design board (no image-generation tool
 
 Hairlines are the foreground colour at 14% opacity. The gradient always runs left to right, mint to cyan, as in the logo.
 
-Surface rhythm down the page: **ink** (Hero) → **paper** (Philosophy, Expertise) → **ink** (Intelligence in Practice) → **paper** (Approach) → **stone** (About) → **ink** (Contact, Footer).
+Surface rhythm down the page: **ink** (Hero) → **paper** (Philosophy, Expertise) → **ink** (Intelligence in Practice) → **paper** (Approach) → **stone** (About) → **paper** (Founders) → **ink** (Contact, Footer).
 
 ## 3. Typography
 
@@ -59,34 +59,39 @@ Headings are set in authored lines, never left to wrap by chance.
 - **Outline button**: 1px hairline pill, used for "Let's Talk".
 - **Text link**: underline that redraws on hover, arrow that moves 3px.
 - **Form fields**: label above, single underline, no boxes.
-- **Demonstration panel**: the only bordered container on the site. Hairline border, 12px radius, `ink-raised` surface.
+- **Demonstration**: four tab cards (icon in a hairline circle, label; the selected icon fills with the gradient) above one panel with a hairline border, 12px radius and `ink-raised` surface. Inside, each example pairs a plain headline with one visual built from soft cards (16px radius).
+- **Platform badge**: hairline pill with the Apple or Android mark and the platform name; lifts 2px on hover, the Android mark turns green.
+- **Icon link**: 44px hairline circle (Instagram in the footer), labelled for screen readers.
 
 ## 6. Sections
 
-1. **Hero.** From incoming chaos to intelligent action, kept to three things and played by scroll. The section is a short scroll track (190svh; 170svh on phones) whose contents hold still meanwhile. In the open band above the words, five words drift loose: *Missed calls*, *Emails*, *New leads*, *Scheduling*, *Questions*. Scrolling lines them up and five hairlines reach for one small point labelled *AI*. Then light does the work: a small mint light runs each hairline into the point, leaving a soft glow behind it; the point blooms once; and a luminous beam draws on to the outcome: *Answered, booked, followed up.* At rest the light breathes, and every few seconds one input sends a little light through the point and along the beam. No times, counts, headings or interface chrome; the same layout works at every width. Beneath sit a mono eyebrow, the two-line tagline set large and light, the supporting line with one sentence, two calls to action, and a quiet strip naming the four capabilities. "intelligence." waits in grey and takes the gradient when the point lights. A faint film grain keeps the dark surface from reading as a flat fill.
+1. **Hero.** From incoming chaos to intelligent action, played by scroll. The section is a short scroll track (190svh; 170svh on phones) whose contents hold still meanwhile. On load, five inputs, each a word with its line icon in a hairline circle (*Missed calls*, *Emails*, *New leads*, *Scheduling*, *Questions*), fade in where they lie and float loosely across the open band. Scrolling lines them up; hairlines reach toward one point (a spark icon in a ring, labelled *AI*); a small mint light runs each line in; the point lights once; and a beam carries on to the outcome, a check and *Answered, booked, followed up.* Once resolved the light breathes, and every few seconds one input sends a little light through the point and along the beam. A row from tablet width up; a column on phones (icons in a row, short labels beneath, beam dropping to the outcome). Beneath sit only the two-line tagline, the supporting line with one sentence, and two calls to action. "intelligence." waits in grey and takes the gradient when the point lights. A faint film grain keeps the dark surface from reading as a flat fill.
 2. **Philosophy.** "Complexity," is struck through and dimmed as it arrives; "simplified." stays. The paragraph sits right of centre.
-3. **Expertise.** Four rows: mono index, large title, one plain sentence, a short list of what is included.
-4. **Intelligence in Practice.** One panel. Three scenarios on a rail, a stage that plays each one once, and a small set of choices that change what happens. Shared grammar across scenarios: steps → content → outcome.
+3. **Expertise.** Four rows: mono index, large title, one plain sentence, a short list of what is included. The fourth, *Custom Software & Mobile Apps*, adds iOS and Android platform badges and *Our apps on the App Store*: a compact tile per app (icon from the App Store, name, one line, link), currently CreatorCam and Wavelogs.
+4. **Intelligence in Practice.** Four tab cards (*AI Receptionist*, *Automation*, *Private AI*, *Mobile Apps*) above one panel showing one example at a time: a plain headline and sentence on the left, a short visual on the right that ends on its result and keeps it. Receptionist: an after-hours call, three short exchanges, an appointment confirmation card. Automation: four steps ticked off along one line, then the result. Private AI: a question, approved documents with the one used marked, a short answer with its source. Mobile Apps: one AI assistant app concept drawn natively for iOS (light) and Android (dark, mint accent): a greeting with suggestion cards; *Book a visit* is chosen, the assistant types, suggests a time on a card, and *Confirm* books it, with a composer bar beneath; visitors can tap through it, and on phones a small iOS/Android switch shows one device at a time. Receptionist and Private AI offer *Another example*; every panel has *Replay* and a plain note that it is illustrative. Nothing rotates on its own. Beneath, a closing call to action: *Imagine what this could do for your business.* with *Explore a Solution* (to Contact).
 5. **Approach.** Four steps on a single drawn line.
 6. **About.** A statement on the left, three principles as a definition list on the right.
-7. **Contact.** Full-width heading, request-type selector, underlined form.
+7. **Founders.** Kept brief on the homepage: *The minds behind Nulle.*, one supporting sentence, the two founders as small portraits (4.75rem, revealed on scroll) with name and role, and *Meet the founders* linking to the founders page.
+8. **Contact.** Full-width heading, request-type selector, underlined form. The footer adds an Instagram icon link, a Founders link, and Nulle's postal address in its bottom row (also in the Organization structured data).
+
+**Founders page (`/founders`).** From nulle.ai/founders.html: *Built by two. For everyone who builds.* with a short introduction and four facts; the founders' quote on a stone band; a full profile for each founder (portrait up to 24rem with the scroll reveal, role, name, what they lead, bio, focus tags, LinkedIn), alternating sides; *What we believe* (three ideas) on ink; and *Ready to talk?* linking to Contact.
 
 ## 7. Motion
 
 | Moment | Behaviour | Duration | Ease |
 | --- | --- | --- | --- |
 | Hero entrance | Lines rise from masks; rule draws; details fade up. CSS only, starts at first paint. | 1.1s, 90ms stagger | `expo.out` |
-| Hero: idle | On load the five words fade in where they lie and drift a few pixels. | 1s in, 140ms stagger | `ease` |
-| Hero: gather (scroll) | The words line up; their drift falls away. GSAP timeline scrubbed by scroll with 0.8s of inertia. | first ~30% of the track | `power3.inOut` |
-| Hero: converge | The AI point appears and five hairlines draw toward it. | ~25–45% | `power2.inOut` |
-| Hero: light | A mint light runs each hairline into the point, gathering speed, and leaves the line softly lit; the point lifts a little as each arrives. Canvas, additive light, sized to the line length. | ~35–55% | `power1.in` |
-| Hero: bloom | The point's core fills, one bloom and ring play once in time (not scrubbed), the words dim, "intelligence." takes its colour, and a beam draws on to the outcome behind its own light. | ~55–70% | `back.out`, `power1.inOut` |
-| Hero: at rest | The lit lines and point breathe slowly. Every 6.5s one input, in turn, sends a small light into the point and a glint along the beam. Paused off screen; still with reduced motion. Scrolling back undoes the sequence. | continuous | — |
+| Hero: idle | On load the inputs fade in where they lie and float a few pixels. | 1s in, 140ms stagger | `ease` |
+| Hero: gather (scroll) | The inputs line up; their float settles. GSAP timeline scrubbed by scroll with 1s of inertia. | first ~30% of the track | `power3.inOut` |
+| Hero: light (scroll) | The AI point appears and hairlines draw toward it; a mint light runs each line in, gathering speed, leaving it softly lit. Lines and light are one canvas redrawn from live positions. | ~25–55% | `power2.inOut`, `power1.in` |
+| Hero: bloom (scroll) | The point's core fills, one bloom and ring play once in time, the words dim, "intelligence." takes its colour, and a beam draws on to the outcome. The last ~25% holds still; scrolling back undoes it. | ~55–75% | `back.out`, `power1.inOut` |
+| Hero: at rest | The lit lines and point breathe; every 6.5s one input in turn sends a small light into the point and a glint along the beam. Paused off screen; complete and still with reduced motion. | continuous | — |
 | Section headings | Lines rise from masks on scroll, once. | 1.15s | `expo.out` |
 | Content | Fade and 28px rise on scroll, once. | 1s | `expo.out` |
 | Rules | Draw from the left. | 1.4s | `expo.inOut` |
 | Philosophy strike | Line draws through "Complexity"; word dims. | 0.9s | `expo.inOut` |
-| Scenarios | One authored timeline each; plays once in view, replayable. | 3–7s | `power2`/`expo` |
+| Demonstrations | One authored timeline each, from a complete final state; plays once when in view or chosen, replayable; the result stays. Choosing another example cross-fades the panel. | 2.5–4s | `expo.out`, `back.out` |
+| Founders | Each portrait wipes up into view (clip-path) while the photo settles from a 1.22× zoom, then drifts ±5% with the scroll; name and bio rise in behind it. On hover the photo warms and scales 3%. | 1.35s wipe, 1.8s settle | `expo.inOut`, `expo.out` |
 | Hover | Colour, underline, 3px arrow shift. | 0.3s | `ease` |
 
-No page parallax and no scroll hijacking: the hero holds still with `position: sticky` and native scrolling, and nothing intercepts the wheel or touch. Apart from the hero's idle drift, the only looping motion is two small cues (the eyebrow dot and the scroll line). With `prefers-reduced-motion: reduce`, or in a window shorter than 32rem, the scroll track collapses to an ordinary section and the hero renders resolved; scenario choices switch instantly.
+No scroll hijacking: the hero holds still with `position: sticky` and native scrolling, and nothing intercepts the wheel or touch. The only parallax is the founders' gentle portrait drift. The hero's resting light is the only continuous animation. With `prefers-reduced-motion: reduce`, or in a window shorter than 32rem, the hero track collapses and renders resolved; every other element renders in its final state, each demonstration shows its result, and tab choices switch instantly.

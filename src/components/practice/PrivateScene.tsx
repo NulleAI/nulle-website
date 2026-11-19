@@ -2,150 +2,95 @@
 
 import { useRef, useState } from "react";
 
-import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
+import { DocumentIcon, LockIcon, SparkIcon } from "@/components/ui/Icons";
 
-import { Choices, Outcome, reachStep, resetOutcome, resetTrack, showOutcome, Track } from "./parts";
-import { knowledgeQuestions, type KnowledgeQuestion } from "./scenarios";
+import { AnotherExample, SceneLayout, useScene, type SceneProps } from "./parts";
+import { demoById, knowledgeQuestions } from "./scenarios";
 
-type SceneProps = {
-  play: boolean;
-  run: number;
-};
+const demo = demoById("private");
 
-/** Scenario C. Question asked → sources retrieved → answer grounded in a source. */
+/**
+ * A team member asks a question; the answer is found in approved company
+ * documents, and comes back short, with its source. About 3.2s.
+ */
 export function PrivateScene({ play, run }: SceneProps) {
-  const [questionId, setQuestionId] = useState(knowledgeQuestions[0].id);
-  const question = knowledgeQuestions.find((item) => item.id === questionId) ?? knowledgeQuestions[0];
-
-  return (
-    <div className="flex flex-1 flex-col gap-8">
-      <Choices
-        label="Ask about"
-        options={knowledgeQuestions}
-        value={questionId}
-        onChange={setQuestionId}
-      />
-      <Query key={`${question.id}-${run}`} item={question} play={play} />
-    </div>
-  );
-}
-
-function Query({ item, play }: { item: KnowledgeQuestion; play: boolean }) {
+  const [index, setIndex] = useState(0);
+  const item = knowledgeQuestions[index];
   const root = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const scene = root.current;
-      if (!scene) return;
-
-      const media = gsap.matchMedia();
-      media.add(MOTION_OK, () => {
-        const meta = scene.querySelector("[data-meta]");
-        const question = scene.querySelector("[data-question]");
-        const sources = gsap.utils.toArray<HTMLElement>("[data-source]", scene);
-        const others = sources.filter((source) => !source.hasAttribute("data-match"));
-        const marker = scene.querySelector("[data-marker]");
-        const tag = scene.querySelector("[data-tag]");
-        const answer = scene.querySelector("[data-answer]");
-        const citation = scene.querySelector("[data-citation]");
-
-        resetTrack(scene);
-        resetOutcome(scene);
-        gsap.set(meta, { opacity: 0 });
-        gsap.set(question, { clipPath: "inset(0 100% 0 0)" });
-        gsap.set(sources, { opacity: 0, y: 10 });
-        gsap.set(marker, { scaleY: 0 });
-        gsap.set(tag, { opacity: 0 });
-        gsap.set([answer, citation], { opacity: 0, y: 10 });
-
-        const timeline = gsap.timeline({ paused: !play, delay: 0.25 });
-
-        // 1. The question is asked.
-        reachStep(timeline, scene, 0, 0);
-        timeline
-          .to(meta, { opacity: 1, duration: 0.4 }, 0)
-          .to(question, { clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "power2.inOut" }, 0.2);
-
-        // 2. Internal sources are retrieved, and the relevant one is found.
-        reachStep(timeline, scene, 1, ">0.15");
-        timeline
-          .to(sources, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", stagger: 0.12 }, "<0.3")
-          .to(others, { opacity: 0.62, duration: 0.5, ease: "power1.out" }, ">0.35")
-          .to(marker, { scaleY: 1, duration: 0.45, ease: "power2.out" }, "<")
-          .to(tag, { opacity: 1, duration: 0.4 }, "<0.1");
-
-        // 3. The answer arrives with its source attached.
-        reachStep(timeline, scene, 2, ">0.25");
-        timeline
-          .to(answer, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, "<0.3")
-          .to(citation, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, ">-0.2");
-        showOutcome(timeline, scene, ">0.1");
-      });
-    },
-    { scope: root, dependencies: [play], revertOnUpdate: true },
-  );
+  useScene(root, play, [run, index], (scene, timeline) => {
+    const others = scene.querySelectorAll("[data-source]:not([data-match])");
+    timeline
+      .from(scene.querySelector("[data-question]"), { opacity: 0, y: 12, duration: 0.55, ease: "expo.out" }, 0)
+      .from(scene.querySelector("[data-sources-label]"), { opacity: 0, duration: 0.4 }, 0.6)
+      .from(scene.querySelectorAll("[data-source]"), { opacity: 0, y: 8, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.7)
+      .fromTo(others, { opacity: 1 }, { opacity: 0.42, duration: 0.5 }, 1.6)
+      .from(scene.querySelector("[data-match] [data-lit]"), { opacity: 0, duration: 0.5 }, 1.6)
+      .from(scene.querySelector("[data-match] [data-tag]"), { opacity: 0, x: -4, duration: 0.4 }, 1.75)
+      .from(scene.querySelector("[data-answer]"), { opacity: 0, y: 14, duration: 0.65, ease: "expo.out" }, 2.2)
+      .from(scene.querySelector("[data-citation]"), { opacity: 0, y: 6, duration: 0.45, ease: "power2.out" }, 2.65);
+  });
 
   return (
-    <div ref={root} className="flex flex-1 flex-col gap-8">
-      <Track steps={["Question asked", "Sources retrieved", "Answer grounded"]} />
+    <SceneLayout
+      label={demo.label}
+      title={demo.title}
+      summary={demo.summary}
+      aside={
+        <AnotherExample
+          index={index}
+          count={knowledgeQuestions.length}
+          onNext={() => setIndex((index + 1) % knowledgeQuestions.length)}
+        />
+      }
+    >
+      <div ref={root} className="mx-auto flex w-full max-w-[30rem] flex-col gap-4">
+        <div data-question className="flex flex-col items-end gap-2">
+          <span className="label">A team member asks</span>
+          <p className="bubble bubble-question">{item.question}</p>
+        </div>
 
-      <div className="flex-1">
-        <p data-meta className="label flex items-start gap-3 !leading-[1.5]">
-          <span
-            aria-hidden="true"
-            className="mt-[0.35em] block size-[7px] shrink-0 rounded-full bg-fg-mute"
-          />
-          Authorized team member · Internal documents only
-        </p>
-
-        <p
-          data-question
-          className="mt-6 max-w-[30ch] text-[1.25rem] leading-[1.2] tracking-[-0.025em] sm:text-[1.5rem]"
-        >
-          {item.question}
-        </p>
-
-        <ul className="mt-7 border-b border-line">
-          {item.sources.map((source) => (
-            <li
-              key={source.title}
-              data-source
-              data-match={source.match ? "" : undefined}
-              className="relative flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 border-t border-line py-2.5 pl-4 text-[0.9375rem]"
-            >
-              {source.match && (
-                <span
-                  data-marker
-                  aria-hidden="true"
-                  className="absolute inset-y-[-1px] left-0 w-[2px] origin-top bg-mint"
-                />
-              )}
-              <span className={source.match ? "text-fg" : "text-fg-soft"}>{source.title}</span>
-              <span className="flex items-baseline gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-fg-mute">
-                {source.kind}
+        <div className="demo-card p-4 sm:p-5">
+          <p data-sources-label className="label flex items-center gap-2">
+            <LockIcon className="size-3.5" />
+            Approved company documents
+          </p>
+          <ul className="mt-3.5 flex flex-col gap-2">
+            {item.sources.map((source) => (
+              <li
+                key={source.title}
+                data-source
+                data-match={source.match ? "" : undefined}
+                className="relative flex items-center gap-3 rounded-lg px-3 py-2.5"
+              >
                 {source.match && (
-                  <span data-tag className="text-mint">
-                    Relevant
+                  <span data-lit aria-hidden="true" className="absolute inset-0 rounded-lg border border-[rgb(175_254_159/0.4)] bg-[rgb(175_254_159/0.06)]" />
+                )}
+                <DocumentIcon className={`relative size-4 ${source.match ? "text-mint" : "text-fg-mute"}`} />
+                <span className="relative min-w-0 flex-1 truncate text-[0.9375rem]">{source.title}</span>
+                <span className="label relative">{source.kind}</span>
+                {source.match && (
+                  <span data-tag className="label relative !text-mint">
+                    Used
                   </span>
                 )}
-              </span>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <p data-answer className="mt-7 max-w-[46ch] leading-snug tracking-[-0.012em]">
-          {item.answer}
-          <sup className="ml-0.5 font-mono text-[0.625rem] text-mint">1</sup>
-        </p>
-        <p data-citation className="mt-3 font-mono text-[0.75rem] leading-snug text-fg-mute">
-          <span className="text-mint">1</span> Source: {item.citation}
-        </p>
+        <div data-answer className="demo-card demo-card-raised p-5">
+          <p className="label flex items-center gap-2 !text-fg">
+            <SparkIcon className="size-3.5 text-mint" />
+            Answer
+          </p>
+          <p className="mt-3 text-[1.0625rem] leading-[1.4] tracking-[-0.015em]">{item.answer}</p>
+          <p data-citation className="demo-status mt-4 !text-fg-soft">
+            <DocumentIcon className="size-3.5 text-mint" />
+            Source: {item.citation}
+          </p>
+        </div>
       </div>
-
-      <Outcome
-        title="Answered from internal knowledge"
-        detail="Grounded in a named document · Source attached for checking"
-      />
-    </div>
+    </SceneLayout>
   );
 }

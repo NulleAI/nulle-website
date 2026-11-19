@@ -10,6 +10,8 @@ import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
  *   data-reveal-lines   raise each [data-line] out of its mask
  *   data-reveal-rule    draw a hairline from the left
  *   data-strike         the Philosophy strike-through
+ *   data-reveal-portrait  a portrait wipes up into view and settles from a zoom,
+ *                         then drifts gently with the page ([data-portrait-drift])
  *
  * Hidden starting states are applied here, in JavaScript, and only to
  * elements still below the fold. If this script never runs, or the
@@ -67,6 +69,30 @@ export function ScrollMotion() {
             .to(line, { scaleX: 1, duration: 0.9, ease: "expo.inOut" }, 0.75)
             .to(words, { color: restingColor, duration: 0.9, ease: "power2.inOut" }, 0.75);
         }
+      }
+
+      // Portraits: a wipe up from the bottom while the photo settles from a zoom.
+      for (const frame of waiting(gsap.utils.toArray<HTMLElement>("[data-reveal-portrait]"))) {
+        const image = frame.querySelector("img");
+        gsap.set(frame, { clipPath: "inset(100% 0% 0% 0%)" });
+        gsap.set(image, { scale: 1.22, yPercent: 4 });
+        gsap
+          .timeline({ scrollTrigger: { trigger: frame, start: "top 88%", once: true } })
+          .to(frame, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.35, ease: "expo.inOut" })
+          .to(image, { scale: 1, yPercent: 0, duration: 1.8, ease: "expo.out", clearProps: "transform" }, 0.1);
+      }
+
+      // Then every portrait drifts a little as the page passes it.
+      for (const drift of gsap.utils.toArray<HTMLElement>("[data-portrait-drift]")) {
+        gsap.fromTo(
+          drift,
+          { yPercent: -5 },
+          {
+            yPercent: 5,
+            ease: "none",
+            scrollTrigger: { trigger: drift.parentElement, start: "top bottom", end: "bottom top", scrub: true },
+          },
+        );
       }
 
       // Hairlines: draw from the left.

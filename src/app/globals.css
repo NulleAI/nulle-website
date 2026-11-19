@@ -224,16 +224,21 @@
     background-size: 260% 100%, 100% 100%, 100% 100%;
   }
 
-  /* The hero's diagram, kept to three things: what comes in, one point
-     of AI, and what goes out, joined by hairlines and lit from a canvas. */
+  /* The hero's diagram: five inputs, one point of AI, one outcome. Text
+     and icons are markup; lines and light are a canvas behind them. A
+     column on phones, a row from tablet width up. */
   .flow {
     --float: 1;
     position: relative;
     display: grid;
     width: 100%;
-    grid-template-columns: auto minmax(2.5rem, 1.6fr) auto minmax(1.25rem, 1fr) auto;
-    grid-template-areas: "in . node . out";
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "in"
+      "node"
+      "out";
+    justify-items: center;
+    row-gap: 2.75rem;
   }
 
   .flow:not([data-ready]) {
@@ -245,7 +250,8 @@
     z-index: 1;
     display: grid;
     grid-area: in;
-    row-gap: 0.75rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -253,29 +259,50 @@
 
   .flow-slot {
     display: flex;
-    justify-content: flex-end;
+    min-width: 0;
+    justify-content: center;
   }
 
   .flow-body {
     display: flex;
+    flex-direction: column-reverse;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
 
   .flow-word {
-    font-size: clamp(0.9375rem, 1.35vw, 1.25rem);
+    font-size: 0.75rem;
     line-height: 1.2;
     letter-spacing: -0.01em;
     color: var(--fg-soft);
     white-space: nowrap;
   }
 
-  .flow-dot {
-    width: 5px;
-    height: 5px;
+  .flow-word-long {
+    display: none;
+  }
+
+  .flow-chip {
+    position: relative;
+    display: grid;
     flex-shrink: 0;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line-strong);
     border-radius: 999px;
-    background-color: var(--fg-mute);
+    background-color: var(--bg);
+    color: var(--fg-soft);
+  }
+
+  .flow-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .flow-chip-done {
+    border-color: rgb(175 254 159 / 0.55);
+    color: var(--color-mint);
   }
 
   .flow-node {
@@ -286,33 +313,44 @@
 
   .flow-node-ring {
     position: relative;
-    display: block;
-    width: 0.875rem;
-    height: 0.875rem;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
     border: 1px solid var(--fg-mute);
     border-radius: 999px;
     background-color: var(--bg);
-    transition: border-color 0.6s ease;
+    color: var(--fg-soft);
+    transition:
+      border-color 0.6s ease,
+      color 0.6s ease;
   }
 
   .flow-node-core {
     position: absolute;
-    inset: 2px;
+    inset: 3px;
     border-radius: inherit;
-    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+  }
+
+  .flow-node-icon {
+    position: relative;
+    width: 1.35rem;
+    height: 1.35rem;
   }
 
   .flow-node-label {
     position: absolute;
-    top: calc(100% + 0.75rem);
-    left: 50%;
-    translate: -50% 0;
+    top: 50%;
+    left: calc(100% + 0.875rem);
+    translate: 0 -50%;
     white-space: nowrap;
     transition: color 0.8s ease;
   }
 
   [data-connected] .flow-node-ring {
     border-color: var(--color-mint);
+    color: var(--color-ink);
   }
 
   [data-connected] .flow-node-label {
@@ -324,42 +362,17 @@
     z-index: 1;
     display: flex;
     grid-area: out;
+    flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    max-width: 7.5em;
     margin: 0;
-    font-size: clamp(1.0625rem, 2vw, 2rem);
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+    font-size: 1.0625rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-align: center;
     color: var(--fg);
   }
 
-  .flow-out-dot {
-    width: 6px;
-    height: 6px;
-    flex-shrink: 0;
-    border-radius: 999px;
-    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
-  }
-
-  .flow-lines {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  .flow-route {
-    fill: none;
-    stroke: var(--line-strong);
-    stroke-width: 1;
-  }
-
-  /* The light that runs the lines, with room for its glow to spill past them. */
   .flow-light {
     position: absolute;
     z-index: 0;
@@ -368,13 +381,891 @@
   }
 
   @media (min-width: 48rem) {
+    .flow {
+      grid-template-columns: auto minmax(3rem, 1.6fr) auto minmax(2rem, 1fr) auto;
+      grid-template-areas: "in . node . out";
+      align-items: center;
+      justify-items: stretch;
+      row-gap: 0;
+    }
+
     .flow-in {
-      row-gap: 1rem;
+      grid-template-columns: none;
+      width: auto;
+      row-gap: 0.85rem;
+    }
+
+    .flow-slot {
+      justify-content: flex-end;
+    }
+
+    .flow-body {
+      flex-direction: row;
+      gap: 0.875rem;
+    }
+
+    .flow-word {
+      font-size: clamp(0.9375rem, 1.35vw, 1.1875rem);
+    }
+
+    .flow-word-long {
+      display: inline;
+    }
+
+    .flow-word-short {
+      display: none;
+    }
+
+    .flow-node-label {
+      top: calc(100% + 0.75rem);
+      left: 50%;
+      translate: -50% 0;
     }
 
     .flow-out {
-      max-width: none;
+      flex-direction: row;
+      gap: 0.875rem;
+      font-size: clamp(1.0625rem, 1.9vw, 1.875rem);
+      text-align: left;
     }
+  }
+
+  /* The platforms Nulle builds for, under Custom Software & Mobile Apps. */
+  .platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 2.75rem;
+    padding-inline: 1rem 1.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition:
+      border-color 0.35s ease,
+      background-color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  .platform-logo {
+    width: 1.125rem;
+    height: 1.125rem;
+    transition:
+      color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    .platform:hover {
+      border-color: var(--fg);
+      background-color: color-mix(in srgb, var(--fg) 4%, transparent);
+      transform: translateY(-2px);
+    }
+
+    .platform:hover .platform-logo {
+      transform: scale(1.08);
+    }
+
+    .platform-android:hover .platform-logo {
+      color: #2bb673;
+    }
+  }
+
+  /* Nulle's own apps: a compact tile per app, linking to the App Store. */
+  .app-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1rem 0.75rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    transition:
+      border-color 0.35s ease,
+      background-color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  .app-tile-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-radius: 22.5%;
+    box-shadow:
+      0 0 0 1px rgb(17 20 19 / 0.08),
+      0 6px 14px -8px rgb(17 20 19 / 0.45);
+  }
+
+  @media (hover: hover) {
+    .app-tile:hover {
+      border-color: var(--line-strong);
+      background-color: color-mix(in srgb, var(--fg) 3%, transparent);
+      transform: translateY(-2px);
+    }
+
+    .app-tile:hover .arrow {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  /* Founders: compact portraits that warm up and lean in slightly on
+     hover. The drift layer is taller than its frame so the gentle scroll
+     parallax never shows an edge. */
+  .founder-portrait {
+    position: relative;
+    width: 100%;
+    max-width: 16rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.375rem;
+    background-color: var(--color-stone);
+  }
+
+  @media (min-width: 48rem) {
+    .founder-portrait {
+      max-width: 19rem;
+    }
+  }
+
+  .founder-portrait.founder-portrait-small {
+    flex-shrink: 0;
+    width: 4.75rem;
+    max-width: none;
+    border-radius: 0.5rem;
+  }
+
+  .founder-portrait.founder-portrait-large {
+    max-width: 22rem;
+  }
+
+  @media (min-width: 48rem) {
+    .founder-portrait.founder-portrait-large {
+      max-width: 24rem;
+    }
+  }
+
+  .founder-drift {
+    position: absolute;
+    inset: -7% 0;
+  }
+
+  .focus-tag {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+  }
+
+  .founder-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.82);
+    transition:
+      transform 1.2s var(--ease-expo),
+      filter 0.8s ease;
+  }
+
+  @media (hover: hover) {
+    .founder:hover .founder-image {
+      filter: saturate(1);
+      transform: scale(1.03);
+    }
+  }
+
+  /* A small round icon link, used for Instagram in the footer. */
+  .social-link {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--fg-soft);
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    .social-link:hover {
+      border-color: var(--fg);
+      color: var(--fg);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     See what's possible: tabs, cards, and the pieces inside them.
+     --------------------------------------------------------------- */
+  .demo-tab {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: var(--fg-mute);
+    cursor: pointer;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .demo-tab-icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .demo-tab:hover {
+    border-color: var(--line-strong);
+    color: var(--fg-soft);
+  }
+
+  .demo-tab[aria-selected="true"] {
+    border-color: var(--line-strong);
+    background-color: var(--color-ink-raised);
+    color: var(--fg);
+  }
+
+  .demo-tab[aria-selected="true"] .demo-tab-icon {
+    border-color: transparent;
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 48rem) {
+    .demo-tab {
+      gap: 0.75rem;
+      padding: 1.125rem 1.25rem;
+      font-size: 1rem;
+    }
+
+    .demo-tab-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+
+  .demo-card {
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background-color: color-mix(in srgb, var(--fg) 3%, var(--bg));
+  }
+
+  .demo-card-raised {
+    border-color: var(--line-strong);
+    background-color: color-mix(in srgb, var(--fg) 6%, var(--bg));
+    box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.65);
+  }
+
+  .demo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgb(175 254 159 / 0.35);
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    color: var(--color-mint);
+    white-space: nowrap;
+  }
+
+  .bubble {
+    max-width: 86%;
+    align-self: flex-start;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 1rem 1rem 1rem 0.375rem;
+    background-color: color-mix(in srgb, var(--fg) 8%, transparent);
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .bubble-ai {
+    align-self: flex-end;
+    border: 1px solid rgb(175 254 159 / 0.3);
+    border-radius: 1rem 1rem 0.375rem 1rem;
+    background-color: rgb(175 254 159 / 0.07);
+  }
+
+  .bubble-by {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-mint);
+  }
+
+  .bubble-question {
+    align-self: flex-end;
+    max-width: 90%;
+    border-radius: 1rem 1rem 0.375rem 1rem;
+    font-size: 1rem;
+  }
+
+  .step-chip {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--fg-soft);
+  }
+
+  .step-chip-lit {
+    position: absolute;
+    inset: -1px;
+    border: 1px solid rgb(175 254 159 / 0.6);
+    border-radius: inherit;
+    background-color: rgb(175 254 159 / 0.08);
+    box-shadow: 0 0 24px -6px rgb(175 254 159 / 0.45);
+  }
+
+  /* Phone concepts. Everything inside a phone is sized in container
+     units, so the screens keep their proportions at any width. */
+  .phone {
+    display: flex;
+    width: clamp(12.5rem, 62vw, 15rem);
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .phone {
+      width: clamp(12rem, 24vw, 15rem);
+    }
+  }
+
+  .phone-frame {
+    width: 100%;
+    aspect-ratio: 9 / 19.2;
+    padding: 3.5%;
+    border: 1px solid var(--line-strong);
+    border-radius: 15% / 7%;
+    background-color: #0a0c0b;
+    box-shadow:
+      0 40px 80px -40px rgb(0 0 0 / 0.85),
+      0 0 0 1px rgb(255 255 255 / 0.03),
+      inset 0 0 0 1px rgb(255 255 255 / 0.05);
+    container-type: inline-size;
+  }
+
+  .phone-android .phone-frame {
+    border-radius: 11% / 5.2%;
+  }
+
+  .phone-screen {
+    --app-bg: #f6f6f2;
+    --app-fg: #111413;
+    --app-mute: #6b716d;
+    --app-card: #ffffff;
+    --app-line: rgb(17 20 19 / 0.09);
+    --app-accent: #111413;
+    --app-on-accent: #f6f6f2;
+    --app-radius: 4.5cqw;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12% / 5.6%;
+    background-color: var(--app-bg);
+    color: var(--app-fg);
+  }
+
+  .phone-android .phone-screen {
+    --app-bg: #0f1311;
+    --app-fg: #eef1ed;
+    --app-mute: #8e968f;
+    --app-card: #1a201d;
+    --app-line: rgb(238 241 237 / 0.09);
+    --app-accent: #affe9f;
+    --app-on-accent: #0f1311;
+    --app-radius: 6cqw;
+    border-radius: 8% / 3.8%;
+  }
+
+  .phone-status {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 13cqw;
+    padding: 0 8cqw;
+    font-size: 4.2cqw;
+    font-weight: 600;
+  }
+
+  .phone-camera {
+    position: absolute;
+    top: 3.4cqw;
+    left: 50%;
+    translate: -50% 0;
+    width: 27cqw;
+    height: 7.6cqw;
+    border-radius: 999px;
+    background-color: #050606;
+  }
+
+  .phone-android .phone-camera {
+    top: 4.2cqw;
+    width: 4.8cqw;
+    height: 4.8cqw;
+  }
+
+  .phone-battery {
+    width: 6.5cqw;
+    height: 3.2cqw;
+    border: 1px solid currentColor;
+    border-radius: 1cqw;
+    opacity: 0.7;
+  }
+
+  /* The assistant app. */
+  .app {
+    position: absolute;
+    inset: 13cqw 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-bar {
+    display: flex;
+    align-items: center;
+    gap: 2.6cqw;
+    height: 13cqw;
+    padding: 0 4cqw;
+    border-bottom: 1px solid var(--app-line);
+  }
+
+  .app-icon-button {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 7.5cqw;
+    height: 7.5cqw;
+    border-radius: 999px;
+    color: var(--app-fg);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .app-icon-button:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+
+  .app-icon-button svg {
+    width: 5cqw;
+    height: 5cqw;
+  }
+
+  .app-compose {
+    margin-left: auto;
+    cursor: default;
+  }
+
+  .app-avatar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 8.5cqw;
+    height: 8.5cqw;
+    border-radius: 999px;
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+    color: #111413;
+    box-shadow: 0 0 6cqw -1cqw rgb(175 254 159 / 0.55);
+  }
+
+  .app-avatar svg {
+    width: 4.8cqw;
+    height: 4.8cqw;
+  }
+
+  .app-avatar-small {
+    width: 6.5cqw;
+    height: 6.5cqw;
+    box-shadow: none;
+  }
+
+  .app-avatar-small svg {
+    width: 3.8cqw;
+    height: 3.8cqw;
+  }
+
+  .app-who {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.6cqw;
+  }
+
+  .app-name {
+    font-size: 4.4cqw;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .app-online {
+    display: flex;
+    align-items: center;
+    gap: 1.2cqw;
+    font-size: 3.2cqw;
+    color: var(--app-mute);
+  }
+
+  .app-online-dot {
+    width: 1.6cqw;
+    height: 1.6cqw;
+    border-radius: 999px;
+    background-color: #3ccf7a;
+  }
+
+  .app-body {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .app-view {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 4cqw 5cqw;
+    transition:
+      opacity 0.45s ease,
+      transform 0.6s var(--ease-expo);
+  }
+
+  /* Like a real chat, the conversation sits just above the composer. */
+  .app-view-chat {
+    justify-content: flex-end;
+    padding-bottom: 3cqw;
+  }
+
+  [data-stage="home"] .app-view-chat {
+    opacity: 0;
+    transform: translateY(4cqw);
+  }
+
+  [data-stage]:not([data-stage="home"]) .app-view-home {
+    opacity: 0;
+    transform: translateY(-4cqw);
+  }
+
+  .app-greeting {
+    margin-top: 6cqw;
+    font-size: 4.3cqw;
+    color: var(--app-mute);
+  }
+
+  .app-headline {
+    margin-top: 1.5cqw;
+    font-size: 9.6cqw;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .phone-android .app-headline {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .app-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2cqw;
+    margin-top: auto;
+  }
+
+  .app-suggestion {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 3cqw;
+    padding: 3.6cqw 4cqw;
+    border: 1px solid var(--app-line);
+    border-radius: var(--app-radius);
+    background-color: var(--app-card);
+    font-size: 4.4cqw;
+    font-weight: 500;
+    text-align: left;
+    color: var(--app-fg);
+  }
+
+  button.app-suggestion {
+    cursor: pointer;
+  }
+
+  .app-suggestion svg {
+    width: 4.6cqw;
+    height: 4.6cqw;
+    color: var(--app-mute);
+  }
+
+  .app-bubble-user {
+    align-self: flex-end;
+    max-width: 82%;
+    margin-top: 2cqw;
+    padding: 3cqw 4.2cqw;
+    border-radius: 5.5cqw 5.5cqw 1.6cqw 5.5cqw;
+    background-color: var(--app-accent);
+    color: var(--app-on-accent);
+    font-size: 4.5cqw;
+    line-height: 1.35;
+  }
+
+  .app-ai {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.4cqw;
+    margin-top: 4cqw;
+  }
+
+  .app-ai-text {
+    font-size: 4.5cqw;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .app-follow {
+    margin-top: 4cqw;
+    padding-left: 8.9cqw;
+  }
+
+  .app-typing {
+    display: flex;
+    gap: 1.3cqw;
+    padding: 2.4cqw 0;
+  }
+
+  .app-typing span {
+    width: 1.7cqw;
+    height: 1.7cqw;
+    border-radius: 999px;
+    background-color: var(--app-mute);
+    animation: app-typing 1s ease-in-out infinite;
+  }
+
+  .app-typing span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .app-typing span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .app-card {
+    margin-top: 4cqw;
+    margin-left: 8.9cqw;
+    padding: 4.2cqw;
+    border: 1px solid var(--app-line);
+    border-radius: var(--app-radius);
+    background-color: var(--app-card);
+    box-shadow: 0 2cqw 6cqw -3cqw rgb(0 0 0 / 0.25);
+  }
+
+  .app-card-label {
+    font-size: 3.4cqw;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--app-mute);
+  }
+
+  .app-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2cqw;
+    padding: 2.8cqw 3.4cqw;
+    border: 1px solid var(--app-line);
+    border-radius: 3.2cqw;
+    font-size: 4.3cqw;
+    font-weight: 500;
+  }
+
+  .app-option.is-on {
+    border-color: var(--app-fg);
+  }
+
+  .phone-android .app-option.is-on {
+    border-color: var(--app-accent);
+    background-color: rgb(175 254 159 / 0.08);
+  }
+
+  .app-radio {
+    width: 3.4cqw;
+    height: 3.4cqw;
+    border: 1px solid var(--app-mute);
+    border-radius: 999px;
+  }
+
+  .is-on .app-radio {
+    border: 1cqw solid var(--app-accent);
+  }
+
+  .phone-ios .is-on .app-radio {
+    border-color: var(--app-fg);
+  }
+
+  .app-confirm {
+    width: 100%;
+    height: 10.5cqw;
+    margin-top: 3.4cqw;
+    border-radius: 3cqw;
+    background-color: var(--app-accent);
+    color: var(--app-on-accent);
+    font-size: 4.4cqw;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .phone-android .app-confirm {
+    border-radius: 999px;
+  }
+
+  .app-booked {
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+  }
+
+  .app-booked > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6cqw;
+  }
+
+  .app-check {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 11cqw;
+    height: 11cqw;
+    border-radius: 999px;
+    color: #111413;
+  }
+
+  .app-check svg {
+    width: 5cqw;
+    height: 5cqw;
+  }
+
+  .app-booked-title {
+    font-size: 4.8cqw;
+    font-weight: 600;
+  }
+
+  .app-booked-time {
+    font-size: 4.3cqw;
+  }
+
+  .app-card-note {
+    font-size: 3.6cqw;
+    color: var(--app-mute);
+  }
+
+  .app-composer {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqw;
+    margin: 2cqw 4cqw 6cqw;
+    padding: 1.6cqw 1.6cqw 1.6cqw 4.4cqw;
+    border: 1px solid var(--app-line);
+    border-radius: 999px;
+    background-color: var(--app-card);
+    color: var(--app-mute);
+  }
+
+  .app-composer-text {
+    flex: 1;
+    font-size: 4.2cqw;
+  }
+
+  .app-composer > svg {
+    width: 4.6cqw;
+    height: 4.6cqw;
+  }
+
+  .app-send {
+    display: grid;
+    place-items: center;
+    width: 8cqw;
+    height: 8cqw;
+    border-radius: 999px;
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+    color: #111413;
+  }
+
+  .app-send svg {
+    width: 4.4cqw;
+    height: 4.4cqw;
+  }
+
+  /* Each new message or card settles in. */
+  .app-in {
+    animation: app-in 0.5s var(--ease-expo) both;
+  }
+
+  /* A small two-way switch, used to pick a platform on phones. */
+  .segmented {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  .segmented-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.25rem;
+    padding-inline: 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--fg-mute);
+    cursor: pointer;
+    transition:
+      color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .segmented-option[aria-pressed="true"] {
+    background-color: var(--fg);
+    color: var(--bg);
   }
 
   .hero-lead {
@@ -391,42 +1282,6 @@
     pointer-events: none;
     opacity: 0.06;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  .hero-dot {
-    position: relative;
-    display: block;
-    width: 6px;
-    height: 6px;
-    flex-shrink: 0;
-    border-radius: 999px;
-    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
-  }
-
-  .hero-dot::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid var(--color-mint);
-    opacity: 0;
-  }
-
-  .scroll-cue {
-    position: relative;
-    display: block;
-    width: 3rem;
-    height: 1px;
-    overflow: hidden;
-    background-color: var(--line-strong);
-  }
-
-  .scroll-cue::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: var(--fg);
-    transform: translateX(-101%);
   }
 
   .display {
@@ -813,13 +1668,33 @@
   }
 }
 
-/* Drift while scattered; --float falls to 0 as the fragments are sorted. */
+/* A slow float while loose, scaled by --float so it settles as the inputs line up. */
 @keyframes flow-float {
   from {
-    translate: 0 calc(var(--float) * -3px);
+    translate: 0 calc(var(--float) * -5px);
   }
   to {
-    translate: calc(var(--float) * 2px) calc(var(--float) * 3px);
+    translate: calc(var(--float) * 3px) calc(var(--float) * 5px);
+  }
+}
+
+@keyframes app-in {
+  from {
+    opacity: 0;
+    transform: translateY(2cqw);
+  }
+}
+
+@keyframes app-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-0.8cqw);
   }
 }
 
@@ -888,27 +1763,17 @@
     animation-delay: calc(var(--i, 0) * 90ms);
   }
 
-  .hero-dot::after {
-    animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) 1.6s infinite;
-  }
-
-  .scroll-cue::after {
-    animation: cue 2.6s var(--ease-quart) 2.2s infinite;
-  }
-
   [data-connected] .hero-title .hero-accent {
     animation: sheen 1.6s var(--ease-quart) 0.35s both;
   }
 
-  .flow[data-ready] {
-    animation: fade 0.8s ease both;
-  }
-
+  /* On load the inputs fade in where they lie and float; --float falls
+     to 0 as scroll lines them up. */
   .flow[data-ready] .flow-in .flow-body {
     animation:
       fade 1s ease both,
       flow-float 6.5s ease-in-out infinite alternate;
-    animation-delay: calc(var(--n, 0) * 140ms + 250ms), calc(var(--n, 0) * -1.7s);
+    animation-delay: calc(var(--n, 0) * 140ms + 200ms), calc(var(--n, 0) * -1.7s);
   }
 
   .enter-draw {

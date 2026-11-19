@@ -3,13 +3,14 @@ import { About } from "@/components/sections/About";
 import { Approach } from "@/components/sections/Approach";
 import { Contact } from "@/components/sections/Contact";
 import { Expertise } from "@/components/sections/Expertise";
+import { Founders } from "@/components/sections/Founders";
 import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { Practice } from "@/components/sections/Practice";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Logo } from "@/components/site/Logo";
-import { site } from "@/lib/site";
+import { address, site } from "@/lib/site";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -20,6 +21,14 @@ const structuredData = {
   description: site.description,
   logo: `${site.url}/icon.png`,
   ...(site.contactEmail ? { email: site.contactEmail } : {}),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: `${address.street}, ${address.unit}`,
+    addressLocality: address.locality,
+    addressRegion: address.region,
+    postalCode: address.postalCode,
+    addressCountry: "US",
+  },
   knowsAbout: [
     "Artificial intelligence consulting",
     "AI agents and automation",
@@ -42,6 +51,7 @@ export default function Home() {
         <Practice />
         <Approach />
         <About />
+        <Founders />
         <Contact />
       </main>
       <Footer />

@@ -1,5 +1,10 @@
+import Image from "next/image";
+
+import { Arrow } from "@/components/ui/Arrow";
+import { AndroidLogo, AppleLogo } from "@/components/ui/Icons";
 import { Lines } from "@/components/ui/Lines";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { apps } from "@/lib/site";
 
 const capabilities = [
   {
@@ -40,15 +45,17 @@ const capabilities = [
   },
   {
     index: "04",
-    title: "Custom Software & Digital Products",
+    title: "Custom Software & Mobile Apps",
     summary:
-      "When off-the-shelf doesn’t fit, we build what does: software engineered around the way your business works.",
+      "From intelligent business tools to beautifully engineered iOS and Android applications, we turn ambitious ideas into production-ready software.",
     includes: [
-      "Purpose-built applications",
+      "Native iOS & Android apps",
+      "Custom business apps",
+      "Consumer digital products",
       "AI integrations",
       "Internal platforms",
-      "Scalable digital products",
     ],
+    platforms: true,
   },
 ] as const;
 
@@ -80,6 +87,47 @@ export function Expertise() {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
+                {"platforms" in capability && (
+                  <ul aria-label="Platforms we build for" className="mt-8 flex flex-wrap gap-3">
+                    <li className="platform">
+                      <AppleLogo className="platform-logo" />
+                      iOS
+                    </li>
+                    <li className="platform platform-android">
+                      <AndroidLogo className="platform-logo" />
+                      Android
+                    </li>
+                  </ul>
+                )}
+                {"platforms" in capability && (
+                  <div className="mt-10">
+                    <p className="label">Our apps on the App Store</p>
+                    <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                      {apps.map((app) => (
+                        <li key={app.name}>
+                          <a href={app.url} target="_blank" rel="noreferrer" className="app-tile">
+                            <Image
+                              src={app.icon}
+                              alt=""
+                              width={56}
+                              height={56}
+                              sizes="56px"
+                              className="app-tile-icon"
+                            />
+                            <span className="min-w-0 flex-1">
+                              <span className="block font-medium tracking-[-0.015em]">{app.name}</span>
+                              <span className="mt-0.5 block text-[0.8125rem] leading-snug text-fg-mute">
+                                {app.summary}
+                              </span>
+                            </span>
+                            <Arrow direction="up-right" />
+                            <span className="sr-only"> on the App Store (opens in a new tab)</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </li>
           ))}

@@ -1,7 +1,9 @@
 import { cacheLife } from "next/cache";
 import Link from "next/link";
 
-import { legalNavigation, navigation, site } from "@/lib/site";
+import { address, legalNavigation, navigation, site } from "@/lib/site";
+
+import { InstagramIcon } from "@/components/ui/Icons";
 
 import { Logo } from "./Logo";
 
@@ -23,6 +25,16 @@ export async function Footer() {
               <Logo />
             </Link>
             <p className="mt-5 text-fg-mute">{site.tagline}</p>
+            <a
+              href={site.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Nulle on Instagram (opens in a new tab)"
+              title="Nulle on Instagram"
+              className="social-link mt-8"
+            >
+              <InstagramIcon className="size-[1.125rem]" />
+            </a>
           </div>
 
           <nav aria-label="Footer" className="md:col-span-3">
@@ -35,6 +47,11 @@ export async function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/founders" className="nav-link">
+                  Founders
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -69,6 +86,15 @@ export async function Footer() {
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
+          <address className="not-italic leading-relaxed">
+            <span className="whitespace-nowrap">{address.street}</span>
+            {", "}
+            <span className="whitespace-nowrap">{address.unit}</span>
+            {", "}
+            <span className="whitespace-nowrap">
+              {address.locality}, {address.region} {address.postalCode}
+            </span>
+          </address>
           <ul className="flex gap-6">
             {legalNavigation.map((item) => (
               <li key={item.href}>

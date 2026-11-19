@@ -1,155 +1,114 @@
 /**
- * Authored content for the "Intelligence in Practice" demonstration.
+ * Authored content for "See what's possible".
  *
  * Everything here is illustrative and deterministic. No model is called
- * and no real business, person, or document is represented.
+ * and no real business, person, document, or app is represented.
  */
 
-export const scenarios = [
+const NOTE = "Illustrative demonstration. A simplified example, not a client project.";
+
+export const demos = [
   {
     id: "receptionist",
-    letter: "A",
-    title: "AI Receptionist",
-    short: "Receptionist",
-    value: "Fewer missed opportunities, and less time spent managing routine calls.",
-    note: "Illustrative demonstration. A simplified example, not a client project.",
+    label: "AI Receptionist",
+    title: "Every call answered, even after hours.",
+    summary:
+      "A customer calls after you’ve closed. The AI receptionist answers, helps, and books the appointment.",
+    note: NOTE,
   },
   {
-    id: "workflow",
-    letter: "B",
-    title: "Intelligent Workflow",
-    short: "Workflow",
-    value: "Less repetitive work, and more time for the decisions that matter.",
-    note: "Illustrative demonstration. A simplified example, not a client project.",
+    id: "automation",
+    label: "Automation",
+    title: "The busywork, handled.",
+    summary:
+      "A new lead arrives. The reply, the CRM record, and the follow-up happen on their own.",
+    note: NOTE,
   },
   {
     id: "private",
-    letter: "C",
-    title: "Private AI",
-    short: "Private AI",
-    value: "Faster access to what your organization already knows, within a controlled environment.",
-    note: "Illustrative demonstration, fictional documents. Real security and compliance depend on how each system is built and governed.",
+    label: "Private AI",
+    title: "Answers from your own documents.",
+    summary:
+      "Your team asks in plain words. The answer comes only from approved company documents, with its source attached.",
+    note: "Illustrative demonstration with fictional documents. Real security and compliance depend on how each system is built and governed.",
+  },
+  {
+    id: "mobile",
+    label: "Mobile Apps",
+    title: "Your idea. Beautifully built.",
+    summary: "Custom iOS and Android applications engineered around your business and your customers.",
+    note: "Illustrative concept, not a delivered client app.",
   },
 ] as const;
 
-export type ScenarioId = (typeof scenarios)[number]["id"];
+export type DemoId = (typeof demos)[number]["id"];
 
-/* ---------------------------------------------------------------- A */
+export const demoById = <T extends DemoId>(id: T) =>
+  demos.find((demo) => demo.id === id) as Extract<(typeof demos)[number], { id: T }>;
 
-export type TranscriptLine = {
-  speaker: "ai" | "caller";
-  text: string;
-  /** What the system took from this line. Shown beneath it. */
-  understood?: string;
+/* ------------------------------------------------- AI Receptionist */
+
+export type Call = {
+  lines: { speaker: "caller" | "ai"; text: string }[];
+  result: { title: string; detail: string; note: string };
 };
 
-export type CallRequest = {
-  id: string;
-  label: string;
-  finalStep: string;
-  lines: TranscriptLine[];
-  outcome: { title: string; detail: string };
-};
-
-export const callRequests: CallRequest[] = [
+export const calls: Call[] = [
   {
-    id: "book",
-    label: "Book a visit",
-    finalStep: "Appointment scheduled",
     lines: [
-      { speaker: "ai", text: "Thank you for calling. How can I help?" },
-      {
-        speaker: "caller",
-        text: "Hi. I’d like to book a check-up sometime next week.",
-        understood: "New appointment · Check-up · Next week",
-      },
-      {
-        speaker: "ai",
-        text: "Of course. I have Tuesday at 10:30 or Thursday at 2:00. Which suits you?",
-      },
-      { speaker: "caller", text: "Thursday at 2 works." },
-      {
-        speaker: "ai",
-        text: "You’re booked for Thursday at 2:00 PM. I’ll send a confirmation by text.",
-      },
+      { speaker: "caller", text: "Hi, I’d like to book a check-up next week." },
+      { speaker: "ai", text: "Of course. I have Thursday at 2:00 PM. Does that work?" },
+      { speaker: "caller", text: "Perfect, thank you." },
     ],
-    outcome: {
-      title: "Appointment scheduled",
-      detail: "Thursday, 2:00 PM · Calendar updated · Confirmation sent",
+    result: {
+      title: "Appointment booked",
+      detail: "Thursday, 2:00 PM · Check-up",
+      note: "Confirmation sent by text",
     },
   },
   {
-    id: "hours",
-    label: "Ask about hours",
-    finalStep: "Question answered",
     lines: [
-      { speaker: "ai", text: "Thank you for calling. How can I help?" },
-      {
-        speaker: "caller",
-        text: "Are you open on Saturdays?",
-        understood: "Question · Opening hours · Saturday",
-      },
-      {
-        speaker: "ai",
-        text: "We are, from 9:00 to 1:00 on Saturdays. Would you like me to book a time?",
-      },
-      { speaker: "caller", text: "Not today, thanks. That’s all I needed." },
-      { speaker: "ai", text: "Glad to help. Have a good evening." },
+      { speaker: "caller", text: "I need to move my appointment on Friday." },
+      { speaker: "ai", text: "No problem. I can offer Monday at 9:15 AM." },
+      { speaker: "caller", text: "Monday works. Thanks." },
     ],
-    outcome: {
-      title: "Question answered",
-      detail: "No one interrupted · Call summary saved for the team",
-    },
-  },
-  {
-    id: "move",
-    label: "Reschedule",
-    finalStep: "Appointment moved",
-    lines: [
-      { speaker: "ai", text: "Thank you for calling. How can I help?" },
-      {
-        speaker: "caller",
-        text: "I need to move my appointment on Friday.",
-        understood: "Reschedule · Existing appointment · Friday",
-      },
-      {
-        speaker: "ai",
-        text: "No problem. I can offer Monday at 9:15 or Wednesday at 4:30.",
-      },
-      { speaker: "caller", text: "Monday, please." },
-      { speaker: "ai", text: "Done. You’re now booked for Monday at 9:15 AM." },
-    ],
-    outcome: {
+    result: {
       title: "Appointment moved",
-      detail: "Monday, 9:15 AM · Calendar updated · Friday slot released",
+      detail: "Monday, 9:15 AM",
+      note: "Calendar updated · Friday slot released",
+    },
+  },
+  {
+    lines: [
+      { speaker: "caller", text: "Are you open on Saturdays?" },
+      { speaker: "ai", text: "We are, from 9:00 AM to 1:00 PM. Shall I book a time?" },
+      { speaker: "caller", text: "Not today, that’s all I needed." },
+    ],
+    result: {
+      title: "Question answered",
+      detail: "Saturday hours shared",
+      note: "Call summary saved for your team",
     },
   },
 ];
 
-/* ---------------------------------------------------------------- B */
+/* ------------------------------------------------------ Automation */
 
-export const workflowTasks = [
-  { title: "Incoming lead", before: "Waiting in an inbox", after: "Captured as it arrives" },
-  { title: "Email response", before: "Written by hand", after: "Reply drafted for you" },
-  { title: "Data entry", before: "Copied across by hand", after: "Recorded automatically" },
-  { title: "Follow-up", before: "Easy to forget", after: "Scheduled" },
+export const automationSteps = [
+  { title: "New lead received", detail: "A website enquiry from Alex Rivera" },
+  { title: "Personalized reply prepared", detail: "Answers the question and suggests a time" },
+  { title: "Added to your CRM", detail: "Contact, source and notes recorded" },
+  { title: "Follow-up scheduled", detail: "A reminder for Tuesday, 10:00 AM" },
 ] as const;
 
-export const workflowStatus = {
-  before: "Four separate tasks, each waiting on someone.",
-  after: "One connected flow, moving as work arrives.",
+export const automationOutcome = {
+  title: "Handled automatically",
+  detail: "Nothing to copy, paste, or remember. Ready for your review.",
 } as const;
 
-export const workflowOutcome = {
-  title: "Routine work handled",
-  detail: "Your attention goes to the decisions only you can make",
-} as const;
-
-/* ---------------------------------------------------------------- C */
+/* ------------------------------------------------------ Private AI */
 
 export type KnowledgeQuestion = {
-  id: string;
-  label: string;
   question: string;
   sources: { title: string; kind: string; match?: boolean }[];
   answer: string;
@@ -158,42 +117,34 @@ export type KnowledgeQuestion = {
 
 export const knowledgeQuestions: KnowledgeQuestion[] = [
   {
-    id: "onboarding",
-    label: "Client onboarding",
-    question: "What are the steps for onboarding a new client?",
+    question: "What is our client onboarding process?",
     sources: [
-      { title: "Client Intake Procedure", kind: "Policy · Section 2", match: true },
+      { title: "Client Intake Procedure", kind: "Policy", match: true },
       { title: "Engagement Letter Template", kind: "Template" },
       { title: "Conflict Check Guidelines", kind: "Policy" },
     ],
     answer:
-      "New clients go through three steps: a conflict check, a signed engagement letter, and an intake call within five business days.",
+      "Three steps: a conflict check, a signed engagement letter, then an intake call within five business days.",
     citation: "Client Intake Procedure, section 2",
   },
   {
-    id: "retention",
-    label: "File retention",
     question: "How long do we keep closed client files?",
     sources: [
-      { title: "Records Retention Policy", kind: "Policy · Section 4", match: true },
+      { title: "Records Retention Policy", kind: "Policy", match: true },
       { title: "File Closing Checklist", kind: "Checklist" },
       { title: "Data Handling Guidelines", kind: "Policy" },
     ],
-    answer:
-      "Closed client files are kept for seven years, then reviewed before secure disposal.",
+    answer: "Seven years. Files are then reviewed before secure disposal.",
     citation: "Records Retention Policy, section 4",
   },
   {
-    id: "fees",
-    label: "Fee approvals",
-    question: "Who approves a fee adjustment above the standard rate?",
+    question: "Who approves a fee above the standard rate?",
     sources: [
-      { title: "Billing Guidelines", kind: "Policy · Section 3", match: true },
+      { title: "Billing Guidelines", kind: "Policy", match: true },
       { title: "Rate Card", kind: "Reference" },
       { title: "Engagement Letter Template", kind: "Template" },
     ],
-    answer:
-      "Adjustments above the standard rate need approval from the supervising partner before the invoice is issued.",
+    answer: "The supervising partner, before the invoice is issued.",
     citation: "Billing Guidelines, section 3",
   },
 ];
