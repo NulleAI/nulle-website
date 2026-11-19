@@ -623,11 +623,11 @@
     }
   }
 
-  /* Founders on the homepage: an asymmetric composition. The headline
-     and one sentence sit left; two moderate headshots sit right, the
-     second set lower; the link to the founders page anchors the
-     bottom left. Stacked on phones. */
+  /* Founders on the homepage: an asymmetric composition. The headline,
+     one sentence and the link to the founders page sit left; two moderate
+     headshots sit right, level, with a hairline between. Stacked on phones. */
   .founders {
+    --headshot: clamp(11.25rem, 15vw, 13.75rem);
     display: grid;
     gap: 3.5rem;
   }
@@ -636,23 +636,14 @@
     .founders {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: 1.5rem;
-      row-gap: 3rem;
     }
 
     .founders-intro {
       grid-column: 1 / span 5;
-      grid-row: 1;
     }
 
     .founders-list {
       grid-column: 7 / -1;
-      grid-row: 1 / span 2;
-    }
-
-    .founders-more {
-      grid-column: 1 / span 5;
-      grid-row: 2;
-      align-self: end;
     }
   }
 
@@ -678,18 +669,45 @@
     }
   }
 
+  /* The way through sits with the introduction it belongs to. */
+  .founders-more {
+    margin-top: 2.25rem;
+  }
+
+  @media (min-width: 64rem) {
+    .founders-more {
+      margin-top: 2.75rem;
+    }
+  }
+
+  /* Side by side from 40rem: two equal columns starting on the grid's
+     seventh column, each a touch wider than its headshot so the lines
+     read comfortably. The photographs share one top edge, and a hairline
+     stands between the two founders, centred in the gap. Stacked below. */
   .founders-list {
+    --founders-gap: clamp(2.5rem, 4vw, 3.5rem);
     display: grid;
-    gap: 3.5rem clamp(1.5rem, 3vw, 3rem);
+    gap: 3.5rem;
   }
 
   @media (min-width: 40rem) {
     .founders-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, calc(var(--headshot) + 1.5rem));
+      column-gap: var(--founders-gap);
     }
 
-    .founder-profile:nth-child(2) {
-      margin-top: 4.5rem;
+    .founder-profile + .founder-profile {
+      position: relative;
+    }
+
+    .founder-profile + .founder-profile::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--founders-gap) / -2);
+      width: 1px;
+      background-color: var(--line);
     }
   }
 
@@ -699,7 +717,7 @@
      two photographs; hover restores full colour and lifts contrast. */
   .headshot {
     position: relative;
-    width: clamp(11.25rem, 15vw, 13.75rem);
+    width: var(--headshot);
     max-width: 100%;
     aspect-ratio: 4 / 5;
     overflow: hidden;
@@ -730,18 +748,25 @@
       filter 0.9s ease;
   }
 
-  @media (hover: hover) {
-    .founder-profile:hover .headshot-image {
-      filter: saturate(1) contrast(1.07);
-      transform: scale(1.045);
-    }
-  }
-
   .founder-meta {
     max-width: 17.5rem;
     margin-top: 1.5rem;
     padding-top: 1.125rem;
     border-top: 1px solid var(--line);
+    transition: border-color 0.8s ease;
+  }
+
+  /* Hover: the photograph regains its colour and leans in a little; the
+     hairline beneath it deepens. */
+  @media (hover: hover) {
+    .founder-profile:hover .headshot-image {
+      filter: saturate(1) contrast(1.07);
+      transform: scale(1.045);
+    }
+
+    .founder-profile:hover .founder-meta {
+      border-top-color: var(--line-strong);
+    }
   }
 
   .founder-name {
@@ -752,14 +777,14 @@
   }
 
   .founder-role {
-    margin-top: 0.7rem;
-    line-height: 1.5;
+    margin-top: 0.75rem;
+    line-height: 1.6;
   }
 
   .founder-summary {
-    margin-top: 0.9rem;
+    margin-top: 1rem;
     font-size: 0.9375rem;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--fg-soft);
   }
 
