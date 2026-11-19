@@ -1,3 +1,6 @@
+import creatorCamIcon from "@/assets/apps/creatorcam.jpg";
+import wavelogsIcon from "@/assets/apps/wavelogs.jpg";
+
 /**
  * Site-wide configuration.
  *
@@ -43,19 +46,22 @@ export const address = {
   postalCode: "30318",
 } as const;
 
-/** Nulle's own apps on the App Store (seller: Nulle, LLC). */
+/**
+ * Nulle's own apps on the App Store (seller: Nulle, LLC). Icons are local
+ * copies of the App Store artwork, so next/image optimizes them at build.
+ */
 export const apps = [
   {
     name: "CreatorCam",
     summary: "Records portrait and landscape video at the same time, in one tap.",
     url: "https://apps.apple.com/us/app/creatorcam-dual-video-record/id6761403032",
-    icon: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8f/73/de/8f73dee5-3c62-41f1-911c-f3b75e5139f0/Placeholder.mill/400x400Icon.ApSiOS01-75.jpg",
+    icon: creatorCamIcon,
   },
   {
     name: "Wavelogs",
     summary: "Private voice notes, transcribed on device, with AI summaries and chat.",
     url: "https://apps.apple.com/us/app/wavelogs-ai-voice-notes/id6759880222",
-    icon: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/74/e7/03/74e7034a-4be3-b39e-51f3-2b3bb5b36e36/Placeholder.mill/400x400Icon.ApSiOS01-75.jpg",
+    icon: wavelogsIcon,
   },
 ] as const;
 
