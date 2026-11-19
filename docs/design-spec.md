@@ -8,8 +8,8 @@ This document stands in for the generated design board (no image-generation tool
 
 1. **Nothing between.** If an element does not carry meaning, it is removed. Empty space is a feature.
 2. **Typography is the image.** No illustrations, no 3D, no stock imagery. Scale, weight, and alignment do the work.
-3. **Colour is an event.** The interface is monochrome. Mint-to-cyan appears only where intelligence is acting: the logo, the hero's beam and key word, an active step, a hover.
-4. **Still first.** Every screen must be complete with motion switched off. Motion only sequences what is already there. The hero is the one place that moves continuously; with reduced motion it becomes a still.
+3. **Colour is an event.** The interface is monochrome. Mint-to-cyan appears only where intelligence is acting: the logo, the hero's AI point, its outcome and key word, an active step, a hover.
+4. **Still first.** Every screen must be complete with motion switched off. Motion only sequences what is already there. The hero is the one place the visitor plays; with reduced motion it renders resolved.
 
 ## 2. Colour
 
@@ -63,7 +63,7 @@ Headings are set in authored lines, never left to wrap by chance.
 
 ## 6. Sections
 
-1. **Hero.** The tagline, made literal, and played by the visitor. The section is a short scroll track (225svh; 195svh on phones) whose contents hold still while the visitor scrolls through it. In the open band between the header and the text sit two endpoints, labelled *You* (left) and *Intelligence* (right), with a centred mono count between them (*14 steps between*; above the line on phones). The space between the endpoints starts crowded with friction: thin layers standing across the line that knock the signal off course, broken and dashed lines, small mono "interruption" chips (*Pending approval*, *Ticket #4821*, *Sync failed*…), and static. Scrolling carries a signal across and clears it all, leaving one clean mint-to-cyan beam, and the line then reads *You · Nothing between · Intelligence*. Beneath sit a mono eyebrow, the two-line tagline set large and light, one sentence, two calls to action, and a quiet strip naming the four capabilities. "intelligence." waits in grey and takes the gradient only when the beam lands. A faint film grain keeps the dark surface from reading as a flat fill.
+1. **Hero.** From incoming chaos to intelligent action, kept to three things and played by scroll. The section is a short scroll track (190svh; 170svh on phones) whose contents hold still meanwhile. In the open band above the words, five words drift loose: *Missed calls*, *Emails*, *New leads*, *Scheduling*, *Questions*. Scrolling lines them up, five hairlines draw them into one small point labelled *AI*, the point lights, and a single line carries on to the outcome: *Answered, booked, followed up.* No times, counts, headings or interface chrome; the same layout works at every width. Beneath sit a mono eyebrow, the two-line tagline set large and light, the supporting line with one sentence, two calls to action, and a quiet strip naming the four capabilities. "intelligence." waits in grey and takes the gradient when the point lights. A faint film grain keeps the dark surface from reading as a flat fill.
 2. **Philosophy.** "Complexity," is struck through and dimmed as it arrives; "simplified." stays. The paragraph sits right of centre.
 3. **Expertise.** Four rows: mono index, large title, one plain sentence, a short list of what is included.
 4. **Intelligence in Practice.** One panel. Three scenarios on a rail, a stage that plays each one once, and a small set of choices that change what happens. Shared grammar across scenarios: steps → content → outcome.
@@ -76,10 +76,10 @@ Headings are set in authored lines, never left to wrap by chance.
 | Moment | Behaviour | Duration | Ease |
 | --- | --- | --- | --- |
 | Hero entrance | Lines rise from masks; rule draws; details fade up. CSS only, starts at first paint. | 1.1s, 90ms stagger | `expo.out` |
-| Hero: idle | On load, layers, broken lines, chips and static settle in between the endpoints and keep drifting. Every 3.8s a signal leaves *You* and is stopped at the first layer, which flinches. | 0.7s in, then looping | `cubic.out` |
-| Hero: clearing (scroll) | Scroll position, followed with light inertia, carries the signal from *You* to *Intelligence* over the first 74% of the track. Each barrier gives way as it arrives: lines fall onto the beam, static is swept along and clears, chips fade aside, layers fold onto the line, and the displaced beam straightens behind the head, which stretches with scroll speed. The friction also slides slightly left as you scroll, nearer layers more, so you seem to move through it. The count ticks down. Scrolling back brings it all back. | scroll-linked | linear, damped |
-| Hero: connection | The beam reaches *Intelligence*: a bloom and one ring, the node fills with the gradient, both labels and the count (*Nothing between*) brighten, and "intelligence." fills with the gradient from the left, then a band of light crosses it. | 1.6s; fill 1.2s | `expo.out`, `quart.inOut` |
-| Hero: at rest | One clean beam that breathes; a glint crosses about every 7s; it brightens under the pointer. The last quarter of the track holds this calm before the hero lets go, then the scene fades as it scrolls away. Canvas 2D, paused off screen. | continuous | — |
+| Hero: idle | On load the five words fade in where they lie and drift a few pixels. | 1s in, 140ms stagger | `ease` |
+| Hero: gather (scroll) | The words line up; their drift falls away. GSAP timeline scrubbed by scroll with 0.8s of inertia. | first ~30% of the track | `power3.inOut` |
+| Hero: converge | The AI point appears and five hairlines draw into it, one after another. | ~30–55% | `power2.inOut` |
+| Hero: resolve | The point's core fills with the gradient and one ring fades out; the words dim; a single line draws on with one accent pulse; the outcome slides in; "intelligence." takes its colour. The last ~25% holds still. Scrolling back undoes it. | ~55–75% | `back.out`, `power3.out` |
 | Section headings | Lines rise from masks on scroll, once. | 1.15s | `expo.out` |
 | Content | Fade and 28px rise on scroll, once. | 1s | `expo.out` |
 | Rules | Draw from the left. | 1.4s | `expo.inOut` |
@@ -87,4 +87,4 @@ Headings are set in authored lines, never left to wrap by chance.
 | Scenarios | One authored timeline each; plays once in view, replayable. | 3–7s | `power2`/`expo` |
 | Hover | Colour, underline, 3px arrow shift. | 0.3s | `ease` |
 
-No page parallax and no scroll hijacking: the hero holds still with `position: sticky` and native scrolling, and nothing intercepts the wheel or touch. The hero beam is the only continuous animation, apart from two small cues beside it (the eyebrow dot and the scroll line). With `prefers-reduced-motion: reduce`, the scroll track collapses to an ordinary section, every element renders in its final state, the hero renders once already connected (no friction), and scenario choices switch instantly. In a window shorter than 32rem the track also collapses, and the friction clears as the hero scrolls away instead.
+No page parallax and no scroll hijacking: the hero holds still with `position: sticky` and native scrolling, and nothing intercepts the wheel or touch. Apart from the hero's idle drift, the only looping motion is two small cues (the eyebrow dot and the scroll line). With `prefers-reduced-motion: reduce`, or in a window shorter than 32rem, the scroll track collapses to an ordinary section and the hero renders resolved; scenario choices switch instantly.

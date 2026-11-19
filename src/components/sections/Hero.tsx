@@ -1,4 +1,4 @@
-import { HeroConnection } from "@/components/hero/HeroConnection";
+import { HeroWorkflow } from "@/components/hero/HeroWorkflow";
 import { Arrow } from "@/components/ui/Arrow";
 import { site } from "@/lib/site";
 
@@ -12,14 +12,15 @@ const capabilities = [
 const delay = (index: number) => ({ "--i": index }) as React.CSSProperties;
 
 /**
- * Section 01. The tagline, made literal, and played by the visitor.
+ * Section 01. From incoming chaos to intelligent action, played by the
+ * visitor.
  *
- * Above the words, two points: you and intelligence. The space between
- * them starts crowded with friction (layers, broken lines, interruptions,
- * static). The section is a short scroll track: its contents hold still
- * while the visitor scrolls through it, and that scroll carries a signal
- * across, clearing the friction until one clean beam is all that is left.
- * When the beam lands, "intelligence." takes its colour.
+ * Above the words, five loose words: missed calls, emails, new leads,
+ * scheduling, questions. The section is a short scroll track: its
+ * contents hold still while the visitor scrolls through it, and that
+ * scroll lines the words up, draws them into one point of AI, and carries
+ * a single line on to the outcome. When the point lights,
+ * "intelligence." takes its colour.
  *
  * Text entrances run on CSS alone, so they begin at first paint. With
  * reduced motion, or a window too short to hold the hero, the track
@@ -29,7 +30,7 @@ export function Hero() {
   return (
     <section id="top" data-header-theme="dark" className="hero-track theme-dark relative isolate">
       <div data-hero-pin className="hero-pin">
-        <HeroConnection />
+        <HeroWorkflow />
         <div aria-hidden="true" className="hero-grain" />
 
         <div className="shell relative pb-6 md:pb-7">
@@ -64,13 +65,14 @@ export function Hero() {
 
             <div className="mt-7 grid gap-x-6 gap-y-8 md:mt-9 lg:grid-cols-12 lg:items-end">
               <p
-                className="hero-lead enter-fade-up max-w-[25em] text-fg-soft lg:col-span-6"
+                className="hero-lead enter-fade-up max-w-[25em] text-fg-soft lg:col-span-7 lg:max-w-[30em]"
                 style={delay(6)}
               >
-                We design and build intelligent solutions that simplify how businesses work.
+                <span className="text-fg">From incoming chaos to intelligent action.</span>{" "}
+                We design and build practical AI that answers, schedules, updates and reports.
               </p>
               <div
-                className="enter-fade-up flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-6 lg:justify-self-end"
+                className="enter-fade-up flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-5 lg:justify-self-end"
                 style={delay(8)}
               >
                 <a href="#contact" className="btn btn-primary">
