@@ -187,6 +187,12 @@
     overflow: hidden;
   }
 
+  /* The diagram's band: it takes the room the headline leaves. */
+  .hero-stage {
+    flex: 1 1 0%;
+    min-height: 15rem;
+  }
+
   @media (max-width: 47.99rem) {
     .hero-track {
       height: 170svh;
@@ -194,8 +200,9 @@
   }
 
   /* Without motion, or in a window too short to hold it, the hero is an
-     ordinary section. */
-  @media (prefers-reduced-motion: reduce), (max-height: 31.99rem) {
+     ordinary section: below 32rem tall, or 49rem on phones, where the
+     diagram stacks above the headline. (HeroWorkflow uses the same test.) */
+  @media (prefers-reduced-motion: reduce), (max-height: 31.99rem), (max-width: 47.99rem) and (max-height: 48.99rem) {
     .hero-track {
       height: auto;
     }
@@ -204,6 +211,12 @@
       position: relative;
       height: auto;
       min-height: 100svh;
+    }
+
+    /* Unpinned, the diagram takes the height it needs above the headline. */
+    .hero-stage {
+      flex: 1 0 auto;
+      padding-bottom: 1.5rem;
     }
   }
 
@@ -224,9 +237,9 @@
     background-size: 260% 100%, 100% 100%, 100% 100%;
   }
 
-  /* The hero's diagram: five inputs, one point of AI, one outcome. Text
-     and icons are markup; lines and light are a canvas behind them. A
-     column on phones, a row from tablet width up. */
+  /* The hero's diagram: five inputs, one point of AI, one outcome in
+     two lines. Text and icons are markup; lines and light are a canvas
+     behind them. A column on phones, a row from tablet width up. */
   .flow {
     --float: 1;
     position: relative;
@@ -371,6 +384,45 @@
     letter-spacing: -0.02em;
     text-align: center;
     color: var(--fg);
+  }
+
+  /* On all but the tallest phones the stacked diagram tightens so it
+     clears the headline and the paragraph beneath it. */
+  @media (max-width: 47.99rem) and (max-height: 55.99rem) {
+    .flow {
+      row-gap: 1.375rem;
+    }
+
+    .flow-body {
+      gap: 0.4rem;
+    }
+
+    .flow-chip {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .flow-node-ring {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .flow-out {
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* The outcome, one statement per line. */
+  .flow-out-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+  }
+
+  .flow-out-line {
+    display: block;
+    line-height: 1.15;
   }
 
   .flow-light {

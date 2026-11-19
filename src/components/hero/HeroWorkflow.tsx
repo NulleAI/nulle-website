@@ -4,12 +4,12 @@ import { useRef } from "react";
 
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import {
-  CalendarIcon,
+  BookIcon,
+  ChatIcon,
   CheckIcon,
-  LeadIcon,
-  MailIcon,
-  PhoneIcon,
-  QuestionIcon,
+  DocumentIcon,
+  FlowIcon,
+  IdeaIcon,
   SparkIcon,
 } from "@/components/ui/Icons";
 
@@ -17,14 +17,15 @@ import {
  * The hero's visual: what comes in, one point of AI, and what goes out,
  * played by scroll.
  *
- * On load, five inputs (missed calls, emails, new leads, scheduling,
- * questions), each a word with its icon, fade in where they lie and float
- * loosely. As the visitor scrolls (the hero holds still meanwhile) they
- * line up, hairlines reach toward one point, a small mint light runs each
- * line in, the point lights once, and a beam carries on to the outcome:
- * answered, booked, followed up. Scrolling back undoes it. Once resolved,
- * the light breathes and every few seconds one input sends a little light
- * through the point and along the beam.
+ * On load, five inputs (conversations, workflows, data and documents,
+ * knowledge, ideas and products), each a word with its icon, fade in where
+ * they lie and float loosely. As the visitor scrolls (the hero holds still
+ * meanwhile) they line up, hairlines reach toward one point, a small mint
+ * light runs each line in, the point lights once, and a beam carries on to
+ * the outcome, two short lines arriving in turn: imagine more, build
+ * smarter. Scrolling back undoes it. Once resolved, the light breathes and
+ * every few seconds one input sends a little light through the point and
+ * along the beam.
  *
  * Text and icons are real markup laid out by CSS (a row from tablet width
  * up, a column on phones). Lines and light are one canvas, redrawn each
@@ -36,14 +37,16 @@ type RGB = readonly [number, number, number];
 type Point = { x: number; y: number };
 type Curve = readonly [Point, Point, Point, Point];
 
+/** What comes in. The short word is used on phones, where five sit in one row. */
 const INPUTS = [
-  { label: "Missed calls", short: "Calls", Icon: PhoneIcon },
-  { label: "Emails", short: "Emails", Icon: MailIcon },
-  { label: "New leads", short: "Leads", Icon: LeadIcon },
-  { label: "Scheduling", short: "Scheduling", Icon: CalendarIcon },
-  { label: "Questions", short: "Questions", Icon: QuestionIcon },
+  { label: "Conversations", short: "Chats", Icon: ChatIcon },
+  { label: "Workflows", short: "Workflows", Icon: FlowIcon },
+  { label: "Data & documents", short: "Data", Icon: DocumentIcon },
+  { label: "Knowledge", short: "Knowledge", Icon: BookIcon },
+  { label: "Ideas & products", short: "Ideas", Icon: IdeaIcon },
 ] as const;
-const OUTCOME = "Answered, booked, followed up.";
+/** What goes out, one line each. */
+const OUTCOME = ["Imagine more.", "Build smarter."] as const;
 
 /** Where each input floats before it lines up: its top-left, as a share of the free space. */
 const SCATTER_WIDE: [number, number][] = [
@@ -398,7 +401,10 @@ export function HeroWorkflow() {
       const slots = items.map((item) => item.parentElement as HTMLElement);
 
       const mm = gsap.matchMedia();
-      mm.add({ wide: "(min-width: 48rem)", motion: MOTION_OK, tall: "(min-height: 32rem)" }, (context) => {
+      // Room to play the scene: 32rem of height, or 49rem on phones, where the
+      // diagram stacks above the headline. Matches the .hero-track rule in CSS.
+      const tallEnough = "(min-width: 48rem) and (min-height: 32rem), (min-height: 49rem)";
+      mm.add({ wide: "(min-width: 48rem)", motion: MOTION_OK, tall: tallEnough }, (context) => {
         const { wide, motion, tall } = context.conditions as Record<string, boolean>;
         const scatter = wide ? SCATTER_WIDE : SCATTER_NARROW;
         const live = motion && tall;
@@ -453,13 +459,17 @@ export function HeroWorkflow() {
         timeline.fromTo(glow, { p: 0 }, { p: 1, duration: 0.9, ease: "power2.out" }, connectAt);
         timeline.to(words, { opacity: 0.6, duration: 0.8 }, connectAt + 0.2);
 
-        // 5. A beam draws on to what was done.
+        // 5. A beam draws on to the outcome: its check, then each line in turn.
+        const outcomeLines = Array.from(outcome.querySelectorAll<HTMLElement>("[data-flow-out-line]"));
         timeline.fromTo(beam, { p: 0 }, { p: 1, duration: 1.1, ease: "power1.inOut" }, connectAt + 0.35);
-        timeline.fromTo(
-          outcome,
-          wide ? { opacity: 0, x: -12 } : { opacity: 0, y: 10 },
-          { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
-          connectAt + 1.05,
+        // One tween each (not a stagger), so every part starts hidden before the scroll reaches it.
+        [done, ...outcomeLines].forEach((part, i) =>
+          timeline.fromTo(
+            part,
+            wide ? { opacity: 0, x: -12 } : { opacity: 0, y: 10 },
+            { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
+            connectAt + 1.05 + i * 0.14,
+          ),
         );
         timeline.to({}, { duration: 2.4 }, connectAt + 1.95);
 
@@ -541,7 +551,7 @@ export function HeroWorkflow() {
   );
 
   return (
-    <div ref={root} aria-hidden="true" className="relative flex min-h-[15rem] flex-1 flex-col pt-16 lg:pt-[4.5rem]">
+    <div ref={root} aria-hidden="true" className="hero-stage relative flex flex-col pt-16 lg:pt-[4.5rem]">
       <div className="shell flex flex-1 items-center">
         <div className="flow" data-flow>
           <ol className="flow-in">
@@ -574,7 +584,13 @@ export function HeroWorkflow() {
             <span className="flow-chip flow-chip-done" data-flow-done>
               <CheckIcon className="flow-icon" />
             </span>
-            <span>{OUTCOME}</span>
+            <span className="flow-out-lines">
+              {OUTCOME.map((line) => (
+                <span key={line} className="flow-out-line" data-flow-out-line>
+                  {line}
+                </span>
+              ))}
+            </span>
           </p>
 
           <canvas className="flow-light" data-flow-light />

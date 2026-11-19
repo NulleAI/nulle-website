@@ -5,8 +5,8 @@ import { site } from "@/lib/site";
 const delay = (index: number) => ({ "--i": index }) as React.CSSProperties;
 
 /**
- * Section 01. From incoming chaos to intelligent action, played by the
- * visitor.
+ * Section 01. From complex challenges to intelligent solutions, played by
+ * the visitor.
  *
  * Above the words, five everyday inputs float loose on arrival. The
  * section is a short scroll track: its contents hold still while the
@@ -56,8 +56,9 @@ export function Hero() {
                 className="hero-lead enter-fade-up max-w-[25em] text-fg-soft lg:col-span-7 lg:max-w-[30em]"
                 style={delay(6)}
               >
-                <span className="text-fg">From incoming chaos to intelligent action.</span>{" "}
-                We design and build practical AI that answers, schedules, updates and reports.
+                <span className="text-fg">From complex challenges to intelligent solutions.</span>{" "}
+                We combine AI, automation, and software engineering to help businesses work smarter, innovate
+                faster, and unlock new possibilities.
               </p>
               <div
                 className="enter-fade-up flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-5 lg:justify-self-end"

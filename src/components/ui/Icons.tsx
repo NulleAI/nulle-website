@@ -139,6 +139,36 @@ export function DocumentIcon(props: IconProps) {
   );
 }
 
+/** Two speech bubbles: conversations. */
+export function ChatIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M6 4.75h7a2.25 2.25 0 0 1 2.25 2.25v4A2.25 2.25 0 0 1 13 13.25H9l-3.25 2.5v-2.5H6A2.25 2.25 0 0 1 3.75 11V7A2.25 2.25 0 0 1 6 4.75Z" />
+      <path d="M15.25 9.25H18a2.25 2.25 0 0 1 2.25 2.25V15A2.25 2.25 0 0 1 18 17.25h-.25v2.5l-3.25-2.5H12A2.25 2.25 0 0 1 9.75 15v-1.75" />
+    </Svg>
+  );
+}
+
+/** An open book: knowledge. */
+export function BookIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 6.5c-1.6-1.3-4-1.9-7.75-1.75v12.5c3.75-.15 6.15.45 7.75 1.75 1.6-1.3 4-1.9 7.75-1.75V4.75C16 4.6 13.6 5.2 12 6.5Z" />
+      <path d="M12 6.5V19" />
+    </Svg>
+  );
+}
+
+/** A light bulb: ideas. */
+export function IdeaIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 3.75a5.75 5.75 0 0 0-3.25 10.5c.5.35.75.9.75 1.5v1.5h5v-1.5c0-.6.25-1.15.75-1.5A5.75 5.75 0 0 0 12 3.75Z" />
+      <path d="M10 20.25h4" />
+    </Svg>
+  );
+}
+
 export function ChevronLeftIcon(props: IconProps) {
   return (
     <Svg {...props}>
