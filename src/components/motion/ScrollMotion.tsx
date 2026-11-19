@@ -10,8 +10,9 @@ import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
  *   data-reveal-lines   raise each [data-line] out of its mask
  *   data-reveal-rule    draw a hairline from the left
  *   data-strike         the Philosophy strike-through
- *   data-reveal-portrait  a portrait wipes up into view and settles from a zoom,
- *                         then drifts gently with the page ([data-portrait-drift])
+ *   data-reveal-portrait  a portrait wipes up into view and settles from a zoom
+ *                         (optionally after data-reveal-delay seconds); a
+ *                         [data-portrait-drift] layer then drifts gently with the page
  *
  * Hidden starting states are applied here, in JavaScript, and only to
  * elements still below the fold. If this script never runs, or the
@@ -71,15 +72,17 @@ export function ScrollMotion() {
         }
       }
 
-      // Portraits: a wipe up from the bottom while the photo settles from a zoom.
+      // Portraits: a wipe up from the bottom while the photo settles from a
+      // zoom. data-reveal-delay (seconds) staggers portraits that arrive together.
       for (const frame of waiting(gsap.utils.toArray<HTMLElement>("[data-reveal-portrait]"))) {
         const image = frame.querySelector("img");
+        const delay = Number(frame.dataset.revealDelay) || 0;
         gsap.set(frame, { clipPath: "inset(100% 0% 0% 0%)" });
         gsap.set(image, { scale: 1.22, yPercent: 4 });
         gsap
           .timeline({ scrollTrigger: { trigger: frame, start: "top 88%", once: true } })
-          .to(frame, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.35, ease: "expo.inOut" })
-          .to(image, { scale: 1, yPercent: 0, duration: 1.8, ease: "expo.out", clearProps: "transform" }, 0.1);
+          .to(frame, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.35, ease: "expo.inOut" }, delay)
+          .to(image, { scale: 1, yPercent: 0, duration: 1.8, ease: "expo.out", clearProps: "transform" }, delay + 0.1);
       }
 
       // Then every portrait drifts a little as the page passes it.

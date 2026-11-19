@@ -527,13 +527,6 @@
     }
   }
 
-  .founder-portrait.founder-portrait-small {
-    flex-shrink: 0;
-    width: 4.75rem;
-    max-width: none;
-    border-radius: 0.5rem;
-  }
-
   .founder-portrait.founder-portrait-large {
     max-width: 22rem;
   }
@@ -576,6 +569,231 @@
       filter: saturate(1);
       transform: scale(1.03);
     }
+  }
+
+  /* Founders on the homepage: an asymmetric composition. The headline
+     and one sentence sit left; two moderate headshots sit right, the
+     second set lower; the link to the founders page anchors the
+     bottom left. Stacked on phones. */
+  .founders {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .founders {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+      row-gap: 3rem;
+    }
+
+    .founders-intro {
+      grid-column: 1 / span 5;
+      grid-row: 1;
+    }
+
+    .founders-list {
+      grid-column: 7 / -1;
+      grid-row: 1 / span 2;
+    }
+
+    .founders-more {
+      grid-column: 1 / span 5;
+      grid-row: 2;
+      align-self: end;
+    }
+  }
+
+  .founders-heading {
+    margin-left: -0.03em;
+    font-size: clamp(2.5rem, 5.4vw, 5.25rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+
+  .founders-lede {
+    max-width: 31ch;
+    margin-top: 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--fg-soft);
+  }
+
+  @media (min-width: 64rem) {
+    .founders-lede {
+      margin-top: 2.25rem;
+    }
+  }
+
+  .founders-list {
+    display: grid;
+    gap: 3.5rem clamp(1.5rem, 3vw, 3rem);
+  }
+
+  @media (min-width: 40rem) {
+    .founders-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .founder-profile:nth-child(2) {
+      margin-top: 4.5rem;
+    }
+  }
+
+  /* A head-and-shoulders crop, 180 to 220px wide: the photograph is
+     scaled evenly from the founder's face (set inline), so features
+     keep their natural proportions. A light desaturation unifies the
+     two photographs; hover restores full colour and lifts contrast. */
+  .headshot {
+    position: relative;
+    width: clamp(11.25rem, 15vw, 13.75rem);
+    max-width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    background-color: var(--color-stone);
+  }
+
+  .headshot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgb(17 20 19 / 0.06);
+    pointer-events: none;
+  }
+
+  .headshot-crop {
+    position: absolute;
+    inset: 0;
+    transform: scale(1.6);
+  }
+
+  .headshot-image {
+    object-fit: cover;
+    filter: saturate(0.8) contrast(1.02);
+    transition:
+      transform 1.4s var(--ease-expo),
+      filter 0.9s ease;
+  }
+
+  @media (hover: hover) {
+    .founder-profile:hover .headshot-image {
+      filter: saturate(1) contrast(1.07);
+      transform: scale(1.045);
+    }
+  }
+
+  .founder-meta {
+    max-width: 17.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.125rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .founder-name {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .founder-role {
+    margin-top: 0.7rem;
+    line-height: 1.5;
+  }
+
+  .founder-summary {
+    margin-top: 0.9rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--fg-soft);
+  }
+
+  /* "Meet the founders": a quiet hairline under the words fills in from
+     the left while the arrow slips out of its circle and a second one
+     slides in behind it. */
+  .founders-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .founders-link-text {
+    position: relative;
+    padding-block: 0.3rem;
+  }
+
+  .founders-link-text::before,
+  .founders-link-text::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+  }
+
+  .founders-link-text::before {
+    background-color: var(--line-strong);
+  }
+
+  .founders-link-text::after {
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s var(--ease-expo);
+  }
+
+  .founders-link-arrow {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    transition:
+      background-color 0.5s var(--ease-expo),
+      border-color 0.5s var(--ease-expo),
+      color 0.5s var(--ease-expo);
+  }
+
+  .founders-link-arrow .arrow {
+    grid-area: 1 / 1;
+    transition: transform 0.6s var(--ease-expo);
+  }
+
+  .founders-link-arrow .founders-link-next {
+    transform: translateX(-2.25rem);
+  }
+
+  @media (hover: hover) {
+    .founders-link:hover .founders-link-text::after {
+      transform: scaleX(1);
+    }
+
+    .founders-link:hover .founders-link-arrow {
+      border-color: var(--fg);
+      background-color: var(--fg);
+      color: var(--bg);
+    }
+
+    .founders-link:hover .founders-link-arrow .arrow {
+      transform: translateX(2.25rem);
+    }
+
+    .founders-link:hover .founders-link-arrow .founders-link-next {
+      transform: translateX(0);
+    }
+  }
+
+  .founders-link:focus-visible .founders-link-text::after {
+    transform: scaleX(1);
   }
 
   /* A small round icon link, used for Instagram in the footer. */
