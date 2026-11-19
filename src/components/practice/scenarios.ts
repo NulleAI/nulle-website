@@ -37,7 +37,7 @@ export const demos = [
     label: "Mobile Apps",
     title: "Your idea. Beautifully built.",
     summary: "Custom iOS and Android applications engineered around your business and your customers.",
-    note: "Illustrative concept, not a delivered client app.",
+    note: "Atlas is an interactive concept designed for this demonstration, not a released product or a client project. No bookings are made. Photographs from Wikimedia Commons; credits are listed with the example.",
   },
 ] as const;
 
@@ -148,3 +148,105 @@ export const knowledgeQuestions: KnowledgeQuestion[] = [
     citation: "Billing Guidelines, section 3",
   },
 ];
+
+/* ------------------------------------------------- Mobile Apps: Atlas */
+
+/** Photographs used in Atlas; see atlasPhotos.ts for files and credits. */
+export type PhotoId =
+  | "kyoto"
+  | "kyotoHero"
+  | "amalfi"
+  | "marrakech"
+  | "ryokan"
+  | "gion"
+  | "kaiseki"
+  | "inari"
+  | "tea"
+  | "philosopher"
+  | "bamboo"
+  | "katsura";
+
+/** What a stop is, which sets its icon. */
+export type StopKind = "stay" | "dining" | "sight" | "tea" | "nature" | "transfer";
+
+export type Stop = {
+  time: string;
+  kind: StopKind;
+  title: string;
+  detail: string;
+  photo?: PhotoId;
+  /** Shown large, as the day's lead. */
+  feature?: boolean;
+  /** Atlas has held a booking for this stop. */
+  held?: boolean;
+};
+
+type Atlas = {
+  request: string;
+  journeys: { photo: PhotoId; place: string; prompt: string; request?: boolean }[];
+  curating: { photo: PhotoId; label: string; text: string }[];
+  trip: {
+    place: string;
+    title: string;
+    note: string;
+    stay: { photo: PhotoId; title: string; detail: string };
+  };
+  days: { label: string; theme: string; stops: Stop[] }[];
+};
+
+/**
+ * Atlas, a concept AI travel concierge: one sentence in, a whole weekend
+ * out. Sample content only: no live availability, prices, or bookings.
+ */
+export const atlas: Atlas = {
+  request: "Plan a luxurious weekend in Kyoto for two",
+  journeys: [
+    { photo: "kyoto", place: "Kyoto, Japan", prompt: "A luxurious weekend for two", request: true },
+    { photo: "amalfi", place: "Amalfi Coast, Italy", prompt: "Five slow days by the sea" },
+    { photo: "marrakech", place: "Marrakech, Morocco", prompt: "A birthday week in the sun" },
+  ],
+  curating: [
+    { photo: "ryokan", label: "Stay", text: "A quiet ryokan with an inner garden" },
+    { photo: "kaiseki", label: "Dine", text: "A nine-seat kaiseki counter for two" },
+    { photo: "inari", label: "Explore", text: "Fushimi Inari before the crowds" },
+  ],
+  trip: {
+    place: "Kyoto · Japan",
+    title: "Kyoto, for two",
+    note: "Paced for two: early starts before the crowds, evenings left unhurried.",
+    stay: {
+      photo: "ryokan",
+      title: "A garden ryokan in central Kyoto",
+      detail: "Inner garden · Private bath · Kaiseki breakfast",
+    },
+  },
+  days: [
+    {
+      label: "Fri",
+      theme: "Arrive gently",
+      stops: [
+        { time: "15:00", kind: "stay", title: "Check in at the ryokan", detail: "Tea on arrival, then a long bath", held: true },
+        { time: "18:30", kind: "sight", title: "Lantern walk in Gion", detail: "Hanamikoji and Shirakawa at dusk", photo: "gion", feature: true },
+        { time: "20:00", kind: "dining", title: "Kaiseki for two", detail: "A nine-seat counter, seasonal menu", photo: "kaiseki", held: true },
+      ],
+    },
+    {
+      label: "Sat",
+      theme: "Shrines and tea",
+      stops: [
+        { time: "06:30", kind: "sight", title: "Fushimi Inari at sunrise", detail: "Through the torii before the crowds", photo: "inari", feature: true },
+        { time: "11:00", kind: "tea", title: "Private tea ceremony", detail: "In a garden teahouse", photo: "tea", held: true },
+        { time: "16:00", kind: "nature", title: "Philosopher’s Path", detail: "Maples along the canal", photo: "philosopher" },
+      ],
+    },
+    {
+      label: "Sun",
+      theme: "Bamboo and home",
+      stops: [
+        { time: "08:00", kind: "nature", title: "Arashiyama bamboo grove", detail: "A quiet walk before nine", photo: "bamboo", feature: true },
+        { time: "12:30", kind: "dining", title: "Lunch by the Katsura", detail: "Yudofu, with Togetsukyo in view", photo: "katsura" },
+        { time: "16:10", kind: "transfer", title: "Shinkansen home", detail: "Green Car, seats together", held: true },
+      ],
+    },
+  ],
+};

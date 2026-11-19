@@ -750,496 +750,1433 @@
     box-shadow: 0 0 24px -6px rgb(175 254 159 / 0.45);
   }
 
-  /* Phone concepts. Everything inside a phone is sized in container
-     units, so the screens keep their proportions at any width. */
-  .phone {
+  /* Atlas, the concept travel app (See what's possible → Mobile Apps).
+     One device, drawn for iOS or Android, with an editorial identity of
+     its own: warm ivory, midnight ink, ocean teal for actions and the
+     AI, champagne gold for fine accents, and real photographs. Inside
+     the screen everything is sized in container units, so it keeps its
+     proportions at any width. */
+  .atlas-stage {
+    position: relative;
     display: flex;
-    width: clamp(12.5rem, 62vw, 15rem);
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    padding-block: 0.5rem 1rem;
+  }
+
+  /* A soft pool of light behind the device. */
+  .atlas-stage::before {
+    content: "";
+    position: absolute;
+    inset: 6% -8% 10%;
+    background: radial-gradient(closest-side, rgb(247 245 239 / 0.07), transparent);
+    pointer-events: none;
+  }
+
+  .atlas-device {
+    position: relative;
+    width: clamp(15rem, 74vw, 17.5rem);
     margin: 0;
   }
 
-  @media (min-width: 40rem) {
-    .phone {
-      width: clamp(12rem, 24vw, 15rem);
+  @media (min-width: 64rem) {
+    .atlas-device {
+      width: 18rem;
     }
   }
 
-  .phone-frame {
-    width: 100%;
+  .atlas-frame {
+    position: relative;
     aspect-ratio: 9 / 19.2;
-    padding: 3.5%;
-    border: 1px solid var(--line-strong);
-    border-radius: 15% / 7%;
-    background-color: #0a0c0b;
+    padding: 2.8%;
+    border-radius: 16.5% / 7.7%;
+    background: linear-gradient(140deg, #5d5853, #2a2725 12%, #131211 42%, #1d1b19 72%, #4c4743);
     box-shadow:
-      0 40px 80px -40px rgb(0 0 0 / 0.85),
-      0 0 0 1px rgb(255 255 255 / 0.03),
-      inset 0 0 0 1px rgb(255 255 255 / 0.05);
-    container-type: inline-size;
+      inset 0 0 0 1px rgb(255 255 255 / 0.1),
+      inset 0 0 0 2.5px #070707,
+      0 50px 90px -40px rgb(0 0 0 / 0.9);
+    transition:
+      border-radius 0.6s var(--ease-expo),
+      padding 0.6s var(--ease-expo);
   }
 
-  .phone-android .phone-frame {
-    border-radius: 11% / 5.2%;
+  [data-platform="android"] .atlas-frame {
+    padding: 3.3%;
+    border-radius: 12% / 5.6%;
+    background: linear-gradient(140deg, #3e3d3b, #1c1b1a 28%, #121211 68%, #2f2e2c);
   }
 
-  .phone-screen {
-    --app-bg: #f6f6f2;
-    --app-fg: #111413;
-    --app-mute: #6b716d;
-    --app-card: #ffffff;
-    --app-line: rgb(17 20 19 / 0.09);
-    --app-accent: #111413;
-    --app-on-accent: #f6f6f2;
-    --app-radius: 4.5cqw;
+  /* Side buttons: action and volume on the left with power on the right
+     for iOS; power and a volume rocker on the right for Android. */
+  .atlas-key {
+    position: absolute;
+    width: 3px;
+    border-radius: 2px;
+    background-image: linear-gradient(90deg, #57524d, #1b1a19);
+  }
+
+  .atlas-key-1 {
+    left: -2px;
+    top: 17%;
+    height: 4.5%;
+  }
+
+  .atlas-key-2 {
+    left: -2px;
+    top: 24.5%;
+    height: 8%;
+  }
+
+  .atlas-key-3 {
+    left: -2px;
+    top: 34%;
+    height: 8%;
+  }
+
+  .atlas-key-4 {
+    right: -2px;
+    top: 27%;
+    height: 12.5%;
+    background-image: linear-gradient(270deg, #57524d, #1b1a19);
+  }
+
+  [data-platform="android"] .atlas-key-1,
+  [data-platform="android"] .atlas-key-2 {
+    display: none;
+  }
+
+  [data-platform="android"] .atlas-key-3 {
+    left: auto;
+    right: -2px;
+    top: 20%;
+    height: 7%;
+    background-image: linear-gradient(270deg, #57524d, #1b1a19);
+  }
+
+  [data-platform="android"] .atlas-key-4 {
+    top: 30%;
+    height: 13%;
+  }
+
+  .atlas-screen {
     position: relative;
     height: 100%;
     overflow: hidden;
-    border-radius: 12% / 5.6%;
-    background-color: var(--app-bg);
-    color: var(--app-fg);
+    isolation: isolate;
+    border-radius: 14% / 6.5%;
+    background-color: #f7f5ef;
+    container-type: inline-size;
+    transition: border-radius 0.6s var(--ease-expo);
   }
 
-  .phone-android .phone-screen {
-    --app-bg: #0f1311;
-    --app-fg: #eef1ed;
-    --app-mute: #8e968f;
-    --app-card: #1a201d;
-    --app-line: rgb(238 241 237 / 0.09);
-    --app-accent: #affe9f;
-    --app-on-accent: #0f1311;
-    --app-radius: 6cqw;
-    border-radius: 8% / 3.8%;
+  [data-platform="android"] .atlas-screen {
+    border-radius: 9.5% / 4.4%;
   }
 
-  .phone-status {
-    position: relative;
+  .atlas-status {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 13cqw;
-    padding: 0 8cqw;
-    font-size: 4.2cqw;
-    font-weight: 600;
+    height: 12.5cqw;
+    padding: 0.6cqw 7.5cqw 0 10cqw;
+    color: #142b2d;
+    pointer-events: none;
+    transition: color 0.35s ease;
   }
 
-  .phone-camera {
+  [data-tone="light"] .atlas-status {
+    color: #fff;
+  }
+
+  [data-platform="android"] .atlas-status {
+    padding-inline: 6.5cqw 6cqw;
+  }
+
+  .atlas-time {
+    font-size: 3.9cqw;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-platform="android"] .atlas-time {
+    font-size: 3.6cqw;
+    font-weight: 500;
+  }
+
+  .atlas-status-icons {
+    width: 16.4cqw;
+    height: 2.9cqw;
+  }
+
+  [data-platform="android"] .atlas-status-icons {
+    width: 10.6cqw;
+  }
+
+  /* The Dynamic Island on iOS becomes a punch-hole camera on Android. */
+  .atlas-camera {
     position: absolute;
-    top: 3.4cqw;
+    top: 2.6cqw;
     left: 50%;
+    width: 29cqw;
+    height: 8.4cqw;
     translate: -50% 0;
-    width: 27cqw;
-    height: 7.6cqw;
     border-radius: 999px;
-    background-color: #050606;
+    background-color: #030303;
+    transition:
+      width 0.55s var(--ease-expo),
+      height 0.55s var(--ease-expo),
+      top 0.55s var(--ease-expo);
   }
 
-  .phone-android .phone-camera {
-    top: 4.2cqw;
-    width: 4.8cqw;
-    height: 4.8cqw;
+  [data-platform="android"] .atlas-camera {
+    top: 3.6cqw;
+    width: 4cqw;
+    height: 4cqw;
   }
 
-  .phone-battery {
-    width: 6.5cqw;
-    height: 3.2cqw;
-    border: 1px solid currentColor;
-    border-radius: 1cqw;
-    opacity: 0.7;
-  }
-
-  /* The assistant app. */
-  .app {
+  .atlas-home {
     position: absolute;
-    inset: 13cqw 0 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .app-bar {
-    display: flex;
-    align-items: center;
-    gap: 2.6cqw;
-    height: 13cqw;
-    padding: 0 4cqw;
-    border-bottom: 1px solid var(--app-line);
-  }
-
-  .app-icon-button {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 7.5cqw;
-    height: 7.5cqw;
+    bottom: 2cqw;
+    left: 50%;
+    z-index: 3;
+    width: 35cqw;
+    height: 1.4cqw;
+    translate: -50% 0;
     border-radius: 999px;
-    color: var(--app-fg);
-    cursor: pointer;
-    transition: opacity 0.3s ease;
+    background-color: rgb(20 43 45 / 0.85);
+    pointer-events: none;
+    transition:
+      width 0.55s var(--ease-expo),
+      height 0.55s var(--ease-expo);
   }
 
-  .app-icon-button:disabled {
-    cursor: default;
-    opacity: 0.3;
+  [data-platform="android"] .atlas-home {
+    width: 26cqw;
+    height: 1.1cqw;
+    background-color: rgb(20 43 45 / 0.6);
   }
 
-  .app-icon-button svg {
-    width: 5cqw;
-    height: 5cqw;
+  .atlas-glass {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    border-radius: inherit;
+    background-image: linear-gradient(115deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0) 30%);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.35);
+    pointer-events: none;
   }
 
-  .app-compose {
-    margin-left: auto;
-    cursor: default;
-  }
-
-  .app-avatar {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 8.5cqw;
-    height: 8.5cqw;
-    border-radius: 999px;
-    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
-    color: #111413;
-    box-shadow: 0 0 6cqw -1cqw rgb(175 254 159 / 0.55);
-  }
-
-  .app-avatar svg {
-    width: 4.8cqw;
-    height: 4.8cqw;
-  }
-
-  .app-avatar-small {
-    width: 6.5cqw;
-    height: 6.5cqw;
-    box-shadow: none;
-  }
-
-  .app-avatar-small svg {
-    width: 3.8cqw;
-    height: 3.8cqw;
-  }
-
-  .app-who {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 0.6cqw;
-  }
-
-  .app-name {
-    font-size: 4.4cqw;
-    font-weight: 600;
-    line-height: 1.1;
+  .atlas-app {
+    --a-ivory: #f7f5ef;
+    --a-ink: #142b2d;
+    --a-teal: #216c68;
+    --a-gold: #c6a477;
+    --a-white: #fff;
+    --a-soft: rgb(20 43 45 / 0.76);
+    --a-mute: rgb(20 43 45 / 0.58);
+    --a-line: rgb(20 43 45 / 0.1);
+    --a-tint: #e6e1d6;
+    --a-radius: 3cqw;
+    --a-button: 2.8cqw;
+    position: absolute;
+    inset: 0;
+    background-color: var(--a-ivory);
+    font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    color: var(--a-ink);
     letter-spacing: -0.01em;
   }
 
-  .app-online {
-    display: flex;
-    align-items: center;
-    gap: 1.2cqw;
-    font-size: 3.2cqw;
-    color: var(--app-mute);
+  [data-platform="android"] .atlas-app {
+    --a-radius: 4cqw;
+    --a-button: 999px;
   }
 
-  .app-online-dot {
-    width: 1.6cqw;
-    height: 1.6cqw;
-    border-radius: 999px;
-    background-color: #3ccf7a;
+  .atlas-photo {
+    object-fit: cover;
   }
 
-  .app-body {
-    position: relative;
-    flex: 1;
-    overflow: hidden;
-  }
-
-  .app-view {
+  /* The three screens sit on top of each other; only the current one shows. */
+  .atlas-view {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    padding: 4cqw 5cqw;
     transition:
-      opacity 0.45s ease,
-      transform 0.6s var(--ease-expo);
+      opacity 0.5s ease,
+      transform 0.7s var(--ease-expo),
+      visibility 0s linear 0s;
   }
 
-  /* Like a real chat, the conversation sits just above the composer. */
-  .app-view-chat {
-    justify-content: flex-end;
-    padding-bottom: 3cqw;
-  }
-
-  [data-stage="home"] .app-view-chat {
+  .atlas-app:not([data-stage="ask"]) [data-view="ask"],
+  .atlas-app:not([data-stage="thinking"]) [data-view="thinking"],
+  .atlas-app:not([data-stage="result"]) [data-view="result"] {
+    visibility: hidden;
     opacity: 0;
-    transform: translateY(4cqw);
+    pointer-events: none;
+    transition-delay: 0s, 0s, 0.5s;
   }
 
-  [data-stage]:not([data-stage="home"]) .app-view-home {
-    opacity: 0;
-    transform: translateY(-4cqw);
+  .atlas-app:not([data-stage="ask"]) [data-view="ask"] {
+    transform: scale(0.97);
   }
 
-  .app-greeting {
-    margin-top: 6cqw;
-    font-size: 4.3cqw;
-    color: var(--app-mute);
+  .atlas-app:not([data-stage="thinking"]) [data-view="thinking"] {
+    transform: scale(1.03);
   }
 
-  .app-headline {
-    margin-top: 1.5cqw;
-    font-size: 9.6cqw;
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.035em;
+  .atlas-app:not([data-stage="result"]) [data-view="result"] {
+    transform: translateY(6cqw);
   }
 
-  .phone-android .app-headline {
-    font-weight: 500;
-    letter-spacing: -0.02em;
-  }
-
-  .app-suggestions {
-    display: flex;
-    flex-direction: column;
-    gap: 2.2cqw;
-    margin-top: auto;
-  }
-
-  .app-suggestion {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 3cqw;
-    padding: 3.6cqw 4cqw;
-    border: 1px solid var(--app-line);
-    border-radius: var(--app-radius);
-    background-color: var(--app-card);
-    font-size: 4.4cqw;
-    font-weight: 500;
-    text-align: left;
-    color: var(--app-fg);
-  }
-
-  button.app-suggestion {
-    cursor: pointer;
-  }
-
-  .app-suggestion svg {
-    width: 4.6cqw;
-    height: 4.6cqw;
-    color: var(--app-mute);
-  }
-
-  .app-bubble-user {
-    align-self: flex-end;
-    max-width: 82%;
-    margin-top: 2cqw;
-    padding: 3cqw 4.2cqw;
-    border-radius: 5.5cqw 5.5cqw 1.6cqw 5.5cqw;
-    background-color: var(--app-accent);
-    color: var(--app-on-accent);
-    font-size: 4.5cqw;
-    line-height: 1.35;
-  }
-
-  .app-ai {
-    display: flex;
-    align-items: flex-start;
-    gap: 2.4cqw;
-    margin-top: 4cqw;
-  }
-
-  .app-ai-text {
-    font-size: 4.5cqw;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-  }
-
-  .app-follow {
-    margin-top: 4cqw;
-    padding-left: 8.9cqw;
-  }
-
-  .app-typing {
-    display: flex;
-    gap: 1.3cqw;
-    padding: 2.4cqw 0;
-  }
-
-  .app-typing span {
-    width: 1.7cqw;
-    height: 1.7cqw;
-    border-radius: 999px;
-    background-color: var(--app-mute);
-    animation: app-typing 1s ease-in-out infinite;
-  }
-
-  .app-typing span:nth-child(2) {
-    animation-delay: 0.15s;
-  }
-
-  .app-typing span:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-
-  .app-card {
-    margin-top: 4cqw;
-    margin-left: 8.9cqw;
-    padding: 4.2cqw;
-    border: 1px solid var(--app-line);
-    border-radius: var(--app-radius);
-    background-color: var(--app-card);
-    box-shadow: 0 2cqw 6cqw -3cqw rgb(0 0 0 / 0.25);
-  }
-
-  .app-card-label {
-    font-size: 3.4cqw;
-    letter-spacing: 0.06em;
+  .atlas-kicker {
+    font-size: 2.5cqw;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--app-mute);
+    color: var(--a-mute);
   }
 
-  .app-option {
+  /* 1. Discover */
+  .atlas-discover {
+    padding: 12.5cqw 5.5cqw 0;
+  }
+
+  .atlas-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 2cqw;
-    padding: 2.8cqw 3.4cqw;
-    border: 1px solid var(--app-line);
-    border-radius: 3.2cqw;
-    font-size: 4.3cqw;
-    font-weight: 500;
-  }
-
-  .app-option.is-on {
-    border-color: var(--app-fg);
-  }
-
-  .phone-android .app-option.is-on {
-    border-color: var(--app-accent);
-    background-color: rgb(175 254 159 / 0.08);
-  }
-
-  .app-radio {
-    width: 3.4cqw;
-    height: 3.4cqw;
-    border: 1px solid var(--app-mute);
-    border-radius: 999px;
-  }
-
-  .is-on .app-radio {
-    border: 1cqw solid var(--app-accent);
-  }
-
-  .phone-ios .is-on .app-radio {
-    border-color: var(--app-fg);
-  }
-
-  .app-confirm {
-    width: 100%;
-    height: 10.5cqw;
-    margin-top: 3.4cqw;
-    border-radius: 3cqw;
-    background-color: var(--app-accent);
-    color: var(--app-on-accent);
-    font-size: 4.4cqw;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .phone-android .app-confirm {
-    border-radius: 999px;
-  }
-
-  .app-booked {
-    display: flex;
-    align-items: center;
-    gap: 3cqw;
-  }
-
-  .app-booked > span:last-child {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6cqw;
-  }
-
-  .app-check {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 11cqw;
     height: 11cqw;
+  }
+
+  .atlas-masthead {
+    font-size: 3.4cqw;
+    font-weight: 800;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+  }
+
+  .atlas-avatar {
+    display: grid;
+    place-items: center;
+    width: 7.4cqw;
+    height: 7.4cqw;
+    border: 1px solid var(--a-line);
     border-radius: 999px;
-    color: #111413;
+    background-color: var(--a-white);
+    font-size: 3cqw;
+    font-weight: 700;
   }
 
-  .app-check svg {
-    width: 5cqw;
-    height: 5cqw;
+  .atlas-discover-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 3cqw;
   }
 
-  .app-booked-title {
-    font-size: 4.8cqw;
-    font-weight: 600;
+  .atlas-greeting {
+    font-size: 3.5cqw;
+    font-weight: 500;
+    color: var(--a-mute);
   }
 
-  .app-booked-time {
-    font-size: 4.3cqw;
+  .atlas-headline {
+    margin-top: 1.4cqw;
+    font-size: 10cqw;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.055em;
   }
 
-  .app-card-note {
-    font-size: 3.6cqw;
-    color: var(--app-mute);
-  }
-
-  .app-composer {
+  .atlas-field {
     display: flex;
     align-items: center;
     gap: 2.4cqw;
-    margin: 2cqw 4cqw 6cqw;
-    padding: 1.6cqw 1.6cqw 1.6cqw 4.4cqw;
-    border: 1px solid var(--app-line);
-    border-radius: 999px;
-    background-color: var(--app-card);
-    color: var(--app-mute);
+    min-height: 15cqw;
+    margin-top: 5cqw;
+    padding: 2cqw 2cqw 2cqw 3.6cqw;
+    border: 1px solid var(--a-line);
+    border-radius: 3.6cqw;
+    background-color: var(--a-white);
+    box-shadow: 0 1.5cqw 4cqw -2.5cqw rgb(20 43 45 / 0.18);
+    transition: border-color 0.4s ease;
   }
 
-  .app-composer-text {
-    flex: 1;
-    font-size: 4.2cqw;
+  [data-platform="android"] .atlas-field {
+    border-radius: 7.5cqw;
   }
 
-  .app-composer > svg {
+  .atlas-field[data-filled] {
+    border-color: rgb(33 108 104 / 0.4);
+  }
+
+  .atlas-field-icon {
     width: 4.6cqw;
     height: 4.6cqw;
+    color: var(--a-teal);
   }
 
-  .app-send {
+  .atlas-field-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 3.4cqw;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .atlas-word {
+    display: inline-block;
+  }
+
+  .atlas-placeholder {
+    font-weight: 400;
+    color: var(--a-mute);
+  }
+
+  .atlas-send {
     display: grid;
+    flex-shrink: 0;
     place-items: center;
-    width: 8cqw;
-    height: 8cqw;
+    width: 8.6cqw;
+    height: 8.6cqw;
     border-radius: 999px;
-    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
-    color: #111413;
+    background-color: rgb(20 43 45 / 0.07);
+    color: var(--a-mute);
+    cursor: pointer;
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
   }
 
-  .app-send svg {
+  .atlas-send:disabled {
+    cursor: default;
+  }
+
+  .atlas-send:not(:disabled) {
+    background-color: var(--a-teal);
+    color: #fff;
+  }
+
+  .atlas-send svg {
     width: 4.4cqw;
     height: 4.4cqw;
   }
 
-  /* Each new message or card settles in. */
-  .app-in {
-    animation: app-in 0.5s var(--ease-expo) both;
+  .atlas-discover .atlas-kicker {
+    margin-top: 7cqw;
   }
 
-  /* A small two-way switch, used to pick a platform on phones. */
+  /* A row of journeys to scroll sideways, each a photograph. */
+  .atlas-journeys {
+    display: flex;
+    gap: 3cqw;
+    margin: 3cqw -5.5cqw 0;
+    padding-inline: 5.5cqw;
+    overflow-x: auto;
+    scroll-padding-inline: 5.5cqw;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .atlas-journeys::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas-journeys > li {
+    flex: 0 0 52cqw;
+    scroll-snap-align: start;
+  }
+
+  .atlas-journey {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 52 / 76;
+    overflow: hidden;
+    border-radius: var(--a-radius);
+    background-color: var(--a-tint);
+    text-align: left;
+    color: #fff;
+  }
+
+  button.atlas-journey {
+    cursor: pointer;
+  }
+
+  .atlas-journey-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .atlas-journey-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to top, rgb(10 22 24 / 0.72), rgb(10 22 24 / 0.08) 52%, transparent 70%);
+  }
+
+  .atlas-journey .atlas-photo {
+    transition: transform 0.9s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    button.atlas-journey:hover .atlas-photo {
+      transform: scale(1.04);
+    }
+  }
+
+  .atlas-journey-text {
+    position: absolute;
+    inset: auto 3.2cqw 3.4cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 1cqw;
+  }
+
+  .atlas-journey-place {
+    font-size: 2.3cqw;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .atlas-journey-prompt {
+    font-size: 3.8cqw;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* The chosen journey: a teal edge and a check. */
+  button.atlas-journey::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 0 var(--a-teal);
+    transition: box-shadow 0.35s ease;
+  }
+
+  button.atlas-journey[aria-pressed="true"]::after {
+    box-shadow: inset 0 0 0 0.6cqw var(--a-teal);
+  }
+
+  .atlas-journey-check {
+    position: absolute;
+    top: 3cqw;
+    right: 3cqw;
+    display: grid;
+    place-items: center;
+    width: 6.4cqw;
+    height: 6.4cqw;
+    border-radius: 999px;
+    background-color: var(--a-teal);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.35s ease,
+      transform 0.5s var(--ease-expo);
+  }
+
+  [aria-pressed="true"] .atlas-journey-check {
+    opacity: 1;
+    transform: none;
+  }
+
+  .atlas-journey-check svg {
+    width: 3.6cqw;
+    height: 3.6cqw;
+  }
+
+  /* The tab bar: translucent with labels on iOS; a Material navigation
+     bar with a pill behind the active icon on Android. */
+  .atlas-tabbar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-inline: -5.5cqw;
+    padding: 2.2cqw 2cqw 7.5cqw;
+    border-top: 1px solid var(--a-line);
+    background-color: rgb(255 255 255 / 0.72);
+  }
+
+  .atlas-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8cqw;
+    font-size: 2.3cqw;
+    font-weight: 600;
+    color: rgb(20 43 45 / 0.42);
+  }
+
+  .atlas-tab[data-active] {
+    color: var(--a-ink);
+  }
+
+  .atlas-tab-icon {
+    display: grid;
+    place-items: center;
+    width: 12cqw;
+    height: 6.6cqw;
+    border-radius: 999px;
+  }
+
+  .atlas-tab-icon svg {
+    width: 5.2cqw;
+    height: 5.2cqw;
+  }
+
+  [data-platform="android"] .atlas-tabbar {
+    padding-top: 2.6cqw;
+    border-top: 0;
+    background-color: #eeeae1;
+  }
+
+  [data-platform="android"] .atlas-tab[data-active] .atlas-tab-icon {
+    background-color: rgb(33 108 104 / 0.16);
+    color: var(--a-teal);
+  }
+
+  /* 2. Curate */
+  .atlas-curate {
+    justify-content: center;
+    padding: 14cqw 5.5cqw 9cqw;
+  }
+
+  .atlas-curate-head {
+    display: flex;
+    align-items: center;
+    gap: 2cqw;
+    font-size: 3.2cqw;
+    font-weight: 600;
+    color: var(--a-teal);
+  }
+
+  .atlas-curate-spark {
+    width: 4.4cqw;
+    height: 4.4cqw;
+  }
+
+  .atlas-progress {
+    position: relative;
+    display: block;
+    height: 2px;
+    margin-top: 3cqw;
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: var(--a-line);
+  }
+
+  .atlas-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--a-teal);
+    transform-origin: left;
+  }
+
+  .atlas-curate-request {
+    margin-top: 4.5cqw;
+    font-size: 6.4cqw;
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.045em;
+  }
+
+  .atlas-map {
+    margin-top: 4.5cqw;
+    aspect-ratio: 300 / 236;
+    overflow: hidden;
+    border: 1px solid var(--a-line);
+    border-radius: var(--a-radius);
+    background-color: var(--a-white);
+  }
+
+  .atlas-map-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .atlas-route {
+    stroke-dasharray: 1 1;
+  }
+
+  .atlas-place-dot {
+    fill: #216c68;
+    stroke: #fff;
+    stroke-width: 1.4;
+  }
+
+  .atlas-place-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    fill: #142b2d;
+    fill-opacity: 0.8;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+
+  .atlas-picks {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6cqw;
+    margin-top: 4.5cqw;
+  }
+
+  .atlas-pick {
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+  }
+
+  .atlas-pick-photo {
+    position: relative;
+    flex-shrink: 0;
+    width: 11cqw;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2cqw;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-pick-label {
+    display: block;
+    font-size: 2.3cqw;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--a-mute);
+  }
+
+  .atlas-pick-text {
+    display: block;
+    margin-top: 0.6cqw;
+    font-size: 3.3cqw;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .atlas-pick-status {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 5cqw;
+    height: 5cqw;
+    color: var(--a-teal);
+  }
+
+  .atlas-spinner {
+    position: absolute;
+    inset: 0.5cqw;
+    border: 1.5px solid rgb(33 108 104 / 0.2);
+    border-top-color: var(--a-teal);
+    border-radius: 999px;
+    opacity: 0;
+  }
+
+  .atlas-pick-check {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 3. Explore */
+  .atlas-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .atlas-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas-hero {
+    position: relative;
+    height: 104cqw;
+    overflow: hidden;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-hero-parallax,
+  .atlas-hero-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* A light veil at the top, so the status bar and buttons stay legible. */
+  .atlas-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 34cqw;
+    background-image: linear-gradient(to bottom, rgb(10 22 24 / 0.42), transparent);
+    pointer-events: none;
+  }
+
+  .atlas-sheet {
+    position: relative;
+    margin-top: -6cqw;
+    padding: 6.5cqw 5.5cqw 32cqw;
+    border-radius: 5cqw 5cqw 0 0;
+    background-color: var(--a-ivory);
+  }
+
+  [data-platform="android"] .atlas-sheet {
+    border-radius: 7cqw 7cqw 0 0;
+  }
+
+  .atlas-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 2cqw;
+    font-size: 2.5cqw;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--a-mute);
+  }
+
+  .atlas-eyebrow::before {
+    content: "";
+    width: 6cqw;
+    height: 1px;
+    background-color: var(--a-gold);
+  }
+
+  .atlas-title {
+    margin-top: 2.2cqw;
+    font-size: 9.4cqw;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .atlas-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4cqw 4cqw;
+    margin-top: 3.4cqw;
+    font-size: 3cqw;
+    font-weight: 500;
+    color: var(--a-soft);
+  }
+
+  .atlas-facts li {
+    display: flex;
+    align-items: center;
+    gap: 1.3cqw;
+  }
+
+  .atlas-facts svg {
+    width: 3.8cqw;
+    height: 3.8cqw;
+    color: var(--a-mute);
+  }
+
+  /* The concierge's note: a gold rule, a teal spark. */
+  .atlas-note {
+    display: flex;
+    gap: 2.6cqw;
+    margin-top: 5cqw;
+    padding: 1cqw 0 1cqw 3.6cqw;
+    border-left: 1px solid var(--a-gold);
+  }
+
+  .atlas-note-icon {
+    width: 4.4cqw;
+    height: 4.4cqw;
+    margin-top: 0.2cqw;
+    color: var(--a-teal);
+  }
+
+  .atlas-note p {
+    font-size: 3.4cqw;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--a-soft);
+  }
+
+  .atlas-section {
+    margin-top: 7cqw;
+    padding-top: 6cqw;
+    border-top: 1px solid var(--a-line);
+  }
+
+  .atlas-section > .atlas-kicker {
+    margin-bottom: 3.4cqw;
+  }
+
+  .atlas-stay-photo,
+  .atlas-stop-photo {
+    position: relative;
+    aspect-ratio: 16 / 10.5;
+    overflow: hidden;
+    border-radius: var(--a-radius);
+    background-color: var(--a-tint);
+  }
+
+  .atlas-stay-title {
+    margin-top: 3.4cqw;
+    font-size: 4.4cqw;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .atlas-stay-detail {
+    margin-top: 1.2cqw;
+    font-size: 3.1cqw;
+    color: var(--a-mute);
+  }
+
+  .atlas-stay-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2.8cqw;
+    font-size: 3cqw;
+    font-weight: 500;
+    color: var(--a-soft);
+  }
+
+  .atlas-stay-foot > span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 1.3cqw;
+  }
+
+  .atlas-stay-foot svg {
+    width: 3.8cqw;
+    height: 3.8cqw;
+  }
+
+  .atlas-held {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.2cqw;
+    font-size: 2.7cqw;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--a-soft);
+    transition: color 0.4s ease;
+  }
+
+  .atlas-held[data-reserved] {
+    color: var(--a-teal);
+  }
+
+  .atlas-held-dot {
+    width: 1.6cqw;
+    height: 1.6cqw;
+    border-radius: 999px;
+    background-color: var(--a-gold);
+  }
+
+  .atlas-held svg {
+    width: 3.2cqw;
+    height: 3.2cqw;
+  }
+
+  /* The day picker: a segmented control on iOS, tabs with a sliding
+     indicator on Android. */
+  .atlas-days {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.7cqw;
+    border-radius: 2.6cqw;
+    background-color: rgb(20 43 45 / 0.06);
+  }
+
+  .atlas-days-thumb {
+    position: absolute;
+    top: 0.7cqw;
+    bottom: 0.7cqw;
+    left: 0.7cqw;
+    width: calc((100% - 1.4cqw) / 3);
+    border-radius: 2cqw;
+    background-color: var(--a-white);
+    box-shadow: 0 0.4cqw 1.2cqw rgb(20 43 45 / 0.12);
+    transform: translateX(calc(var(--day, 0) * 100%));
+    transition: transform 0.5s var(--ease-expo);
+  }
+
+  .atlas-day {
+    position: relative;
+    height: 7.6cqw;
+    font-size: 3.2cqw;
+    font-weight: 600;
+    color: var(--a-mute);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .atlas-day[aria-pressed="true"] {
+    color: var(--a-ink);
+  }
+
+  [data-platform="android"] .atlas-days {
+    padding: 0;
+    border-bottom: 1px solid var(--a-line);
+    border-radius: 0;
+    background: none;
+  }
+
+  [data-platform="android"] .atlas-days-thumb {
+    top: auto;
+    bottom: -1px;
+    left: 0;
+    width: calc(100% / 3);
+    height: 0.7cqw;
+    border-radius: 0.7cqw 0.7cqw 0 0;
+    background-color: var(--a-teal);
+    box-shadow: none;
+  }
+
+  [data-platform="android"] .atlas-day {
+    height: 9cqw;
+  }
+
+  [data-platform="android"] .atlas-day[aria-pressed="true"] {
+    color: var(--a-teal);
+  }
+
+  .atlas-day-panel {
+    --dir: 1;
+  }
+
+  .atlas-day-panel[data-direction="-1"] {
+    --dir: -1;
+  }
+
+  .atlas-day-theme {
+    margin-top: 4.6cqw;
+    font-size: 5.2cqw;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .atlas-stops {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.4cqw;
+  }
+
+  .atlas-stop {
+    padding-block: 3.6cqw;
+  }
+
+  .atlas-stop + .atlas-stop {
+    border-top: 1px solid var(--a-line);
+  }
+
+  .atlas-stop:first-child {
+    padding-top: 0;
+  }
+
+  .atlas-stop-photo {
+    margin-bottom: 3cqw;
+  }
+
+  .atlas-stop-row {
+    display: grid;
+    grid-template-columns: 17cqw minmax(0, 1fr);
+    align-items: center;
+    gap: 3.4cqw;
+  }
+
+  .atlas-stop-thumb {
+    position: relative;
+    width: 17cqw;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2.2cqw;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-stop-glyph {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--a-line);
+    background-color: transparent;
+    color: var(--a-ink);
+  }
+
+  .atlas-stop-glyph svg {
+    width: 6cqw;
+    height: 6cqw;
+  }
+
+  .atlas-stop-meta {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqw;
+    font-size: 2.7cqw;
+    font-weight: 600;
+    color: var(--a-mute);
+  }
+
+  .atlas-stop-time {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    color: var(--a-ink);
+  }
+
+  .atlas-stop-kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 1cqw;
+  }
+
+  .atlas-stop-kind svg {
+    width: 3.2cqw;
+    height: 3.2cqw;
+  }
+
+  .atlas-stop-meta .atlas-held {
+    margin-left: auto;
+  }
+
+  .atlas-stop-title {
+    margin-top: 1.2cqw;
+    font-size: 4cqw;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .atlas-stop-feature .atlas-stop-title {
+    font-size: 4.8cqw;
+    letter-spacing: -0.035em;
+  }
+
+  .atlas-stop-detail {
+    margin-top: 0.8cqw;
+    font-size: 3.1cqw;
+    line-height: 1.35;
+    color: var(--a-mute);
+  }
+
+  /* The bar above the plan: floating buttons over the photograph, then a
+     solid bar with the title once the photograph has scrolled away. */
+  .atlas-topbar {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 8.6cqw minmax(0, 1fr) 8.6cqw;
+    align-items: center;
+    gap: 2cqw;
+    padding: 12.5cqw 4cqw 2.4cqw;
+    transition:
+      background-color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+
+  .atlas-topbar[data-solid] {
+    background-color: rgb(247 245 239 / 0.92);
+    box-shadow: 0 1px 0 var(--a-line);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .atlas-icon-button {
+    display: grid;
+    place-items: center;
+    width: 8.6cqw;
+    height: 8.6cqw;
+    border-radius: 999px;
+    background-color: rgb(255 255 255 / 0.9);
+    color: var(--a-ink);
+    transition: background-color 0.35s ease;
+  }
+
+  button.atlas-icon-button {
+    cursor: pointer;
+  }
+
+  .atlas-icon-button svg {
+    width: 4.8cqw;
+    height: 4.8cqw;
+  }
+
+  [data-solid] .atlas-icon-button {
+    background-color: transparent;
+  }
+
+  .atlas-topbar-title {
+    overflow: hidden;
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(1.5cqw);
+    transition:
+      opacity 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-topbar-title {
+    text-align: left;
+  }
+
+  [data-solid] .atlas-topbar-title {
+    opacity: 1;
+    transform: none;
+  }
+
+  .atlas-dock {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+    padding: 3.4cqw 5.5cqw 8cqw;
+    background-color: rgb(247 245 239 / 0.94);
+    box-shadow: 0 -1px 0 var(--a-line);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .atlas-dock-title {
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .atlas-dock-sub {
+    margin-top: 0.6cqw;
+    font-size: 2.8cqw;
+    color: var(--a-mute);
+  }
+
+  .atlas-cta {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4cqw;
+    height: 11cqw;
+    padding-inline: 6cqw;
+    border-radius: var(--a-button);
+    background-color: var(--a-teal);
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background-color 0.45s ease,
+      color 0.45s ease,
+      transform 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .atlas-cta:not(:disabled):hover {
+      background-color: #1b5956;
+    }
+  }
+
+  .atlas-cta:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .atlas-cta[data-done] {
+    background-color: rgb(33 108 104 / 0.12);
+    color: var(--a-teal);
+    cursor: default;
+  }
+
+  .atlas-cta svg {
+    width: 4.2cqw;
+    height: 4.2cqw;
+  }
+
+  /* Photo credits, beside the example (site styles, not the app's). */
+  .atlas-credits summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .atlas-credits summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .atlas-credits summary::after {
+    content: "+";
+  }
+
+  .atlas-credits[open] summary::after {
+    content: "−";
+  }
+
+  .atlas-credits ul {
+    display: flex;
+    max-width: 38ch;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--fg-mute);
+  }
+
+  .atlas-credits a {
+    color: var(--fg-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 2px;
+    transition: color 0.3s ease;
+  }
+
+  .atlas-credits a:hover {
+    color: var(--fg);
+  }
+
+  .atlas-credits p {
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--fg-mute);
+  }
+
+  /* Motion inside Atlas. Each screen's entrance plays when it becomes the
+     current one, from an authored final state. */
+  [data-stage="ask"] .atlas-in {
+    animation: atlas-rise 0.8s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 200ms);
+  }
+
+  [data-stage="ask"] .atlas-journey .atlas-photo {
+    animation: atlas-settle 1.6s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 200ms);
+  }
+
+  [data-filled] .atlas-word {
+    animation: atlas-word 0.4s ease backwards;
+    animation-delay: calc(var(--w) * 50ms);
+  }
+
+  [data-stage="ask"] .atlas-send:not(:disabled) {
+    animation: atlas-pulse 1.8s ease-out 0.6s infinite;
+  }
+
+  [data-stage="thinking"] .atlas-progress::after {
+    animation: atlas-progress 2.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  }
+
+  [data-stage="thinking"] .atlas-curate-spark {
+    animation: atlas-breathe 1.6s ease-in-out infinite;
+  }
+
+  [data-stage="thinking"] .atlas-route {
+    animation: atlas-draw 1.9s linear 0.35s backwards;
+  }
+
+  [data-stage="thinking"] .atlas-place-dot {
+    animation: atlas-dot 0.45s ease backwards;
+    animation-delay: var(--at);
+  }
+
+  [data-stage="thinking"] .atlas-place-label {
+    animation: atlas-label 0.45s ease backwards;
+    animation-delay: var(--at);
+  }
+
+  [data-stage="thinking"] .atlas-pick {
+    animation: atlas-rise 0.55s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 0.35s);
+  }
+
+  [data-stage="thinking"] .atlas-pick .atlas-photo {
+    animation: atlas-settle 1.2s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 0.35s);
+  }
+
+  [data-stage="thinking"] .atlas-spinner {
+    animation:
+      atlas-spin 0.8s linear infinite,
+      atlas-out 0.2s ease both;
+    animation-delay: 0s, calc(var(--k) * 0.6s + 0.95s);
+  }
+
+  [data-stage="thinking"] .atlas-pick-check {
+    animation: atlas-pop 0.4s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 1s);
+  }
+
+  [data-stage="result"] .atlas-hero-photo {
+    animation: atlas-unveil 1.8s var(--ease-expo) backwards;
+  }
+
+  [data-stage="result"] .atlas-sheet {
+    animation: atlas-sheet 1s var(--ease-expo) 0.15s backwards;
+  }
+
+  [data-stage="result"] .atlas-reveal {
+    animation: atlas-rise 0.8s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 350ms);
+  }
+
+  [data-stage="result"] .atlas-topbar {
+    animation: atlas-fade 0.6s ease 0.5s backwards;
+  }
+
+  [data-stage="result"] .atlas-dock {
+    animation: atlas-dock 0.8s var(--ease-expo) 0.7s backwards;
+  }
+
+  /* A new day slides in from the side it was chosen on. */
+  .atlas-day-panel[data-browsed] {
+    animation: atlas-day 0.55s var(--ease-expo) backwards;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* The opening photograph drifts slower than the page as it scrolls,
+       and photographs settle as they come into view. Scroll-linked, so
+       it runs on the compositor; skipped where unsupported. */
+    @supports (animation-timeline: scroll()) {
+      .atlas-scroll {
+        scroll-timeline: --atlas-scroll y;
+      }
+
+      .atlas-hero-parallax {
+        animation: atlas-parallax linear both;
+        animation-timeline: --atlas-scroll;
+        animation-range: 0 104cqw;
+      }
+
+      .atlas-stay-photo .atlas-photo,
+      .atlas-stop-photo .atlas-photo,
+      .atlas-stop-thumb .atlas-photo {
+        animation: atlas-photo-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 80%;
+      }
+    }
+  }
+
+  /* A small two-way switch (Atlas uses it to pick a platform). */
   .segmented {
     display: inline-flex;
     gap: 0.25rem;
@@ -1678,23 +2615,134 @@
   }
 }
 
-@keyframes app-in {
+@keyframes atlas-rise {
   from {
     opacity: 0;
-    transform: translateY(2cqw);
+    transform: translateY(3cqw);
   }
 }
 
-@keyframes app-typing {
-  0%,
-  60%,
-  100% {
-    opacity: 0.35;
-    transform: translateY(0);
+@keyframes atlas-word {
+  from {
+    opacity: 0;
+    transform: translateY(1cqw);
   }
-  30% {
+}
+
+@keyframes atlas-settle {
+  from {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes atlas-unveil {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes atlas-sheet {
+  from {
+    transform: translateY(14cqw);
+  }
+}
+
+@keyframes atlas-dock {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes atlas-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes atlas-day {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 8cqw));
+  }
+}
+
+@keyframes atlas-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes atlas-out {
+  from {
     opacity: 1;
-    transform: translateY(-0.8cqw);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes atlas-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@keyframes atlas-breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes atlas-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes atlas-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes atlas-dot {
+  from {
+    fill: #fff;
+    stroke: rgb(20 43 45 / 0.35);
+  }
+}
+
+@keyframes atlas-label {
+  from {
+    fill-opacity: 0.35;
+  }
+}
+
+@keyframes atlas-pulse {
+  from {
+    box-shadow: 0 0 0 0 rgb(33 108 104 / 0.45);
+  }
+  to {
+    box-shadow: 0 0 0 2.6cqw rgb(33 108 104 / 0);
+  }
+}
+
+@keyframes atlas-parallax {
+  to {
+    transform: translateY(36cqw);
+  }
+}
+
+@keyframes atlas-photo-in {
+  from {
+    opacity: 0.35;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

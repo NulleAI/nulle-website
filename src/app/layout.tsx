@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Manrope } from "next/font/google";
 
 import { site } from "@/lib/site";
 
@@ -15,6 +15,15 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+});
+
+// The typeface of Atlas, the concept app in "See what's possible". Not
+// preloaded: the file is fetched only when that demonstration is shown.
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 const title = `${site.name} — ${site.tagline}`;
@@ -54,7 +63,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable}`}
     >
       <body className="theme-dark min-h-svh">{children}</body>
     </html>
