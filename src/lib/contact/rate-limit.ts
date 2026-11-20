@@ -37,6 +37,10 @@ export function allowRequest(client: string, now: number = Date.now()): boolean 
 }
 
 export function clientKey(headers: Headers): string {
+  // DigitalOcean App Platform puts the visitor's address in
+  // do-connecting-ip. Prefer it: the first x-forwarded-for entry is
+  // whatever the visitor sent, so it can be changed to dodge the limit.
+  const platform = headers.get("do-connecting-ip")?.trim();
   const forwarded = headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || headers.get("x-real-ip")?.trim() || "unknown";
+  return platform || forwarded || headers.get("x-real-ip")?.trim() || "unknown";
 }

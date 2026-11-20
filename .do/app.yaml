@@ -1,38 +1,62 @@
+# DigitalOcean App Platform spec for nulle.ai: one Node web service that
+# builds the Next.js site and runs it with `next start`.
+#
+# App Platform does not read this file from the repository. The live
+# spec is stored in DigitalOcean (App > Settings > App Spec), and this
+# file records what it should contain. docs/deploy-digitalocean.md has
+# the steps for setting it up and for switching the live app over.
+#
+# Never upload this whole file over the live app's spec. An uploaded
+# spec replaces everything, and this file leaves out the custom domains
+# and the secret values that only DigitalOcean holds.
 name: nulle-website
 region: nyc
-static_sites:
-  - name: nulle-website
+
+services:
+  - name: web
+    environment_slug: node-js
+    github:
+      repo: NulleAI/nulle-website
+      branch: main
+      deploy_on_push: true
     source_dir: /
-    output_dir: /
-    index_document: index.html
-    error_document: index.html
-    routes:
-      - path: /
-    github:
-      repo: NulleAI/nulle-website
-      branch: main
-      deploy_on_push: true
-functions:
-  - name: api
-    source_dir: /functions
-    routes:
-      - path: /api
-    github:
-      repo: NulleAI/nulle-website
-      branch: main
-      deploy_on_push: true
-    envs:
-      - key: CONTACT_TO
-        scope: RUN_AND_BUILD_TIME
-        value: connect@nulle.ai
-      - key: CONTACT_FROM
-        scope: RUN_AND_BUILD_TIME
-        value: Nulle Website <website@nulle.ai>
-      - key: ALLOWED_ORIGINS
-        scope: RUN_AND_BUILD_TIME
-        value: https://nulle.ai,https://www.nulle.ai
-      # RESEND_API_KEY is a secret. Add it in the DigitalOcean dashboard
-      # (App > Settings > api > Environment Variables, type: Encrypt, scope:
-      # Run and build time). Never put the plain key in this file. After adding
-      # it, `doctl apps spec get <app-id>` returns an encrypted EV[...] value
-      # that is safe to commit here if you want the spec to stay in sync.
+    # The Node version comes from "engines" in package.json.
+    build_command: npm run build
+    run_command: npm start
+    # App Platform passes this to the app as PORT, which `next start` uses.
+    http_port: 8080
+    # 512 MB, $5 a month. A production build peaked near 220 MB while
+    # resizing every photo. If the Insights memory graph stays high, move
+    # to apps-s-1vcpu-1gb-fixed (1 GB, $10 a month).
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    health_check:
+      http_path: /
+
+ingress:
+  rules:
+    - component:
+        name: web
+      match:
+        path:
+          prefix: /
+
+# Shared by every component in the app.
+envs:
+  # Read during the build (page metadata, sitemap, robots.txt), so changing
+  # it needs a rebuild, not only a restart.
+  - key: NEXT_PUBLIC_SITE_URL
+    scope: RUN_AND_BUILD_TIME
+    value: https://nulle.ai
+  - key: CONTACT_TO_EMAIL
+    scope: RUN_TIME
+    value: connect@nulle.ai
+  # Must be on the domain verified in Resend.
+  - key: CONTACT_FROM_EMAIL
+    scope: RUN_TIME
+    value: Nulle Website <website@mail.nulle.ai>
+  # Two secrets also belong here, scope RUN_TIME, type SECRET:
+  #   RESEND_API_KEY       the Resend API key
+  #   CONTACT_FORM_SECRET  a long random string (openssl rand -hex 32)
+  # Enter them in the control panel with "Encrypt" ticked. Never write
+  # the plain values in this file.

@@ -46,8 +46,8 @@ limit (5 per 10 minutes), then delivery.
 ### Integration status
 
 - Webhook delivery: tested end to end against a local receiver (success and failure).
-- Resend email delivery: implemented, **not tested**, because no API key was available. Send one
-  real request after adding the three Resend variables.
+- Resend email delivery: tested end to end on 2026-11-19. The request arrived at the
+  `CONTACT_TO_EMAIL` inbox, and replying went to the visitor's address.
 - Scheduling: a configurable link, tested with a placeholder URL. No booking is made by this site;
   it hands off to your scheduling page.
 
@@ -75,5 +75,9 @@ Motion respects `prefers-reduced-motion`: every element renders in its final sta
 
 ## Deploy
 
-Any Node host that runs Next.js works. On Vercel: import the repository, add the environment
-variables, deploy.
+nulle.ai runs on DigitalOcean App Platform as one Node web service. The spec is in
+`.do/app.yaml`. [docs/deploy-digitalocean.md](docs/deploy-digitalocean.md) covers the settings,
+a test app, switching the live app over, and going back.
+
+Any other Node host that runs Next.js also works: build with `npm run build`, run with
+`npm start`, and set the environment variables above.
