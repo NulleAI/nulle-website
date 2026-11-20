@@ -73,6 +73,11 @@ const HAIRLINE = "rgba(246,246,242,0.22)";
 
 /** How far the canvas reaches past the diagram on every side, px, so glow is never clipped. */
 const LIGHT_PAD = 48;
+/** Paper, for the faint threads and motes drawn while the inputs are loose. */
+const PAPER: RGB = [246, 246, 242];
+/** Seconds for a mote to cross each loose thread (one per input), and when each starts. */
+const MOTE_PERIOD = [6.4, 7.6, 5.8, 8.2, 7] as const;
+const MOTE_PHASE = [0.1, 0.62, 0.35, 0.85, 0.5] as const;
 /** Seconds between the resting pulses. */
 const REST_CYCLE = 6.5;
 
@@ -168,6 +173,9 @@ export function HeroWorkflow() {
       const lit = INPUTS.map(() => ({ p: 0 }));
       const beam = { p: 0 };
       const glow = { p: 0 };
+      // How present the loose, ambient layer is: 1 before scrolling, 0 once the inputs line up.
+      const ambient = { a: 1 };
+      let readyAt = Infinity;
       let flashAt = -Infinity;
       let restAt: number | null = null;
       let still = false;
@@ -176,16 +184,30 @@ export function HeroWorkflow() {
       let ratio = 1;
       let canvasWidth = 0;
       let canvasHeight = 0;
+      // Where the diagram's top-left corner sits on the canvas.
+      let originX = LIGHT_PAD;
+      let originY = LIGHT_PAD;
 
-      /** The canvas is sized from the diagram, never from itself, and capped. */
+      /**
+       * The canvas covers the diagram (with room for glow) and the whole band
+       * the loose inputs float in. It is sized from those, never from itself,
+       * and capped.
+       */
       const size = () => {
         const box = flow.getBoundingClientRect();
+        const band = stage.getBoundingClientRect();
+        const left = Math.min(-LIGHT_PAD, band.left - box.left);
+        const top = Math.min(-LIGHT_PAD, band.top - box.top);
+        const right = Math.max(box.width + LIGHT_PAD, band.right - box.left);
+        const bottom = Math.max(box.height + LIGHT_PAD, band.bottom - box.top);
         ratio = Math.min(window.devicePixelRatio || 1, 2);
-        canvasWidth = Math.min(box.width + LIGHT_PAD * 2, 4096);
-        canvasHeight = Math.min(box.height + LIGHT_PAD * 2, 2048);
+        originX = -left;
+        originY = -top;
+        canvasWidth = Math.min(right - left, 4096);
+        canvasHeight = Math.min(bottom - top, 2048);
         Object.assign(canvas.style, {
-          left: `${-LIGHT_PAD}px`,
-          top: `${-LIGHT_PAD}px`,
+          left: `${left}px`,
+          top: `${top}px`,
           width: `${canvasWidth}px`,
           height: `${canvasHeight}px`,
         });
@@ -231,7 +253,12 @@ export function HeroWorkflow() {
         const line = horizontal
           ? { x0: hx + r, y0: hy, x1: end.left - box.left - 6, y1: hy }
           : { x0: hx, y0: hy + r, x1: hx, y1: end.top - box.top - 6 };
-        return { width: box.width, height: box.height, inputs, hub: { x: hx, y: hy }, line };
+        // Each icon's centre, wherever it is floating right now.
+        const loose = chips.map((chip) => {
+          const c = chip.getBoundingClientRect();
+          return { x: c.left + c.width / 2 - box.left, y: c.top + c.height / 2 - box.top, r: c.width / 2 };
+        });
+        return { width: box.width, height: box.height, inputs, hub: { x: hx, y: hy }, hubRadius: r, line, loose };
       };
 
       const strokePasses = (passes: readonly (readonly [number, number])[], level: number) => {
@@ -273,10 +300,21 @@ export function HeroWorkflow() {
         ctx.fillRect(at.x - radius, at.y - radius, radius * 2, radius * 2);
       };
 
+      /** A small, soft point of light: something on its way. */
+      const mote = (at: Point, radius: number, strength: number) => {
+        if (strength <= 0.003) return;
+        const light = ctx.createRadialGradient(at.x, at.y, 0, at.x, at.y, radius);
+        light.addColorStop(0, rgba(WHITE, strength));
+        light.addColorStop(0.35, rgba(PAPER, strength * 0.35));
+        light.addColorStop(1, rgba(PAPER, 0));
+        ctx.fillStyle = light;
+        ctx.fillRect(at.x - radius, at.y - radius, radius * 2, radius * 2);
+      };
+
       const render = (now: number) => {
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        const { width, height, inputs, hub, line } = measure();
+        const { width, height, inputs, hub, hubRadius, line, loose } = measure();
         const t = now / 1000;
         const along = Math.hypot(line.x1 - line.x0, line.y1 - line.y0) || 1;
         const angle = Math.atan2(line.y1 - line.y0, line.x1 - line.x0);
@@ -288,9 +326,55 @@ export function HeroWorkflow() {
         const beamSparkSize = clamp(along * 0.07, 9, 24);
 
         ctx.save();
-        ctx.translate(LIGHT_PAD, LIGHT_PAD);
+        ctx.translate(originX, originY);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
+
+        // While the inputs float loose: a faint thread reaches from each toward
+        // the point to come, keeping a gentle bend of its own and swaying slowly;
+        // now and then a soft mote crosses one; and where they meet there is a
+        // whisper of light that lifts a little as each mote arrives. It eases in
+        // after the inputs appear and fades as scroll lines them up.
+        const presence = still ? 0 : ambient.a * smooth((now - readyAt - 600) / 1800);
+        if (presence > 0.002) {
+          ctx.save();
+          ctx.globalCompositeOperation = "lighter";
+          let arriving = 0;
+          loose.forEach((chip, i) => {
+            const weight = presence * SCATTER_OPACITY[i];
+            const dist = Math.hypot(hub.x - chip.x, hub.y - chip.y) || 1;
+            const ux = (hub.x - chip.x) / dist;
+            const uy = (hub.y - chip.y) / dist;
+            const start = { x: chip.x + ux * (chip.r + 7), y: chip.y + uy * (chip.r + 7) };
+            const end = { x: hub.x - ux * (hubRadius + 8), y: hub.y - uy * (hubRadius + 8) };
+            const span = Math.hypot(end.x - start.x, end.y - start.y);
+            if (span < 24) return;
+            const bend = ((i % 2 ? 1 : -1) * 0.07 + Math.sin(t * (0.21 + i * 0.037) + i * 1.9) * 0.035) * span;
+            const curve: Curve = [
+              start,
+              { x: mix(start.x, end.x, 0.33) - uy * bend, y: mix(start.y, end.y, 0.33) + ux * bend },
+              { x: mix(start.x, end.x, 0.67) - uy * bend * 0.7, y: mix(start.y, end.y, 0.67) + ux * bend * 0.7 },
+              end,
+            ];
+            const thread = ctx.createLinearGradient(start.x, start.y, end.x, end.y);
+            thread.addColorStop(0, rgba(PAPER, 0.09 * weight));
+            thread.addColorStop(1, rgba(PAPER, 0.02 * weight));
+            ctx.strokeStyle = thread;
+            ctx.lineWidth = 1;
+            traceCurve(curve);
+            ctx.stroke();
+
+            const cycle = (((t + i * 0.37) / MOTE_PERIOD[i] + MOTE_PHASE[i]) % 1 + 1) % 1;
+            const travel = cycle / 0.6;
+            if (travel < 1) {
+              const fade = Math.pow(Math.sin(Math.PI * travel), 1.4);
+              mote(pointAt(curve, easeInOutSine(travel)), 4.5, 0.5 * fade * weight);
+              arriving += bell(travel, 0.96, 0.07) * weight;
+            }
+          });
+          halo(hub, 34, presence * (0.045 + 0.02 * Math.sin(t * 0.8)) + 0.07 * arriving, PAPER);
+          ctx.restore();
+        }
 
         // Hairlines, drawn in as the inputs arrive.
         ctx.strokeStyle = HAIRLINE;
@@ -441,6 +525,8 @@ export function HeroWorkflow() {
           );
         });
         timeline.fromTo(flow, { "--float": 1 }, { "--float": 0, duration: 1.4 }, 0);
+        // The loose threads and motes fade before the real hairlines begin.
+        timeline.fromTo(ambient, { a: 1 }, { a: 0, duration: 2, ease: "power1.in" }, 0);
 
         // 2. Hairlines reach for one point.
         timeline.fromTo(node, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 2.2);
@@ -505,6 +591,7 @@ export function HeroWorkflow() {
         }
         sync();
         flow.dataset.ready = "";
+        if (readyAt === Infinity) readyAt = performance.now();
 
         // Light is drawn every frame while the hero is on screen; without motion, only when asked.
         let frame = 0;
@@ -530,6 +617,7 @@ export function HeroWorkflow() {
           if (!live) render(performance.now());
         });
         resize.observe(flow);
+        resize.observe(stage);
         schedule();
         if (!live) render(performance.now());
 
@@ -558,13 +646,15 @@ export function HeroWorkflow() {
             {INPUTS.map(({ label, short, Icon }, i) => (
               <li key={label} className="flow-slot">
                 <span className="flow-item" data-flow-in>
-                  <span className="flow-body" style={{ "--n": i } as React.CSSProperties}>
-                    <span className="flow-word">
-                      <span className="flow-word-long">{label}</span>
-                      <span className="flow-word-short">{short}</span>
-                    </span>
-                    <span className="flow-chip" data-flow-chip>
-                      <Icon className="flow-icon" />
+                  <span className="flow-drift" style={{ "--n": i } as React.CSSProperties}>
+                    <span className="flow-body">
+                      <span className="flow-word">
+                        <span className="flow-word-long">{label}</span>
+                        <span className="flow-word-short">{short}</span>
+                      </span>
+                      <span className="flow-chip" data-flow-chip>
+                        <Icon className="flow-icon" />
+                      </span>
                     </span>
                   </span>
                 </span>

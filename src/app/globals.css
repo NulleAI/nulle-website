@@ -220,6 +220,13 @@
     }
   }
 
+  /* ...plus room on phones for the lowered outcome. */
+  @media (max-width: 47.99rem) and (max-height: 48.99rem), (max-width: 47.99rem) and (prefers-reduced-motion: reduce) {
+    .hero-stage {
+      padding-bottom: 2.5rem;
+    }
+  }
+
   /* "intelligence." waits in grey until the beam reaches it, then takes
      its colour from the left, and a band of light crosses it. */
   .hero-title .hero-accent {
@@ -276,6 +283,11 @@
     justify-content: center;
   }
 
+  /* Carries the loose inputs' sideways drift; .flow-body carries the vertical. */
+  .flow-drift {
+    display: block;
+  }
+
   .flow-body {
     display: flex;
     flex-direction: column-reverse;
@@ -311,6 +323,18 @@
   .flow-icon {
     width: 1.05rem;
     height: 1.05rem;
+  }
+
+  /* A brighter ring that breathes over each loose input's icon. */
+  .flow-in .flow-chip::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid rgb(246 246 242 / 0.6);
+    border-radius: inherit;
+    box-shadow: 0 0 12px rgb(246 246 242 / 0.08);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .flow-chip-done {
@@ -410,6 +434,19 @@
     .flow-out {
       gap: 0.5rem;
       font-size: 0.9375rem;
+    }
+  }
+
+  /* On phones the point sits a little lower, so the lines reaching it have
+     room to curve; the check and its line sit a little lower beneath it
+     (a visual offset only). */
+  @media (max-width: 47.99rem) {
+    .flow-node {
+      margin-top: 1rem;
+    }
+
+    .flow-out {
+      top: 1rem;
     }
   }
 
@@ -2910,13 +2947,34 @@
   }
 }
 
-/* A slow float while loose, scaled by --float so it settles as the inputs line up. */
-@keyframes flow-float {
+/* While loose, each input drifts on two slow axes at its own pace, so it
+   traces an unhurried loop of its own; --float scales the drift (and the
+   ring's pulse) to nothing as scroll lines the inputs up. */
+@keyframes flow-drift-x {
   from {
-    translate: 0 calc(var(--float) * -5px);
+    translate: calc(var(--float) * -6px) 0;
   }
   to {
-    translate: calc(var(--float) * 3px) calc(var(--float) * 5px);
+    translate: calc(var(--float) * 6px) 0;
+  }
+}
+
+@keyframes flow-drift-y {
+  from {
+    translate: 0 calc(var(--float) * -7px);
+  }
+  to {
+    translate: 0 calc(var(--float) * 7px);
+  }
+}
+
+@keyframes flow-chip-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: calc(var(--float) * 0.7);
   }
 }
 
@@ -3120,13 +3178,24 @@
     animation: sheen 1.6s var(--ease-quart) 0.35s both;
   }
 
-  /* On load the inputs fade in where they lie and float; --float falls
-     to 0 as scroll lines them up. */
+  /* On load the inputs fade in where they lie, then drift and softly
+     pulse, each out of step with the others; --float falls to 0 as scroll
+     lines them up, so all of it settles without a seam. */
+  .flow[data-ready] .flow-in .flow-drift {
+    animation: flow-drift-x calc(9s + var(--n, 0) * 1.6s) ease-in-out infinite alternate;
+    animation-delay: calc(var(--n, 0) * -2.3s);
+  }
+
   .flow[data-ready] .flow-in .flow-body {
     animation:
       fade 1s ease both,
-      flow-float 6.5s ease-in-out infinite alternate;
+      flow-drift-y calc(6.2s + var(--n, 0) * 0.9s) ease-in-out infinite alternate;
     animation-delay: calc(var(--n, 0) * 140ms + 200ms), calc(var(--n, 0) * -1.7s);
+  }
+
+  .flow[data-ready] .flow-in .flow-chip::after {
+    animation: flow-chip-pulse calc(4.8s + var(--n, 0) * 0.7s) ease-in-out infinite;
+    animation-delay: calc(var(--n, 0) * -1.3s);
   }
 
   .enter-draw {
