@@ -1,4 +1,0 @@
-# Local secrets for `doctl serverless deploy` and deployer output. Never commit.
-.env
-.deployed/
-__deployer__.zip
