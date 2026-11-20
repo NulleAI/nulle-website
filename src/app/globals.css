@@ -413,16 +413,26 @@
     }
   }
 
-  /* The outcome, one statement per line. */
+  /* The outcome: one line on phones (wrapping only if it must), one
+     statement per line beside the check from tablet width up. */
   .flow-out-lines {
     display: flex;
-    flex-direction: column;
-    gap: 0.15em;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.15em 0.3em;
   }
 
   .flow-out-line {
     display: block;
     line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 48rem) {
+    .flow-out-lines {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
   }
 
   .flow-light {
