@@ -1,0 +1,3216 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Tokens
+   ------------------------------------------------------------------ */
+
+@theme {
+  --color-ink: #111413;
+  --color-ink-raised: #171b19;
+  --color-paper: #f6f6f2;
+  --color-stone: #e8e9e5;
+  --color-mute: #818782;
+  --color-mute-deep: #5f6561;
+  --color-mint: #affe9f;
+  --color-cyan: #8af0fd;
+  --color-alert: #ff9d8c;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Surface-aware colours. Each section sets a theme class; everything
+     inside reads these instead of hard-coded values. */
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-fg-mute: var(--fg-mute);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+}
+
+@layer base {
+  .theme-dark {
+    --bg: var(--color-ink);
+    --fg: var(--color-paper);
+    --fg-soft: #c5c9c4;
+    --fg-mute: #8b918c;
+    --line: rgb(246 246 242 / 0.14);
+    --line-strong: rgb(246 246 242 / 0.3);
+    --focus: var(--color-mint);
+    --logo-on-dark: 1;
+    --logo-on-light: 0;
+    color-scheme: dark;
+  }
+
+  .theme-light,
+  .theme-stone {
+    --bg: var(--color-paper);
+    --fg: var(--color-ink);
+    --fg-soft: #393e3b;
+    --fg-mute: var(--color-mute-deep);
+    --line: rgb(17 20 19 / 0.14);
+    --line-strong: rgb(17 20 19 / 0.36);
+    --focus: var(--color-ink);
+    --logo-on-dark: 0;
+    --logo-on-light: 1;
+    color-scheme: light;
+  }
+
+  .theme-stone {
+    --bg: var(--color-stone);
+    --fg-mute: #585e5a;
+  }
+
+  .theme-dark,
+  .theme-light,
+  .theme-stone {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 4.5rem;
+    background-color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    letter-spacing: -0.006em;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-mint);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus, currentColor);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------------ */
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 110rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4.2vw, 4.5rem);
+  }
+
+  .section-y {
+    padding-block: clamp(6rem, 13vw, 12.5rem);
+  }
+
+  /* ----------------------------------------------------------------
+     Type
+     ---------------------------------------------------------------- */
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-mute);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 11.4vw, 4.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    font-weight: 400;
+    /* Pull the heading left by its side bearing so it aligns optically
+       with the text around it. */
+    margin-left: -0.035em;
+  }
+
+  @media (min-width: 48rem) {
+    .hero-title {
+      font-size: clamp(3.75rem, min(7.3vw, 13svh), 8.5rem);
+    }
+  }
+
+  /* The hero is a short scroll track. Its contents hold still while the
+     visitor scrolls through it, and that scroll plays the scene. */
+  .hero-track {
+    height: 190svh;
+  }
+
+  .hero-pin {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    min-height: 32rem;
+    overflow: hidden;
+  }
+
+  /* The diagram's band: it takes the room the headline leaves. */
+  .hero-stage {
+    flex: 1 1 0%;
+    min-height: 15rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-track {
+      height: 170svh;
+    }
+  }
+
+  /* Without motion, or in a window too short to hold it, the hero is an
+     ordinary section: below 32rem tall, or 49rem on phones, where the
+     diagram stacks above the headline. (HeroWorkflow uses the same test.) */
+  @media (prefers-reduced-motion: reduce), (max-height: 31.99rem), (max-width: 47.99rem) and (max-height: 48.99rem) {
+    .hero-track {
+      height: auto;
+    }
+
+    .hero-pin {
+      position: relative;
+      height: auto;
+      min-height: 100svh;
+    }
+
+    /* Unpinned, the diagram takes the height it needs above the headline. */
+    .hero-stage {
+      flex: 1 0 auto;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  /* ...plus room on phones for the lowered outcome. */
+  @media (max-width: 47.99rem) and (max-height: 48.99rem), (max-width: 47.99rem) and (prefers-reduced-motion: reduce) {
+    .hero-stage {
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  /* "intelligence." waits in grey until the beam reaches it, then takes
+     its colour from the left, and a band of light crosses it. */
+  .hero-title .hero-accent {
+    background-image:
+      linear-gradient(100deg, transparent 38%, rgb(255 255 255 / 0.9) 50%, transparent 62%),
+      linear-gradient(90deg, var(--color-mint), var(--color-cyan)),
+      linear-gradient(var(--fg-mute), var(--fg-mute));
+    background-size: 260% 100%, 0% 100%, 100% 100%;
+    background-position: 0% 0, 0 0, 0 0;
+    background-repeat: no-repeat;
+    transition: background-size 1.2s var(--ease-expo);
+  }
+
+  [data-connected] .hero-title .hero-accent {
+    background-size: 260% 100%, 100% 100%, 100% 100%;
+  }
+
+  /* The hero's diagram: five inputs, one point of AI, one outcome in
+     two lines. Text and icons are markup; lines and light are a canvas
+     behind them. A column on phones, a row from tablet width up. */
+  .flow {
+    --float: 1;
+    position: relative;
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "in"
+      "node"
+      "out";
+    justify-items: center;
+    row-gap: 2.75rem;
+  }
+
+  .flow:not([data-ready]) {
+    visibility: hidden;
+  }
+
+  .flow-in {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-area: in;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-slot {
+    display: flex;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  /* Carries the loose inputs' sideways drift; .flow-body carries the vertical. */
+  .flow-drift {
+    display: block;
+  }
+
+  .flow-body {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .flow-word {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--fg-soft);
+    white-space: nowrap;
+  }
+
+  .flow-word-long {
+    display: none;
+  }
+
+  .flow-chip {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background-color: var(--bg);
+    color: var(--fg-soft);
+  }
+
+  .flow-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  /* A brighter ring that breathes over each loose input's icon. */
+  .flow-in .flow-chip::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid rgb(246 246 242 / 0.6);
+    border-radius: inherit;
+    box-shadow: 0 0 12px rgb(246 246 242 / 0.08);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .flow-chip-done {
+    border-color: rgb(175 254 159 / 0.55);
+    color: var(--color-mint);
+  }
+
+  .flow-node {
+    position: relative;
+    z-index: 1;
+    grid-area: node;
+  }
+
+  .flow-node-ring {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 1px solid var(--fg-mute);
+    border-radius: 999px;
+    background-color: var(--bg);
+    color: var(--fg-soft);
+    transition:
+      border-color 0.6s ease,
+      color 0.6s ease;
+  }
+
+  .flow-node-core {
+    position: absolute;
+    inset: 3px;
+    border-radius: inherit;
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+  }
+
+  .flow-node-icon {
+    position: relative;
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .flow-node-label {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 0.875rem);
+    translate: 0 -50%;
+    white-space: nowrap;
+    transition: color 0.8s ease;
+  }
+
+  [data-connected] .flow-node-ring {
+    border-color: var(--color-mint);
+    color: var(--color-ink);
+  }
+
+  [data-connected] .flow-node-label {
+    color: var(--fg);
+  }
+
+  .flow-out {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    grid-area: out;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--fg);
+  }
+
+  /* On all but the tallest phones the stacked diagram tightens so it
+     clears the headline and the paragraph beneath it. */
+  @media (max-width: 47.99rem) and (max-height: 55.99rem) {
+    .flow {
+      row-gap: 1.375rem;
+    }
+
+    .flow-body {
+      gap: 0.4rem;
+    }
+
+    .flow-chip {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .flow-node-ring {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .flow-out {
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* On phones the point sits a little lower, so the lines reaching it have
+     room to curve; the check and its line sit a little lower beneath it
+     (a visual offset only). */
+  @media (max-width: 47.99rem) {
+    .flow-node {
+      margin-top: 1rem;
+    }
+
+    .flow-out {
+      top: 1rem;
+    }
+  }
+
+  /* The outcome: one line on phones (wrapping only if it must), one
+     statement per line beside the check from tablet width up. */
+  .flow-out-lines {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.15em 0.3em;
+  }
+
+  .flow-out-line {
+    display: block;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 48rem) {
+    .flow-out-lines {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+
+  .flow-light {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+  }
+
+  @media (min-width: 48rem) {
+    .flow {
+      grid-template-columns: auto minmax(3rem, 1.6fr) auto minmax(2rem, 1fr) auto;
+      grid-template-areas: "in . node . out";
+      align-items: center;
+      justify-items: stretch;
+      row-gap: 0;
+    }
+
+    .flow-in {
+      grid-template-columns: none;
+      width: auto;
+      row-gap: 0.85rem;
+    }
+
+    .flow-slot {
+      justify-content: flex-end;
+    }
+
+    .flow-body {
+      flex-direction: row;
+      gap: 0.875rem;
+    }
+
+    .flow-word {
+      font-size: clamp(0.9375rem, 1.35vw, 1.1875rem);
+    }
+
+    .flow-word-long {
+      display: inline;
+    }
+
+    .flow-word-short {
+      display: none;
+    }
+
+    .flow-node-label {
+      top: calc(100% + 0.75rem);
+      left: 50%;
+      translate: -50% 0;
+    }
+
+    .flow-out {
+      flex-direction: row;
+      gap: 0.875rem;
+      font-size: clamp(1.0625rem, 1.9vw, 1.875rem);
+      text-align: left;
+    }
+  }
+
+  /* The platforms Nulle builds for, under Custom Software & Mobile Apps. */
+  .platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 2.75rem;
+    padding-inline: 1rem 1.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition:
+      border-color 0.35s ease,
+      background-color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  .platform-logo {
+    width: 1.125rem;
+    height: 1.125rem;
+    transition:
+      color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    .platform:hover {
+      border-color: var(--fg);
+      background-color: color-mix(in srgb, var(--fg) 4%, transparent);
+      transform: translateY(-2px);
+    }
+
+    .platform:hover .platform-logo {
+      transform: scale(1.08);
+    }
+
+    .platform-android:hover .platform-logo {
+      color: #2bb673;
+    }
+  }
+
+  /* Nulle's own apps: a compact tile per app, linking to the App Store. */
+  .app-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1rem 0.75rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    transition:
+      border-color 0.35s ease,
+      background-color 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  .app-tile-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-radius: 22.5%;
+    box-shadow:
+      0 0 0 1px rgb(17 20 19 / 0.08),
+      0 6px 14px -8px rgb(17 20 19 / 0.45);
+  }
+
+  @media (hover: hover) {
+    .app-tile:hover {
+      border-color: var(--line-strong);
+      background-color: color-mix(in srgb, var(--fg) 3%, transparent);
+      transform: translateY(-2px);
+    }
+
+    .app-tile:hover .arrow {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  /* Founders: compact portraits that warm up and lean in slightly on
+     hover. The drift layer is taller than its frame so the gentle scroll
+     parallax never shows an edge. */
+  .founder-portrait {
+    position: relative;
+    width: 100%;
+    max-width: 16rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.375rem;
+    background-color: var(--color-stone);
+  }
+
+  @media (min-width: 48rem) {
+    .founder-portrait {
+      max-width: 19rem;
+    }
+  }
+
+  .founder-portrait.founder-portrait-large {
+    max-width: 22rem;
+  }
+
+  @media (min-width: 48rem) {
+    .founder-portrait.founder-portrait-large {
+      max-width: 24rem;
+    }
+  }
+
+  .founder-drift {
+    position: absolute;
+    inset: -7% 0;
+  }
+
+  .focus-tag {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+  }
+
+  .founder-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.82);
+    transition:
+      transform 1.2s var(--ease-expo),
+      filter 0.8s ease;
+  }
+
+  @media (hover: hover) {
+    .founder:hover .founder-image {
+      filter: saturate(1);
+      transform: scale(1.03);
+    }
+  }
+
+  /* Founders on the homepage: an asymmetric composition. The headline,
+     one sentence and the link to the founders page sit left; two moderate
+     headshots sit right, level, with a hairline between. Stacked on phones. */
+  .founders {
+    --headshot: clamp(11.25rem, 15vw, 13.75rem);
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .founders {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+
+    .founders-intro {
+      grid-column: 1 / span 5;
+    }
+
+    .founders-list {
+      grid-column: 7 / -1;
+    }
+  }
+
+  .founders-heading {
+    margin-left: -0.03em;
+    font-size: clamp(2.5rem, 5.4vw, 5.25rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+
+  .founders-lede {
+    max-width: 31ch;
+    margin-top: 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--fg-soft);
+  }
+
+  @media (min-width: 64rem) {
+    .founders-lede {
+      margin-top: 2.25rem;
+    }
+  }
+
+  /* The way through sits with the introduction it belongs to. */
+  .founders-more {
+    margin-top: 2.25rem;
+  }
+
+  @media (min-width: 64rem) {
+    .founders-more {
+      margin-top: 2.75rem;
+    }
+  }
+
+  /* Side by side from 40rem: two equal columns starting on the grid's
+     seventh column, each a touch wider than its headshot so the lines
+     read comfortably. The photographs share one top edge, and a hairline
+     stands between the two founders, centred in the gap. Stacked below. */
+  .founders-list {
+    --founders-gap: clamp(2.5rem, 4vw, 3.5rem);
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    .founders-list {
+      grid-template-columns: repeat(2, calc(var(--headshot) + 1.5rem));
+      column-gap: var(--founders-gap);
+    }
+
+    .founder-profile + .founder-profile {
+      position: relative;
+    }
+
+    .founder-profile + .founder-profile::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--founders-gap) / -2);
+      width: 1px;
+      background-color: var(--line);
+    }
+  }
+
+  /* A head-and-shoulders crop, 180 to 220px wide: the photograph is
+     scaled evenly from the founder's face (set inline), so features
+     keep their natural proportions. A light desaturation unifies the
+     two photographs; hover restores full colour and lifts contrast. */
+  .headshot {
+    position: relative;
+    width: var(--headshot);
+    max-width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    background-color: var(--color-stone);
+  }
+
+  .headshot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgb(17 20 19 / 0.06);
+    pointer-events: none;
+  }
+
+  .headshot-crop {
+    position: absolute;
+    inset: 0;
+    transform: scale(1.6);
+  }
+
+  .headshot-image {
+    object-fit: cover;
+    filter: saturate(0.8) contrast(1.02);
+    transition:
+      transform 1.4s var(--ease-expo),
+      filter 0.9s ease;
+  }
+
+  .founder-meta {
+    max-width: 17.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.125rem;
+    border-top: 1px solid var(--line);
+    transition: border-color 0.8s ease;
+  }
+
+  /* Hover: the photograph regains its colour and leans in a little; the
+     hairline beneath it deepens. */
+  @media (hover: hover) {
+    .founder-profile:hover .headshot-image {
+      filter: saturate(1) contrast(1.07);
+      transform: scale(1.045);
+    }
+
+    .founder-profile:hover .founder-meta {
+      border-top-color: var(--line-strong);
+    }
+  }
+
+  .founder-name {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .founder-role {
+    margin-top: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .founder-summary {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--fg-soft);
+  }
+
+  /* "Meet the founders": a quiet hairline under the words fills in from
+     the left while the arrow slips out of its circle and a second one
+     slides in behind it. */
+  .founders-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .founders-link-text {
+    position: relative;
+    padding-block: 0.3rem;
+  }
+
+  .founders-link-text::before,
+  .founders-link-text::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+  }
+
+  .founders-link-text::before {
+    background-color: var(--line-strong);
+  }
+
+  .founders-link-text::after {
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s var(--ease-expo);
+  }
+
+  .founders-link-arrow {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    transition:
+      background-color 0.5s var(--ease-expo),
+      border-color 0.5s var(--ease-expo),
+      color 0.5s var(--ease-expo);
+  }
+
+  .founders-link-arrow .arrow {
+    grid-area: 1 / 1;
+    transition: transform 0.6s var(--ease-expo);
+  }
+
+  .founders-link-arrow .founders-link-next {
+    transform: translateX(-2.25rem);
+  }
+
+  @media (hover: hover) {
+    .founders-link:hover .founders-link-text::after {
+      transform: scaleX(1);
+    }
+
+    .founders-link:hover .founders-link-arrow {
+      border-color: var(--fg);
+      background-color: var(--fg);
+      color: var(--bg);
+    }
+
+    .founders-link:hover .founders-link-arrow .arrow {
+      transform: translateX(2.25rem);
+    }
+
+    .founders-link:hover .founders-link-arrow .founders-link-next {
+      transform: translateX(0);
+    }
+  }
+
+  .founders-link:focus-visible .founders-link-text::after {
+    transform: scaleX(1);
+  }
+
+  /* A small round icon link, used for Instagram in the footer. */
+  .social-link {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--fg-soft);
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    .social-link:hover {
+      border-color: var(--fg);
+      color: var(--fg);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     See what's possible: tabs, cards, and the pieces inside them.
+     --------------------------------------------------------------- */
+  .demo-tab {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: var(--fg-mute);
+    cursor: pointer;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .demo-tab-icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .demo-tab:hover {
+    border-color: var(--line-strong);
+    color: var(--fg-soft);
+  }
+
+  .demo-tab[aria-selected="true"] {
+    border-color: var(--line-strong);
+    background-color: var(--color-ink-raised);
+    color: var(--fg);
+  }
+
+  .demo-tab[aria-selected="true"] .demo-tab-icon {
+    border-color: transparent;
+    background-image: linear-gradient(135deg, var(--color-mint), var(--color-cyan));
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 48rem) {
+    .demo-tab {
+      gap: 0.75rem;
+      padding: 1.125rem 1.25rem;
+      font-size: 1rem;
+    }
+
+    .demo-tab-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+
+  .demo-card {
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background-color: color-mix(in srgb, var(--fg) 3%, var(--bg));
+  }
+
+  .demo-card-raised {
+    border-color: var(--line-strong);
+    background-color: color-mix(in srgb, var(--fg) 6%, var(--bg));
+    box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.65);
+  }
+
+  .demo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgb(175 254 159 / 0.35);
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    color: var(--color-mint);
+    white-space: nowrap;
+  }
+
+  .bubble {
+    max-width: 86%;
+    align-self: flex-start;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 1rem 1rem 1rem 0.375rem;
+    background-color: color-mix(in srgb, var(--fg) 8%, transparent);
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .bubble-ai {
+    align-self: flex-end;
+    border: 1px solid rgb(175 254 159 / 0.3);
+    border-radius: 1rem 1rem 0.375rem 1rem;
+    background-color: rgb(175 254 159 / 0.07);
+  }
+
+  .bubble-by {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-mint);
+  }
+
+  .bubble-question {
+    align-self: flex-end;
+    max-width: 90%;
+    border-radius: 1rem 1rem 0.375rem 1rem;
+    font-size: 1rem;
+  }
+
+  .step-chip {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--fg-soft);
+  }
+
+  .step-chip-lit {
+    position: absolute;
+    inset: -1px;
+    border: 1px solid rgb(175 254 159 / 0.6);
+    border-radius: inherit;
+    background-color: rgb(175 254 159 / 0.08);
+    box-shadow: 0 0 24px -6px rgb(175 254 159 / 0.45);
+  }
+
+  /* Atlas, the concept travel app (See what's possible → Mobile Apps).
+     One device, drawn for iOS or Android, with an editorial identity of
+     its own: warm ivory, midnight ink, ocean teal for actions and the
+     AI, champagne gold for fine accents, and real photographs. Inside
+     the screen everything is sized in container units, so it keeps its
+     proportions at any width. */
+  .atlas-stage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-block: 0.5rem 1rem;
+  }
+
+  /* A soft pool of light behind the device. */
+  .atlas-stage::before {
+    content: "";
+    position: absolute;
+    inset: 6% -8% 10%;
+    background: radial-gradient(closest-side, rgb(247 245 239 / 0.07), transparent);
+    pointer-events: none;
+  }
+
+  .atlas-device {
+    position: relative;
+    width: clamp(15rem, 74vw, 17.5rem);
+    margin: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .atlas-device {
+      width: 18rem;
+    }
+  }
+
+  .atlas-frame {
+    position: relative;
+    aspect-ratio: 9 / 19.2;
+    padding: 2.8%;
+    border-radius: 16.5% / 7.7%;
+    background: linear-gradient(140deg, #5d5853, #2a2725 12%, #131211 42%, #1d1b19 72%, #4c4743);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.1),
+      inset 0 0 0 2.5px #070707,
+      0 50px 90px -40px rgb(0 0 0 / 0.9);
+    transition:
+      border-radius 0.6s var(--ease-expo),
+      padding 0.6s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-frame {
+    padding: 3.3%;
+    border-radius: 12% / 5.6%;
+    background: linear-gradient(140deg, #3e3d3b, #1c1b1a 28%, #121211 68%, #2f2e2c);
+  }
+
+  /* Side buttons: action and volume on the left with power on the right
+     for iOS; power and a volume rocker on the right for Android. */
+  .atlas-key {
+    position: absolute;
+    width: 3px;
+    border-radius: 2px;
+    background-image: linear-gradient(90deg, #57524d, #1b1a19);
+  }
+
+  .atlas-key-1 {
+    left: -2px;
+    top: 17%;
+    height: 4.5%;
+  }
+
+  .atlas-key-2 {
+    left: -2px;
+    top: 24.5%;
+    height: 8%;
+  }
+
+  .atlas-key-3 {
+    left: -2px;
+    top: 34%;
+    height: 8%;
+  }
+
+  .atlas-key-4 {
+    right: -2px;
+    top: 27%;
+    height: 12.5%;
+    background-image: linear-gradient(270deg, #57524d, #1b1a19);
+  }
+
+  [data-platform="android"] .atlas-key-1,
+  [data-platform="android"] .atlas-key-2 {
+    display: none;
+  }
+
+  [data-platform="android"] .atlas-key-3 {
+    left: auto;
+    right: -2px;
+    top: 20%;
+    height: 7%;
+    background-image: linear-gradient(270deg, #57524d, #1b1a19);
+  }
+
+  [data-platform="android"] .atlas-key-4 {
+    top: 30%;
+    height: 13%;
+  }
+
+  .atlas-screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 14% / 6.5%;
+    background-color: #f7f5ef;
+    container-type: inline-size;
+    transition: border-radius 0.6s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-screen {
+    border-radius: 9.5% / 4.4%;
+  }
+
+  .atlas-status {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 12.5cqw;
+    padding: 0.6cqw 7.5cqw 0 10cqw;
+    color: #142b2d;
+    pointer-events: none;
+    transition: color 0.35s ease;
+  }
+
+  [data-tone="light"] .atlas-status {
+    color: #fff;
+  }
+
+  [data-platform="android"] .atlas-status {
+    padding-inline: 6.5cqw 6cqw;
+  }
+
+  .atlas-time {
+    font-size: 3.9cqw;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-platform="android"] .atlas-time {
+    font-size: 3.6cqw;
+    font-weight: 500;
+  }
+
+  .atlas-status-icons {
+    width: 16.4cqw;
+    height: 2.9cqw;
+  }
+
+  [data-platform="android"] .atlas-status-icons {
+    width: 10.6cqw;
+  }
+
+  /* The Dynamic Island on iOS becomes a punch-hole camera on Android. */
+  .atlas-camera {
+    position: absolute;
+    top: 2.6cqw;
+    left: 50%;
+    width: 29cqw;
+    height: 8.4cqw;
+    translate: -50% 0;
+    border-radius: 999px;
+    background-color: #030303;
+    transition:
+      width 0.55s var(--ease-expo),
+      height 0.55s var(--ease-expo),
+      top 0.55s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-camera {
+    top: 3.6cqw;
+    width: 4cqw;
+    height: 4cqw;
+  }
+
+  .atlas-home {
+    position: absolute;
+    bottom: 2cqw;
+    left: 50%;
+    z-index: 3;
+    width: 35cqw;
+    height: 1.4cqw;
+    translate: -50% 0;
+    border-radius: 999px;
+    background-color: rgb(20 43 45 / 0.85);
+    pointer-events: none;
+    transition:
+      width 0.55s var(--ease-expo),
+      height 0.55s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-home {
+    width: 26cqw;
+    height: 1.1cqw;
+    background-color: rgb(20 43 45 / 0.6);
+  }
+
+  .atlas-glass {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    border-radius: inherit;
+    background-image: linear-gradient(115deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0) 30%);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.35);
+    pointer-events: none;
+  }
+
+  .atlas-app {
+    --a-ivory: #f7f5ef;
+    --a-ink: #142b2d;
+    --a-teal: #216c68;
+    --a-gold: #c6a477;
+    --a-white: #fff;
+    --a-soft: rgb(20 43 45 / 0.76);
+    --a-mute: rgb(20 43 45 / 0.58);
+    --a-line: rgb(20 43 45 / 0.1);
+    --a-tint: #e6e1d6;
+    --a-radius: 3cqw;
+    --a-button: 2.8cqw;
+    position: absolute;
+    inset: 0;
+    background-color: var(--a-ivory);
+    font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    color: var(--a-ink);
+    letter-spacing: -0.01em;
+  }
+
+  [data-platform="android"] .atlas-app {
+    --a-radius: 4cqw;
+    --a-button: 999px;
+  }
+
+  .atlas-photo {
+    object-fit: cover;
+  }
+
+  /* The three screens sit on top of each other; only the current one shows. */
+  .atlas-view {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    transition:
+      opacity 0.5s ease,
+      transform 0.7s var(--ease-expo),
+      visibility 0s linear 0s;
+  }
+
+  .atlas-app:not([data-stage="ask"]) [data-view="ask"],
+  .atlas-app:not([data-stage="thinking"]) [data-view="thinking"],
+  .atlas-app:not([data-stage="result"]) [data-view="result"] {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition-delay: 0s, 0s, 0.5s;
+  }
+
+  .atlas-app:not([data-stage="ask"]) [data-view="ask"] {
+    transform: scale(0.97);
+  }
+
+  .atlas-app:not([data-stage="thinking"]) [data-view="thinking"] {
+    transform: scale(1.03);
+  }
+
+  .atlas-app:not([data-stage="result"]) [data-view="result"] {
+    transform: translateY(6cqw);
+  }
+
+  .atlas-kicker {
+    font-size: 2.5cqw;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--a-mute);
+  }
+
+  /* 1. Discover */
+  .atlas-discover {
+    padding: 12.5cqw 5.5cqw 0;
+  }
+
+  .atlas-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 11cqw;
+  }
+
+  .atlas-masthead {
+    font-size: 3.4cqw;
+    font-weight: 800;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+  }
+
+  .atlas-avatar {
+    display: grid;
+    place-items: center;
+    width: 7.4cqw;
+    height: 7.4cqw;
+    border: 1px solid var(--a-line);
+    border-radius: 999px;
+    background-color: var(--a-white);
+    font-size: 3cqw;
+    font-weight: 700;
+  }
+
+  .atlas-discover-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 3cqw;
+  }
+
+  .atlas-greeting {
+    font-size: 3.5cqw;
+    font-weight: 500;
+    color: var(--a-mute);
+  }
+
+  .atlas-headline {
+    margin-top: 1.4cqw;
+    font-size: 10cqw;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+  }
+
+  .atlas-field {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqw;
+    min-height: 15cqw;
+    margin-top: 5cqw;
+    padding: 2cqw 2cqw 2cqw 3.6cqw;
+    border: 1px solid var(--a-line);
+    border-radius: 3.6cqw;
+    background-color: var(--a-white);
+    box-shadow: 0 1.5cqw 4cqw -2.5cqw rgb(20 43 45 / 0.18);
+    transition: border-color 0.4s ease;
+  }
+
+  [data-platform="android"] .atlas-field {
+    border-radius: 7.5cqw;
+  }
+
+  .atlas-field[data-filled] {
+    border-color: rgb(33 108 104 / 0.4);
+  }
+
+  .atlas-field-icon {
+    width: 4.6cqw;
+    height: 4.6cqw;
+    color: var(--a-teal);
+  }
+
+  .atlas-field-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 3.4cqw;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .atlas-word {
+    display: inline-block;
+  }
+
+  .atlas-placeholder {
+    font-weight: 400;
+    color: var(--a-mute);
+  }
+
+  .atlas-send {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 8.6cqw;
+    height: 8.6cqw;
+    border-radius: 999px;
+    background-color: rgb(20 43 45 / 0.07);
+    color: var(--a-mute);
+    cursor: pointer;
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  .atlas-send:disabled {
+    cursor: default;
+  }
+
+  .atlas-send:not(:disabled) {
+    background-color: var(--a-teal);
+    color: #fff;
+  }
+
+  .atlas-send svg {
+    width: 4.4cqw;
+    height: 4.4cqw;
+  }
+
+  .atlas-discover .atlas-kicker {
+    margin-top: 7cqw;
+  }
+
+  /* A row of journeys to scroll sideways, each a photograph. */
+  .atlas-journeys {
+    display: flex;
+    gap: 3cqw;
+    margin: 3cqw -5.5cqw 0;
+    padding-inline: 5.5cqw;
+    overflow-x: auto;
+    scroll-padding-inline: 5.5cqw;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .atlas-journeys::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas-journeys > li {
+    flex: 0 0 52cqw;
+    scroll-snap-align: start;
+  }
+
+  .atlas-journey {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 52 / 76;
+    overflow: hidden;
+    border-radius: var(--a-radius);
+    background-color: var(--a-tint);
+    text-align: left;
+    color: #fff;
+  }
+
+  button.atlas-journey {
+    cursor: pointer;
+  }
+
+  .atlas-journey-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .atlas-journey-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to top, rgb(10 22 24 / 0.72), rgb(10 22 24 / 0.08) 52%, transparent 70%);
+  }
+
+  .atlas-journey .atlas-photo {
+    transition: transform 0.9s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    button.atlas-journey:hover .atlas-photo {
+      transform: scale(1.04);
+    }
+  }
+
+  .atlas-journey-text {
+    position: absolute;
+    inset: auto 3.2cqw 3.4cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 1cqw;
+  }
+
+  .atlas-journey-place {
+    font-size: 2.3cqw;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .atlas-journey-prompt {
+    font-size: 3.8cqw;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* The chosen journey: a teal edge and a check. */
+  button.atlas-journey::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 0 var(--a-teal);
+    transition: box-shadow 0.35s ease;
+  }
+
+  button.atlas-journey[aria-pressed="true"]::after {
+    box-shadow: inset 0 0 0 0.6cqw var(--a-teal);
+  }
+
+  .atlas-journey-check {
+    position: absolute;
+    top: 3cqw;
+    right: 3cqw;
+    display: grid;
+    place-items: center;
+    width: 6.4cqw;
+    height: 6.4cqw;
+    border-radius: 999px;
+    background-color: var(--a-teal);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.35s ease,
+      transform 0.5s var(--ease-expo);
+  }
+
+  [aria-pressed="true"] .atlas-journey-check {
+    opacity: 1;
+    transform: none;
+  }
+
+  .atlas-journey-check svg {
+    width: 3.6cqw;
+    height: 3.6cqw;
+  }
+
+  /* The tab bar: translucent with labels on iOS; a Material navigation
+     bar with a pill behind the active icon on Android. */
+  .atlas-tabbar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-inline: -5.5cqw;
+    padding: 2.2cqw 2cqw 7.5cqw;
+    border-top: 1px solid var(--a-line);
+    background-color: rgb(255 255 255 / 0.72);
+  }
+
+  .atlas-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8cqw;
+    font-size: 2.3cqw;
+    font-weight: 600;
+    color: rgb(20 43 45 / 0.42);
+  }
+
+  .atlas-tab[data-active] {
+    color: var(--a-ink);
+  }
+
+  .atlas-tab-icon {
+    display: grid;
+    place-items: center;
+    width: 12cqw;
+    height: 6.6cqw;
+    border-radius: 999px;
+  }
+
+  .atlas-tab-icon svg {
+    width: 5.2cqw;
+    height: 5.2cqw;
+  }
+
+  [data-platform="android"] .atlas-tabbar {
+    padding-top: 2.6cqw;
+    border-top: 0;
+    background-color: #eeeae1;
+  }
+
+  [data-platform="android"] .atlas-tab[data-active] .atlas-tab-icon {
+    background-color: rgb(33 108 104 / 0.16);
+    color: var(--a-teal);
+  }
+
+  /* 2. Curate */
+  .atlas-curate {
+    justify-content: center;
+    padding: 14cqw 5.5cqw 9cqw;
+  }
+
+  .atlas-curate-head {
+    display: flex;
+    align-items: center;
+    gap: 2cqw;
+    font-size: 3.2cqw;
+    font-weight: 600;
+    color: var(--a-teal);
+  }
+
+  .atlas-curate-spark {
+    width: 4.4cqw;
+    height: 4.4cqw;
+  }
+
+  .atlas-progress {
+    position: relative;
+    display: block;
+    height: 2px;
+    margin-top: 3cqw;
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: var(--a-line);
+  }
+
+  .atlas-progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--a-teal);
+    transform-origin: left;
+  }
+
+  .atlas-curate-request {
+    margin-top: 4.5cqw;
+    font-size: 6.4cqw;
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.045em;
+  }
+
+  .atlas-map {
+    margin-top: 4.5cqw;
+    aspect-ratio: 300 / 236;
+    overflow: hidden;
+    border: 1px solid var(--a-line);
+    border-radius: var(--a-radius);
+    background-color: var(--a-white);
+  }
+
+  .atlas-map-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .atlas-route {
+    stroke-dasharray: 1 1;
+  }
+
+  .atlas-place-dot {
+    fill: #216c68;
+    stroke: #fff;
+    stroke-width: 1.4;
+  }
+
+  .atlas-place-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    fill: #142b2d;
+    fill-opacity: 0.8;
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+
+  .atlas-picks {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6cqw;
+    margin-top: 4.5cqw;
+  }
+
+  .atlas-pick {
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+  }
+
+  .atlas-pick-photo {
+    position: relative;
+    flex-shrink: 0;
+    width: 11cqw;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2cqw;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-pick-label {
+    display: block;
+    font-size: 2.3cqw;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--a-mute);
+  }
+
+  .atlas-pick-text {
+    display: block;
+    margin-top: 0.6cqw;
+    font-size: 3.3cqw;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .atlas-pick-status {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 5cqw;
+    height: 5cqw;
+    color: var(--a-teal);
+  }
+
+  .atlas-spinner {
+    position: absolute;
+    inset: 0.5cqw;
+    border: 1.5px solid rgb(33 108 104 / 0.2);
+    border-top-color: var(--a-teal);
+    border-radius: 999px;
+    opacity: 0;
+  }
+
+  .atlas-pick-check {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 3. Explore */
+  .atlas-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .atlas-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas-hero {
+    position: relative;
+    height: 104cqw;
+    overflow: hidden;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-hero-parallax,
+  .atlas-hero-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* A light veil at the top, so the status bar and buttons stay legible. */
+  .atlas-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 34cqw;
+    background-image: linear-gradient(to bottom, rgb(10 22 24 / 0.42), transparent);
+    pointer-events: none;
+  }
+
+  .atlas-sheet {
+    position: relative;
+    margin-top: -6cqw;
+    padding: 6.5cqw 5.5cqw 32cqw;
+    border-radius: 5cqw 5cqw 0 0;
+    background-color: var(--a-ivory);
+  }
+
+  [data-platform="android"] .atlas-sheet {
+    border-radius: 7cqw 7cqw 0 0;
+  }
+
+  .atlas-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 2cqw;
+    font-size: 2.5cqw;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--a-mute);
+  }
+
+  .atlas-eyebrow::before {
+    content: "";
+    width: 6cqw;
+    height: 1px;
+    background-color: var(--a-gold);
+  }
+
+  .atlas-title {
+    margin-top: 2.2cqw;
+    font-size: 9.4cqw;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .atlas-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4cqw 4cqw;
+    margin-top: 3.4cqw;
+    font-size: 3cqw;
+    font-weight: 500;
+    color: var(--a-soft);
+  }
+
+  .atlas-facts li {
+    display: flex;
+    align-items: center;
+    gap: 1.3cqw;
+  }
+
+  .atlas-facts svg {
+    width: 3.8cqw;
+    height: 3.8cqw;
+    color: var(--a-mute);
+  }
+
+  /* The concierge's note: a gold rule, a teal spark. */
+  .atlas-note {
+    display: flex;
+    gap: 2.6cqw;
+    margin-top: 5cqw;
+    padding: 1cqw 0 1cqw 3.6cqw;
+    border-left: 1px solid var(--a-gold);
+  }
+
+  .atlas-note-icon {
+    width: 4.4cqw;
+    height: 4.4cqw;
+    margin-top: 0.2cqw;
+    color: var(--a-teal);
+  }
+
+  .atlas-note p {
+    font-size: 3.4cqw;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--a-soft);
+  }
+
+  .atlas-section {
+    margin-top: 7cqw;
+    padding-top: 6cqw;
+    border-top: 1px solid var(--a-line);
+  }
+
+  .atlas-section > .atlas-kicker {
+    margin-bottom: 3.4cqw;
+  }
+
+  .atlas-stay-photo,
+  .atlas-stop-photo {
+    position: relative;
+    aspect-ratio: 16 / 10.5;
+    overflow: hidden;
+    border-radius: var(--a-radius);
+    background-color: var(--a-tint);
+  }
+
+  .atlas-stay-title {
+    margin-top: 3.4cqw;
+    font-size: 4.4cqw;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .atlas-stay-detail {
+    margin-top: 1.2cqw;
+    font-size: 3.1cqw;
+    color: var(--a-mute);
+  }
+
+  .atlas-stay-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2.8cqw;
+    font-size: 3cqw;
+    font-weight: 500;
+    color: var(--a-soft);
+  }
+
+  .atlas-stay-foot > span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 1.3cqw;
+  }
+
+  .atlas-stay-foot svg {
+    width: 3.8cqw;
+    height: 3.8cqw;
+  }
+
+  .atlas-held {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.2cqw;
+    font-size: 2.7cqw;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--a-soft);
+    transition: color 0.4s ease;
+  }
+
+  .atlas-held[data-reserved] {
+    color: var(--a-teal);
+  }
+
+  .atlas-held-dot {
+    width: 1.6cqw;
+    height: 1.6cqw;
+    border-radius: 999px;
+    background-color: var(--a-gold);
+  }
+
+  .atlas-held svg {
+    width: 3.2cqw;
+    height: 3.2cqw;
+  }
+
+  /* The day picker: a segmented control on iOS, tabs with a sliding
+     indicator on Android. */
+  .atlas-days {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.7cqw;
+    border-radius: 2.6cqw;
+    background-color: rgb(20 43 45 / 0.06);
+  }
+
+  .atlas-days-thumb {
+    position: absolute;
+    top: 0.7cqw;
+    bottom: 0.7cqw;
+    left: 0.7cqw;
+    width: calc((100% - 1.4cqw) / 3);
+    border-radius: 2cqw;
+    background-color: var(--a-white);
+    box-shadow: 0 0.4cqw 1.2cqw rgb(20 43 45 / 0.12);
+    transform: translateX(calc(var(--day, 0) * 100%));
+    transition: transform 0.5s var(--ease-expo);
+  }
+
+  .atlas-day {
+    position: relative;
+    height: 7.6cqw;
+    font-size: 3.2cqw;
+    font-weight: 600;
+    color: var(--a-mute);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .atlas-day[aria-pressed="true"] {
+    color: var(--a-ink);
+  }
+
+  [data-platform="android"] .atlas-days {
+    padding: 0;
+    border-bottom: 1px solid var(--a-line);
+    border-radius: 0;
+    background: none;
+  }
+
+  [data-platform="android"] .atlas-days-thumb {
+    top: auto;
+    bottom: -1px;
+    left: 0;
+    width: calc(100% / 3);
+    height: 0.7cqw;
+    border-radius: 0.7cqw 0.7cqw 0 0;
+    background-color: var(--a-teal);
+    box-shadow: none;
+  }
+
+  [data-platform="android"] .atlas-day {
+    height: 9cqw;
+  }
+
+  [data-platform="android"] .atlas-day[aria-pressed="true"] {
+    color: var(--a-teal);
+  }
+
+  .atlas-day-panel {
+    --dir: 1;
+  }
+
+  .atlas-day-panel[data-direction="-1"] {
+    --dir: -1;
+  }
+
+  .atlas-day-theme {
+    margin-top: 4.6cqw;
+    font-size: 5.2cqw;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .atlas-stops {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.4cqw;
+  }
+
+  .atlas-stop {
+    padding-block: 3.6cqw;
+  }
+
+  .atlas-stop + .atlas-stop {
+    border-top: 1px solid var(--a-line);
+  }
+
+  .atlas-stop:first-child {
+    padding-top: 0;
+  }
+
+  .atlas-stop-photo {
+    margin-bottom: 3cqw;
+  }
+
+  .atlas-stop-row {
+    display: grid;
+    grid-template-columns: 17cqw minmax(0, 1fr);
+    align-items: center;
+    gap: 3.4cqw;
+  }
+
+  .atlas-stop-thumb {
+    position: relative;
+    width: 17cqw;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2.2cqw;
+    background-color: var(--a-tint);
+  }
+
+  .atlas-stop-glyph {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--a-line);
+    background-color: transparent;
+    color: var(--a-ink);
+  }
+
+  .atlas-stop-glyph svg {
+    width: 6cqw;
+    height: 6cqw;
+  }
+
+  .atlas-stop-meta {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqw;
+    font-size: 2.7cqw;
+    font-weight: 600;
+    color: var(--a-mute);
+  }
+
+  .atlas-stop-time {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    color: var(--a-ink);
+  }
+
+  .atlas-stop-kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 1cqw;
+  }
+
+  .atlas-stop-kind svg {
+    width: 3.2cqw;
+    height: 3.2cqw;
+  }
+
+  .atlas-stop-meta .atlas-held {
+    margin-left: auto;
+  }
+
+  .atlas-stop-title {
+    margin-top: 1.2cqw;
+    font-size: 4cqw;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .atlas-stop-feature .atlas-stop-title {
+    font-size: 4.8cqw;
+    letter-spacing: -0.035em;
+  }
+
+  .atlas-stop-detail {
+    margin-top: 0.8cqw;
+    font-size: 3.1cqw;
+    line-height: 1.35;
+    color: var(--a-mute);
+  }
+
+  /* The bar above the plan: floating buttons over the photograph, then a
+     solid bar with the title once the photograph has scrolled away. */
+  .atlas-topbar {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 8.6cqw minmax(0, 1fr) 8.6cqw;
+    align-items: center;
+    gap: 2cqw;
+    padding: 12.5cqw 4cqw 2.4cqw;
+    transition:
+      background-color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+
+  .atlas-topbar[data-solid] {
+    background-color: rgb(247 245 239 / 0.92);
+    box-shadow: 0 1px 0 var(--a-line);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .atlas-icon-button {
+    display: grid;
+    place-items: center;
+    width: 8.6cqw;
+    height: 8.6cqw;
+    border-radius: 999px;
+    background-color: rgb(255 255 255 / 0.9);
+    color: var(--a-ink);
+    transition: background-color 0.35s ease;
+  }
+
+  button.atlas-icon-button {
+    cursor: pointer;
+  }
+
+  .atlas-icon-button svg {
+    width: 4.8cqw;
+    height: 4.8cqw;
+  }
+
+  [data-solid] .atlas-icon-button {
+    background-color: transparent;
+  }
+
+  .atlas-topbar-title {
+    overflow: hidden;
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(1.5cqw);
+    transition:
+      opacity 0.35s ease,
+      transform 0.45s var(--ease-expo);
+  }
+
+  [data-platform="android"] .atlas-topbar-title {
+    text-align: left;
+  }
+
+  [data-solid] .atlas-topbar-title {
+    opacity: 1;
+    transform: none;
+  }
+
+  .atlas-dock {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+    padding: 3.4cqw 5.5cqw 8cqw;
+    background-color: rgb(247 245 239 / 0.94);
+    box-shadow: 0 -1px 0 var(--a-line);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .atlas-dock-title {
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .atlas-dock-sub {
+    margin-top: 0.6cqw;
+    font-size: 2.8cqw;
+    color: var(--a-mute);
+  }
+
+  .atlas-cta {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4cqw;
+    height: 11cqw;
+    padding-inline: 6cqw;
+    border-radius: var(--a-button);
+    background-color: var(--a-teal);
+    font-size: 3.5cqw;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background-color 0.45s ease,
+      color 0.45s ease,
+      transform 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .atlas-cta:not(:disabled):hover {
+      background-color: #1b5956;
+    }
+  }
+
+  .atlas-cta:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .atlas-cta[data-done] {
+    background-color: rgb(33 108 104 / 0.12);
+    color: var(--a-teal);
+    cursor: default;
+  }
+
+  .atlas-cta svg {
+    width: 4.2cqw;
+    height: 4.2cqw;
+  }
+
+  /* Photo credits, beside the example (site styles, not the app's). */
+  .atlas-credits summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .atlas-credits summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .atlas-credits summary::after {
+    content: "+";
+  }
+
+  .atlas-credits[open] summary::after {
+    content: "−";
+  }
+
+  .atlas-credits ul {
+    display: flex;
+    max-width: 38ch;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--fg-mute);
+  }
+
+  .atlas-credits a {
+    color: var(--fg-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 2px;
+    transition: color 0.3s ease;
+  }
+
+  .atlas-credits a:hover {
+    color: var(--fg);
+  }
+
+  .atlas-credits p {
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--fg-mute);
+  }
+
+  /* Motion inside Atlas. Each screen's entrance plays when it becomes the
+     current one, from an authored final state. */
+  [data-stage="ask"] .atlas-in {
+    animation: atlas-rise 0.8s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 200ms);
+  }
+
+  [data-stage="ask"] .atlas-journey .atlas-photo {
+    animation: atlas-settle 1.6s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 200ms);
+  }
+
+  [data-filled] .atlas-word {
+    animation: atlas-word 0.4s ease backwards;
+    animation-delay: calc(var(--w) * 50ms);
+  }
+
+  [data-stage="ask"] .atlas-send:not(:disabled) {
+    animation: atlas-pulse 1.8s ease-out 0.6s infinite;
+  }
+
+  [data-stage="thinking"] .atlas-progress::after {
+    animation: atlas-progress 2.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+  }
+
+  [data-stage="thinking"] .atlas-curate-spark {
+    animation: atlas-breathe 1.6s ease-in-out infinite;
+  }
+
+  [data-stage="thinking"] .atlas-route {
+    animation: atlas-draw 1.9s linear 0.35s backwards;
+  }
+
+  [data-stage="thinking"] .atlas-place-dot {
+    animation: atlas-dot 0.45s ease backwards;
+    animation-delay: var(--at);
+  }
+
+  [data-stage="thinking"] .atlas-place-label {
+    animation: atlas-label 0.45s ease backwards;
+    animation-delay: var(--at);
+  }
+
+  [data-stage="thinking"] .atlas-pick {
+    animation: atlas-rise 0.55s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 0.35s);
+  }
+
+  [data-stage="thinking"] .atlas-pick .atlas-photo {
+    animation: atlas-settle 1.2s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 0.35s);
+  }
+
+  [data-stage="thinking"] .atlas-spinner {
+    animation:
+      atlas-spin 0.8s linear infinite,
+      atlas-out 0.2s ease both;
+    animation-delay: 0s, calc(var(--k) * 0.6s + 0.95s);
+  }
+
+  [data-stage="thinking"] .atlas-pick-check {
+    animation: atlas-pop 0.4s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k) * 0.6s + 1s);
+  }
+
+  [data-stage="result"] .atlas-hero-photo {
+    animation: atlas-unveil 1.8s var(--ease-expo) backwards;
+  }
+
+  [data-stage="result"] .atlas-sheet {
+    animation: atlas-sheet 1s var(--ease-expo) 0.15s backwards;
+  }
+
+  [data-stage="result"] .atlas-reveal {
+    animation: atlas-rise 0.8s var(--ease-expo) backwards;
+    animation-delay: calc(var(--k, 0) * 70ms + 350ms);
+  }
+
+  [data-stage="result"] .atlas-topbar {
+    animation: atlas-fade 0.6s ease 0.5s backwards;
+  }
+
+  [data-stage="result"] .atlas-dock {
+    animation: atlas-dock 0.8s var(--ease-expo) 0.7s backwards;
+  }
+
+  /* A new day slides in from the side it was chosen on. */
+  .atlas-day-panel[data-browsed] {
+    animation: atlas-day 0.55s var(--ease-expo) backwards;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* The opening photograph drifts slower than the page as it scrolls,
+       and photographs settle as they come into view. Scroll-linked, so
+       it runs on the compositor; skipped where unsupported. */
+    @supports (animation-timeline: scroll()) {
+      .atlas-scroll {
+        scroll-timeline: --atlas-scroll y;
+      }
+
+      .atlas-hero-parallax {
+        animation: atlas-parallax linear both;
+        animation-timeline: --atlas-scroll;
+        animation-range: 0 104cqw;
+      }
+
+      .atlas-stay-photo .atlas-photo,
+      .atlas-stop-photo .atlas-photo,
+      .atlas-stop-thumb .atlas-photo {
+        animation: atlas-photo-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 80%;
+      }
+    }
+  }
+
+  /* A small two-way switch (Atlas uses it to pick a platform). */
+  .segmented {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  .segmented-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.25rem;
+    padding-inline: 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--fg-mute);
+    cursor: pointer;
+    transition:
+      color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .segmented-option[aria-pressed="true"] {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
+  .hero-lead {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    line-height: 1.35;
+    letter-spacing: -0.018em;
+  }
+
+  /* A whisper of film grain, so the dark surface reads as material
+     rather than a flat fill. */
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .display {
+    font-size: clamp(2.75rem, 7.6vw, 8.25rem);
+    line-height: 0.94;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+    margin-left: -0.035em;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+
+  .lead {
+    font-size: clamp(1.375rem, 2.05vw, 2.125rem);
+    line-height: 1.24;
+    letter-spacing: -0.022em;
+  }
+
+  /* A mask clips one authored line so it can rise into place. The
+     padding keeps descenders and tight tracking from being cut off. */
+  .mask {
+    display: block;
+    overflow: hidden;
+    padding: 0.06em 0.06em 0.17em 0;
+    margin: -0.06em -0.06em -0.17em 0;
+  }
+
+  .mask > * {
+    display: block;
+  }
+
+  .accent-text {
+    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Room for descenders and tight tracking inside the clipped box. */
+    padding: 0 0.06em 0.16em 0;
+    margin: 0 -0.06em -0.16em 0;
+  }
+
+  .accent-fill {
+    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
+  }
+
+  /* ----------------------------------------------------------------
+     Buttons and links
+     ---------------------------------------------------------------- */
+
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    height: 3rem;
+    padding-inline: 1.5rem;
+    overflow: hidden;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      transform 0.25s var(--ease-expo);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn:focus-visible {
+    border-radius: 999px;
+  }
+
+  .btn[disabled],
+  .btn[aria-disabled="true"] {
+    cursor: default;
+    opacity: 0.55;
+  }
+
+  .btn-sm {
+    height: 2.5rem;
+    padding-inline: 1.125rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-primary {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(90deg, var(--color-mint), var(--color-cyan));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--line-strong);
+    color: var(--fg);
+  }
+
+  @media (hover: hover) {
+    .btn-primary:not([disabled]):hover {
+      color: var(--color-ink);
+    }
+
+    .btn-primary:not([disabled]):hover::before {
+      opacity: 1;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--fg);
+      background-color: color-mix(in srgb, var(--fg) 7%, transparent);
+    }
+  }
+
+  .btn .arrow,
+  .link .arrow {
+    transition: transform 0.4s var(--ease-expo);
+  }
+
+  .link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.3rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: currentColor;
+    transform-origin: left;
+  }
+
+  @media (hover: hover) {
+    .btn:hover .arrow,
+    .link:hover .arrow {
+      transform: translateX(3px);
+    }
+
+    .btn:hover .arrow-down,
+    .link:hover .arrow-down {
+      transform: translateY(3px);
+    }
+
+    .link:hover::after {
+      animation: redraw 0.75s var(--ease-expo);
+    }
+  }
+
+  /* Off screen until a keyboard user reaches it. */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 60;
+    transform: translateY(-250%);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .nav-link {
+    color: var(--fg-soft);
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--fg);
+  }
+
+  .quiet-link {
+    color: var(--fg-soft);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition:
+      color 0.3s ease,
+      text-decoration-color 0.3s ease;
+  }
+
+  .quiet-link:hover {
+    color: var(--fg);
+    text-decoration-color: currentColor;
+  }
+
+  /* ----------------------------------------------------------------
+     Form fields
+     ---------------------------------------------------------------- */
+
+  .field-input {
+    width: 100%;
+    padding: 0.7rem 0 0.8rem;
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--fg);
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    appearance: none;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .field-input::placeholder {
+    color: var(--fg-mute);
+    opacity: 1;
+  }
+
+  .field-input:hover {
+    border-bottom-color: color-mix(in srgb, var(--fg) 60%, transparent);
+  }
+
+  .field-input:focus,
+  .field-input:focus-visible {
+    outline: none;
+    border-radius: 0;
+    border-bottom-color: var(--focus);
+    box-shadow: 0 1px 0 0 var(--focus);
+  }
+
+  .field-input[aria-invalid="true"] {
+    border-bottom-color: var(--color-alert);
+  }
+
+  .field-input[aria-invalid="true"]:focus {
+    box-shadow: 0 1px 0 0 var(--color-alert);
+  }
+
+  select.field-input {
+    padding-right: 1.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23f6f6f2' stroke-width='1.25'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.15rem center;
+    cursor: pointer;
+  }
+
+  textarea.field-input {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+
+  /* ----------------------------------------------------------------
+     Header
+     ---------------------------------------------------------------- */
+
+  .site-header {
+    transition:
+      background-color 0.45s ease,
+      border-color 0.45s ease,
+      color 0.45s ease;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-header[data-scrolled="true"] {
+    background-color: color-mix(in srgb, var(--bg) 84%, transparent);
+    border-bottom-color: var(--line);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  .logo-variant {
+    transition: opacity 0.45s ease;
+  }
+
+  .logo-for-dark {
+    opacity: var(--logo-on-dark, 1);
+  }
+
+  .logo-for-light {
+    opacity: var(--logo-on-light, 0);
+  }
+
+  /* ----------------------------------------------------------------
+     Philosophy: "Complexity," is struck through.
+     ---------------------------------------------------------------- */
+
+  .strike {
+    position: relative;
+    display: inline-block;
+    color: var(--color-mute);
+  }
+
+  .strike-line {
+    position: absolute;
+    left: -0.03em;
+    right: -0.01em;
+    top: 54%;
+    height: max(2px, 0.03em);
+    background-color: var(--fg);
+    transform-origin: left center;
+  }
+
+  /* ----------------------------------------------------------------
+     Expertise rows
+     ---------------------------------------------------------------- */
+
+  .row-rule {
+    position: relative;
+    border-top: 1px solid var(--line);
+  }
+
+  .row-rule::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 1px;
+    background-color: var(--fg);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s var(--ease-expo);
+  }
+
+  @media (hover: hover) {
+    .row-rule:hover::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Hero entrance. CSS only, so it starts at first paint and never
+   waits on JavaScript. Skipped entirely for reduced motion.
+   ------------------------------------------------------------------ */
+
+@keyframes rise {
+  from {
+    transform: translateY(112%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: 100% 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0% 0, 0 0, 0 0;
+  }
+}
+
+/* While loose, each input drifts on two slow axes at its own pace, so it
+   traces an unhurried loop of its own; --float scales the drift (and the
+   ring's pulse) to nothing as scroll lines the inputs up. */
+@keyframes flow-drift-x {
+  from {
+    translate: calc(var(--float) * -6px) 0;
+  }
+  to {
+    translate: calc(var(--float) * 6px) 0;
+  }
+}
+
+@keyframes flow-drift-y {
+  from {
+    translate: 0 calc(var(--float) * -7px);
+  }
+  to {
+    translate: 0 calc(var(--float) * 7px);
+  }
+}
+
+@keyframes flow-chip-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: calc(var(--float) * 0.7);
+  }
+}
+
+@keyframes atlas-rise {
+  from {
+    opacity: 0;
+    transform: translateY(3cqw);
+  }
+}
+
+@keyframes atlas-word {
+  from {
+    opacity: 0;
+    transform: translateY(1cqw);
+  }
+}
+
+@keyframes atlas-settle {
+  from {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes atlas-unveil {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes atlas-sheet {
+  from {
+    transform: translateY(14cqw);
+  }
+}
+
+@keyframes atlas-dock {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes atlas-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes atlas-day {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 8cqw));
+  }
+}
+
+@keyframes atlas-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes atlas-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes atlas-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@keyframes atlas-breathe {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes atlas-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes atlas-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes atlas-dot {
+  from {
+    fill: #fff;
+    stroke: rgb(20 43 45 / 0.35);
+  }
+}
+
+@keyframes atlas-label {
+  from {
+    fill-opacity: 0.35;
+  }
+}
+
+@keyframes atlas-pulse {
+  from {
+    box-shadow: 0 0 0 0 rgb(33 108 104 / 0.45);
+  }
+  to {
+    box-shadow: 0 0 0 2.6cqw rgb(33 108 104 / 0);
+  }
+}
+
+@keyframes atlas-parallax {
+  to {
+    transform: translateY(36cqw);
+  }
+}
+
+@keyframes atlas-photo-in {
+  from {
+    opacity: 0.35;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+@keyframes cue {
+  0% {
+    transform: translateX(-101%);
+  }
+  55% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(101%);
+  }
+}
+
+@keyframes redraw {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  46% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter-rise {
+    animation: rise 1.15s var(--ease-expo) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+
+  .enter-fade-up {
+    animation: fade-up 1.1s var(--ease-expo) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+
+  .enter-fade {
+    animation: fade 0.9s ease both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  [data-connected] .hero-title .hero-accent {
+    animation: sheen 1.6s var(--ease-quart) 0.35s both;
+  }
+
+  /* On load the inputs fade in where they lie, then drift and softly
+     pulse, each out of step with the others; --float falls to 0 as scroll
+     lines them up, so all of it settles without a seam. */
+  .flow[data-ready] .flow-in .flow-drift {
+    animation: flow-drift-x calc(9s + var(--n, 0) * 1.6s) ease-in-out infinite alternate;
+    animation-delay: calc(var(--n, 0) * -2.3s);
+  }
+
+  .flow[data-ready] .flow-in .flow-body {
+    animation:
+      fade 1s ease both,
+      flow-drift-y calc(6.2s + var(--n, 0) * 0.9s) ease-in-out infinite alternate;
+    animation-delay: calc(var(--n, 0) * 140ms + 200ms), calc(var(--n, 0) * -1.7s);
+  }
+
+  .flow[data-ready] .flow-in .flow-chip::after {
+    animation: flow-chip-pulse calc(4.8s + var(--n, 0) * 0.7s) ease-in-out infinite;
+    animation-delay: calc(var(--n, 0) * -1.3s);
+  }
+
+  .enter-draw {
+    transform-origin: left center;
+    animation: draw 1.5s var(--ease-quart) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
