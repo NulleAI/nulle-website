@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /mockups/
-Disallow: /functions/
-
-Sitemap: https://nulle.ai/sitemap.xml
