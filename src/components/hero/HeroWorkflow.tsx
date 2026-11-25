@@ -48,20 +48,25 @@ const INPUTS = [
 /** What goes out, one line each. */
 const OUTCOME = ["Imagine more.", "Build smarter."] as const;
 
-/** Where each input floats before it lines up: its top-left, as a share of the free space. */
+/**
+ * Where each input floats before it lines up: its top-left, as a share of the free space.
+ * Along the axis they line up on (down the column from tablet width up, across the row on
+ * phones) they keep their final order, so no two paths cross; neighbours on that axis sit
+ * far apart on the other, so no label runs into another on the way, drift included.
+ */
 const SCATTER_WIDE: [number, number][] = [
-  [0.12, 0.1],
-  [0.46, 0.72],
-  [0.3, 0.34],
-  [0.66, 0.18],
-  [0.56, 0.9],
+  [0.12, 0.04],
+  [0.7, 0.18],
+  [0.26, 0.34],
+  [0.44, 0.72],
+  [0.66, 0.9],
 ];
 const SCATTER_NARROW: [number, number][] = [
-  [0.52, 0.04],
-  [0.06, 0.4],
-  [0.7, 0.58],
-  [0.2, 0.16],
-  [0.36, 0.86],
+  [0.06, 0.04],
+  [0.2, 0.4],
+  [0.34, 0.86],
+  [0.52, 0.12],
+  [0.72, 0.58],
 ];
 /** How present each input is while loose. */
 const SCATTER_OPACITY = [0.95, 0.6, 0.8, 0.5, 0.7];
@@ -108,8 +113,13 @@ const easeOutCubic = (p: number) => 1 - Math.pow(1 - clamp(p), 3);
 const easeInOutSine = (p: number) => -(Math.cos(Math.PI * clamp(p)) - 1) / 2;
 const bell = (p: number, centre: number, width: number) => Math.exp(-(((p - centre) / width) ** 2));
 const mixRGB = (a: RGB, b: RGB, t: number): RGB => [mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t)];
+/**
+ * The faintest light worth drawing. Anything fainter can't show on screen, and Safari draws
+ * near-zero alpha with "lighter" as solid white: each fading pulse flashed a white stroke.
+ */
+const MIN_ALPHA = 1 / 255;
 const rgba = (c: RGB, a: number) =>
-  `rgba(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])},${clamp(a).toFixed(3)})`;
+  `rgba(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])},${(a >= MIN_ALPHA ? clamp(a) : 0).toFixed(3)})`;
 
 const pointAt = (c: Curve, t: number): Point => {
   const u = 1 - t;
@@ -263,8 +273,10 @@ export function HeroWorkflow() {
 
       const strokePasses = (passes: readonly (readonly [number, number])[], level: number) => {
         for (const [width, alpha] of passes) {
+          const a = clamp(alpha * level);
+          if (!(a >= MIN_ALPHA)) continue;
           ctx.lineWidth = width;
-          ctx.globalAlpha = clamp(alpha * level);
+          ctx.globalAlpha = a;
           ctx.stroke();
         }
         ctx.globalAlpha = 1;
@@ -482,6 +494,12 @@ export function HeroWorkflow() {
         ctx.restore();
       };
 
+      /** Resizing the canvas clears it, so it is drawn again at once, never shown empty for a frame. */
+      const resized = () => {
+        size();
+        render(performance.now());
+      };
+
       const slots = items.map((item) => item.parentElement as HTMLElement);
 
       const mm = gsap.matchMedia();
@@ -584,7 +602,7 @@ export function HeroWorkflow() {
             scrub: 1,
             animation: timeline,
             invalidateOnRefresh: true,
-            onRefresh: size,
+            onRefresh: resized,
           });
         } else {
           timeline.progress(1);
@@ -594,16 +612,14 @@ export function HeroWorkflow() {
         if (readyAt === Infinity) readyAt = performance.now();
 
         // Light is drawn every frame while the hero is on screen; without motion, only when asked.
-        let frame = 0;
+        // It is drawn from GSAP's ticker, which renders the timeline first on each tick, so the
+        // canvas always matches the markup in the same frame. (A loop of its own can end up
+        // queued ahead of GSAP's once the ticker has slept and woken, and then draws a frame late.)
         let onScreen = true;
-        const loop = (now: number) => {
-          frame = 0;
-          render(now);
-          schedule();
-        };
+        const draw = () => render(performance.now());
         function schedule() {
-          if (frame || !live || !onScreen || document.hidden) return;
-          frame = requestAnimationFrame(loop);
+          if (live && onScreen && !document.hidden) gsap.ticker.add(draw);
+          else gsap.ticker.remove(draw);
         }
         const view = new IntersectionObserver(([entry]) => {
           onScreen = entry.isIntersecting;
@@ -612,17 +628,14 @@ export function HeroWorkflow() {
         view.observe(section);
         document.addEventListener("visibilitychange", schedule);
 
-        const resize = new ResizeObserver(() => {
-          size();
-          if (!live) render(performance.now());
-        });
+        const resize = new ResizeObserver(resized);
         resize.observe(flow);
         resize.observe(stage);
         schedule();
         if (!live) render(performance.now());
 
         return () => {
-          cancelAnimationFrame(frame);
+          gsap.ticker.remove(draw);
           view.disconnect();
           resize.disconnect();
           document.removeEventListener("visibilitychange", schedule);
