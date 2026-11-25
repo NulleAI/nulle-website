@@ -113,8 +113,13 @@ const easeOutCubic = (p: number) => 1 - Math.pow(1 - clamp(p), 3);
 const easeInOutSine = (p: number) => -(Math.cos(Math.PI * clamp(p)) - 1) / 2;
 const bell = (p: number, centre: number, width: number) => Math.exp(-(((p - centre) / width) ** 2));
 const mixRGB = (a: RGB, b: RGB, t: number): RGB => [mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t)];
+/**
+ * The faintest light worth drawing. Anything fainter can't show on screen, and Safari draws
+ * near-zero alpha with "lighter" as solid white: each fading pulse flashed a white stroke.
+ */
+const MIN_ALPHA = 1 / 255;
 const rgba = (c: RGB, a: number) =>
-  `rgba(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])},${clamp(a).toFixed(3)})`;
+  `rgba(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])},${(a >= MIN_ALPHA ? clamp(a) : 0).toFixed(3)})`;
 
 const pointAt = (c: Curve, t: number): Point => {
   const u = 1 - t;
@@ -268,8 +273,10 @@ export function HeroWorkflow() {
 
       const strokePasses = (passes: readonly (readonly [number, number])[], level: number) => {
         for (const [width, alpha] of passes) {
+          const a = clamp(alpha * level);
+          if (!(a >= MIN_ALPHA)) continue;
           ctx.lineWidth = width;
-          ctx.globalAlpha = clamp(alpha * level);
+          ctx.globalAlpha = a;
           ctx.stroke();
         }
         ctx.globalAlpha = 1;
