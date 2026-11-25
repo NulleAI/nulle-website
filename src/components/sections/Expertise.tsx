@@ -4,60 +4,8 @@ import { Arrow } from "@/components/ui/Arrow";
 import { AndroidLogo, AppleLogo } from "@/components/ui/Icons";
 import { Lines } from "@/components/ui/Lines";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { services } from "@/lib/services";
 import { apps } from "@/lib/site";
-
-const capabilities = [
-  {
-    index: "01",
-    title: "AI Agents & Automation",
-    summary:
-      "Calls answered, questions handled, and appointments booked, without adding to your team’s day.",
-    includes: [
-      "AI receptionists",
-      "Customer support agents",
-      "Automated scheduling",
-      "Lead qualification",
-      "Business process automation",
-    ],
-  },
-  {
-    index: "02",
-    title: "AI Strategy & Consulting",
-    summary:
-      "We look at how your business really runs, find where AI will make a difference, and give you a practical plan to get there.",
-    includes: [
-      "Operations review",
-      "Opportunity mapping",
-      "Workflow improvement",
-      "Implementation planning",
-    ],
-  },
-  {
-    index: "03",
-    title: "Private AI & Infrastructure",
-    summary:
-      "AI that works with your own knowledge, in an environment you control. Designed for teams that handle confidential information, such as law firms and healthcare practices.",
-    includes: [
-      "Private AI assistants",
-      "Internal knowledge systems",
-      "Controlled AI deployments",
-    ],
-  },
-  {
-    index: "04",
-    title: "Custom Software & Mobile Apps",
-    summary:
-      "From intelligent business tools to beautifully engineered iOS and Android applications, we turn ambitious ideas into production-ready software.",
-    includes: [
-      "Native iOS & Android apps",
-      "Custom business apps",
-      "Consumer digital products",
-      "AI integrations",
-      "Internal platforms",
-    ],
-    platforms: true,
-  },
-] as const;
 
 /** Section 03. An editorial list in place of service cards. */
 export function Expertise() {
@@ -72,7 +20,7 @@ export function Expertise() {
         </div>
 
         <ol className="mt-16 md:mt-28">
-          {capabilities.map((capability) => (
+          {services.map((capability) => (
             <li
               key={capability.index}
               className="row-rule grid gap-x-6 gap-y-6 py-9 md:grid-cols-12 md:py-14"

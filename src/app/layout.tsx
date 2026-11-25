@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Manrope } from "next/font/google";
 
+import { openGraphBase } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
 import "./globals.css";
@@ -38,12 +39,10 @@ export const metadata: Metadata = {
   applicationName: site.name,
   alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
-    siteName: site.name,
+    ...openGraphBase,
     title,
     description: site.description,
     url: "/",
-    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",

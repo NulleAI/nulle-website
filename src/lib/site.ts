@@ -37,6 +37,27 @@ export const site = {
   schedulingUrl: httpsUrl(process.env.NEXT_PUBLIC_SCHEDULING_URL),
 } as const;
 
+/**
+ * Facts about the company, as Nulle states them. Used in the FAQ, the
+ * structured data, and /llms.txt, so every place says the same thing.
+ */
+export const company = {
+  legalName: "Nulle, LLC",
+  /** Searchers and AI assistants often add "AI" to tell Nulle apart from similar names. */
+  alternateName: "Nulle AI",
+  foundingYear: "2025",
+  basedIn: "Atlanta, Georgia",
+  serves: "Atlanta and the Southeast",
+  /** One line that says what Nulle is, for answers and summaries. */
+  summary: "Nulle, LLC is an AI consulting and engineering company based in Atlanta, Georgia.",
+} as const;
+
+/** How working with Nulle begins, priced, and timed. */
+export const engagement = {
+  consultationMinutes: 20,
+  typicalTimeline: "2 to 4 weeks",
+} as const;
+
 /** Nulle's postal address, shown in the footer and in structured data. */
 export const address = {
   street: "1700 Northside Drive NW",
