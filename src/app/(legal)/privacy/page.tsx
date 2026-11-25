@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { LegalPage } from "@/components/site/LegalPage";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy",
   description: "How Nulle handles the information you share through this website.",
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy",
+});
 
 const reachUs = site.contactEmail ? (
   <>
@@ -66,9 +67,15 @@ export default function PrivacyPage() {
         {
           heading: "Cookies and tracking",
           body: (
-            <p>
-              This website does not set cookies and does not use analytics or advertising trackers.
-            </p>
+            <>
+              <p>This website does not use analytics or advertising trackers.</p>
+              <p>
+                Our own code sets no cookies. The network that delivers the site for our hosting
+                provider sets one strictly necessary security cookie, <code>__cf_bm</code>, which helps
+                tell visitors apart from automated traffic and expires after 30 minutes. It is not
+                used for advertising.
+              </p>
+            </>
           ),
         },
         {
