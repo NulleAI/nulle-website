@@ -63,7 +63,7 @@ limit (5 per 10 minutes), then delivery.
 ```
 docs/design-spec.md          Visual design specification
 src/app                      Routes, metadata, icons, Open Graph image, server action
-src/components/sections      The seven page sections
+src/components/sections      The homepage sections
 src/components/hero          The hero's WebGL signal ribbon (no 3D library)
 src/components/practice      The interactive demonstration (authored, deterministic scenarios)
 src/components/motion        Scroll choreography, driven by data attributes

@@ -3,12 +3,12 @@ import { Lines } from "@/components/ui/Lines";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { site } from "@/lib/site";
 
-/** Section 08. One clear next step. */
+/** Section 09. One clear next step. */
 export function Contact() {
   return (
     <section id="contact" data-header-theme="dark" className="theme-dark">
       <div className="shell section-y">
-        <SectionLabel index="08">Contact</SectionLabel>
+        <SectionLabel index="09">Contact</SectionLabel>
         <h2 className="display mt-10 md:mt-14">
           <Lines lines={["Let’s build", "what’s next."]} />
         </h2>

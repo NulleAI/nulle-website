@@ -48,6 +48,15 @@ envs:
   - key: NEXT_PUBLIC_SITE_URL
     scope: RUN_AND_BUILD_TIME
     value: https://nulle.ai
+  # Shown in the contact section, footer, FAQ, structured data and
+  # /llms.txt. Inlined at build time, like the site URL.
+  - key: NEXT_PUBLIC_CONTACT_EMAIL
+    scope: RUN_AND_BUILD_TIME
+    value: connect@nulle.ai
+  # NEXT_PUBLIC_SCHEDULING_URL is deliberately unset: booking happens
+  # through the contact form ("Book a Consultation"). Set it only to an
+  # external calendar page, never to /#contact, or "Open our calendar"
+  # would link the form to itself.
   - key: CONTACT_TO_EMAIL
     scope: RUN_TIME
     value: connect@nulle.ai

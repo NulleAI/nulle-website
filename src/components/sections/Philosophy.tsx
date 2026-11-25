@@ -22,7 +22,7 @@ export function Philosophy() {
                 ,
               </span>
             </span>
-          </span>
+          </span>{" "}
           <span className="mask">
             <span data-line>simplified.</span>
           </span>

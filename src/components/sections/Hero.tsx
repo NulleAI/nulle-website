@@ -29,19 +29,20 @@ export function Hero() {
         <div className="shell relative pb-12 md:pb-16">
           <div data-hero-content>
             <h1 className="hero-title">
-              <span className="sr-only">{site.tagline}</span>
+              <span className="sr-only">{site.tagline}</span>{" "}
               <span aria-hidden="true" className="block">
                 <span className="mask">
                   <span className="enter-rise" style={delay(1)}>
                     Nothing between
                   </span>
                 </span>
+                {/* Spaces between lines keep the words apart for text extractors; blocks and flex items never show them. */}{" "}
                 <span className="flex flex-col md:flex-row md:gap-[0.24em]">
                   <span className="mask">
                     <span className="enter-rise" style={delay(2)}>
                       you and
                     </span>
-                  </span>
+                  </span>{" "}
                   <span className="mask">
                     <span className="enter-rise" style={delay(3)}>
                       <span className="accent-text hero-accent">intelligence.</span>

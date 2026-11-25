@@ -5,17 +5,20 @@ import Link from "next/link";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
+import { JsonLd } from "@/components/site/JsonLd";
 import { Logo } from "@/components/site/Logo";
 import { Arrow } from "@/components/ui/Arrow";
 import { Lines } from "@/components/ui/Lines";
 import { beliefs, facts, founders } from "@/lib/founders";
+import { pageMetadata } from "@/lib/metadata";
+import { foundersStructuredData } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Founders",
   description:
     "Jerry Cox and Rahiem Klugh, co-founders of Nulle: two software engineers with 30 years of combined experience building enterprise software, based in Atlanta.",
-  alternates: { canonical: "/founders" },
-};
+  path: "/founders",
+});
 
 /** The founders in full: who they are, what they lead, and what they believe. */
 export default function FoundersPage() {
@@ -166,6 +169,7 @@ export default function FoundersPage() {
       </main>
       <Footer />
       <ScrollMotion />
+      <JsonLd data={foundersStructuredData()} />
     </>
   );
 }

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/site/LegalPage";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Terms",
   description: "The terms that apply when you use the Nulle website.",
-  alternates: { canonical: "/terms" },
-};
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (
