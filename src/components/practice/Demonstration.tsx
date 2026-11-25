@@ -160,6 +160,23 @@ export function Demonstration() {
           </button>
         </div>
       </div>
+
+      {/*
+        The other examples' headlines, in the HTML but hidden until chosen,
+        as tabbed content usually is. Without them, only the first example
+        would be readable by search engines and AI crawlers, which do not
+        click tabs. `hidden` keeps them out of view and out of the
+        accessibility tree.
+      */}
+      {demos.map((item, index) =>
+        index === active ? null : (
+          <div key={item.id} hidden>
+            <p>{item.label}</p>
+            <h3>{item.title}</h3>
+            <p>{item.summary}</p>
+          </div>
+        ),
+      )}
     </div>
   );
 }
